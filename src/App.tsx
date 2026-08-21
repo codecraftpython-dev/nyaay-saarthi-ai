@@ -13,9 +13,24 @@ import { CitizenLoginPage } from './components/auth/CitizenLoginPage';
 import { AdvocateLoginPage } from './components/auth/AdvocateLoginPage';
 import { CitizenRegisterPage } from './components/auth/CitizenRegisterPage';
 import { AdvocateRegisterPage } from './components/auth/AdvocateRegisterPage';
-import { CitizenDashboardPage } from './components/dashboard/CitizenDashboardPage';
 import { AdvocateDashboardPage } from './components/dashboard/AdvocateDashboardPage';
-import { Language, AppRoute, AuthUser, FooterLink } from './types';
+
+// Citizen Portal Component Suite
+import { CitizenNavbar } from './components/citizen/CitizenNavbar';
+import { CitizenHomePage } from './components/citizen/CitizenHomePage';
+import { AdvocateDiscoveryPage } from './components/citizen/AdvocateDiscoveryPage';
+import { AdvocateProfilePage } from './components/citizen/AdvocateProfilePage';
+import { AppointmentBookingFlow } from './components/citizen/AppointmentBookingFlow';
+import { MyAppointmentsPage } from './components/citizen/MyAppointmentsPage';
+import { MyApplicationsPage } from './components/citizen/MyApplicationsPage';
+import { AiAssistantPage } from './components/citizen/AiAssistantPage';
+import { KnowYourRightsPage } from './components/citizen/KnowYourRightsPage';
+import { UserProfilePage } from './components/citizen/UserProfilePage';
+import { SavedResourcesPage } from './components/citizen/SavedResourcesPage';
+import { UserSettingsPage } from './components/citizen/UserSettingsPage';
+
+import { Language, AppRoute, AuthUser, FooterLink, Advocate } from './types';
+import { MOCK_ADVOCATES, getStoredAppointments, getStoredApplications } from './data/portalData';
 
 function parseCurrentRoute(): AppRoute {
   if (typeof window === 'undefined') return 'home';
@@ -34,7 +49,21 @@ function parseCurrentRoute(): AppRoute {
   if (target === 'auth/register' || target === 'register') return 'auth/register/citizen';
   if (target === 'auth/register/citizen' || target === 'register/citizen') return 'auth/register/citizen';
   if (target === 'auth/register/advocate' || target === 'register/advocate') return 'auth/register/advocate';
+  
+  // Citizen Portal Routes
   if (target === 'user/home' || target === 'user-dashboard') return 'user/home';
+  if (target === 'user/profile' || target === 'profile') return 'user/profile';
+  if (target === 'user/applications' || target === 'applications') return 'user/applications';
+  if (target === 'user/appointments' || target === 'my-appointments') return 'user/appointments';
+  if (target === 'user/saved' || target === 'saved') return 'user/saved';
+  if (target === 'user/settings' || target === 'settings') return 'user/settings';
+  if (target === 'chat' || target === 'assistant' || target === 'ai-assistant') return 'chat';
+  if (target === 'rights' || target === 'know-your-rights') return 'rights';
+  if (target === 'appointments' || target === 'advocates' || target === 'find-advocate') return 'appointments';
+  if (target === 'advocate-profile') return 'advocate-profile';
+  if (target === 'appointment-book') return 'appointment-book';
+
+  // Advocate Portal Routes
   if (target === 'advocate-dashboard' || target === 'advocate/home' || target === 'advocate') return 'advocate-dashboard';
 
   return 'home';
@@ -54,7 +83,36 @@ export default function App() {
         console.error('Failed to parse saved user:', e);
       }
     }
-    return null;
+    // Default fallback demo citizen account for instant testability
+    return {
+      id: 'usr_rajesh_101',
+      name: 'Rajesh Kumar',
+      email: 'rajesh.kumar@gmail.com',
+      phone: '+91 98765 43210',
+      dob: '1992-05-14',
+      state: 'Delhi',
+      city: 'New Delhi',
+      address: 'B-42, Pocket 1, Mayur Vihar Phase 1, New Delhi - 110091',
+      role: 'citizen',
+      createdAt: '2025-01-10',
+    };
+  });
+
+  // Portal auxiliary state: selected advocate and pre-filled category
+  const [selectedAdvocate, setSelectedAdvocate] = useState<Advocate | null>(() => MOCK_ADVOCATES[0]);
+  const [activeCategoryFilter, setActiveCategoryFilter] = useState<string | null>(null);
+
+  // Modal / Interactive Dialog State for footer links
+  const [dialogState, setDialogState] = useState<{
+    isOpen: boolean;
+    actionKey: string | null;
+    title: string | null;
+    linkData?: FooterLink | null;
+  }>({
+    isOpen: false,
+    actionKey: null,
+    title: null,
+    linkData: null,
   });
 
   // Listen to hash changes (browser Back/Forward navigation)
@@ -73,28 +131,30 @@ export default function App() {
     };
   }, []);
 
-  // Modal / Interactive Dialog State
-  const [dialogState, setDialogState] = useState<{
-    isOpen: boolean;
-    actionKey: string | null;
-    title: string | null;
-    linkData?: FooterLink | null;
-  }>({
-    isOpen: false,
-    actionKey: null,
-    title: null,
-    linkData: null,
-  });
-
-  const navigateTo = (route: AppRoute) => {
+  const navigateTo = (route: AppRoute, params?: any) => {
     let resolvedRoute: AppRoute = route;
 
     // Default aliases
     if (route === 'auth/login') resolvedRoute = 'auth/login/citizen';
     if (route === 'auth/register') resolvedRoute = 'auth/register/citizen';
 
-    // Route Protection
-    if (resolvedRoute === 'user/home') {
+    // Handle extra params (e.g. advocate or category)
+    if (params?.advocate) {
+      setSelectedAdvocate(params.advocate);
+    }
+    if (params?.category) {
+      setActiveCategoryFilter(params.category);
+    } else if (route === 'appointments' && !params?.category) {
+      setActiveCategoryFilter(null);
+    }
+
+    // Route Protection for Citizen Portal
+    const citizenProtectedRoutes: AppRoute[] = [
+      'user/home', 'user/profile', 'user/settings', 
+      'user/applications', 'user/appointments', 'user/saved'
+    ];
+
+    if (citizenProtectedRoutes.includes(resolvedRoute)) {
       if (!currentUser) {
         resolvedRoute = 'auth/login/citizen';
       } else if (currentUser.role !== 'citizen') {
@@ -152,6 +212,21 @@ export default function App() {
 
     if (action === 'home') {
       navigateTo('home');
+      return;
+    }
+
+    if (action === 'chat' || action === 'chat-ai') {
+      navigateTo('chat');
+      return;
+    }
+
+    if (action === 'appointments' || action === 'book-appointment') {
+      navigateTo('appointments');
+      return;
+    }
+
+    if (action === 'rights') {
+      navigateTo('rights');
       return;
     }
 
@@ -235,26 +310,154 @@ export default function App() {
     );
   }
 
-  // 6. Protected Citizen Dashboard View
-  if (currentRoute === 'user/home') {
-    const activeCitizen = currentUser && currentUser.role === 'citizen' ? currentUser : {
-      id: 'demo_citizen',
+  // 6. Citizen Portal Suite (Shared Layout)
+  const isCitizenPortalRoute = [
+    'user/home',
+    'user/profile',
+    'user/settings',
+    'user/applications',
+    'user/appointments',
+    'user/saved',
+    'chat',
+    'rights',
+    'appointments',
+    'advocate-profile',
+    'appointment-book'
+  ].includes(currentRoute);
+
+  if (isCitizenPortalRoute) {
+    const activeCitizen = (currentUser && currentUser.role === 'citizen') ? currentUser : {
+      id: 'usr_rajesh_101',
       name: 'Rajesh Kumar',
       email: 'rajesh.kumar@gmail.com',
+      phone: '+91 98765 43210',
+      dob: '1992-05-14',
+      state: 'Delhi',
+      city: 'New Delhi',
+      address: 'B-42, Pocket 1, Mayur Vihar Phase 1, New Delhi - 110091',
       role: 'citizen' as const,
+      createdAt: '2025-01-10',
     };
 
+    const appointments = getStoredAppointments();
+    const upcomingCount = appointments.filter(a => a.status === 'upcoming').length;
+
     return (
-      <>
-        <CitizenDashboardPage
+      <div className="min-h-screen bg-[#F4F9FD] text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950">
+        
+        {/* Citizen Portal Header */}
+        <CitizenNavbar
           user={activeCitizen}
           language={language}
+          currentRoute={currentRoute}
           onLanguageChange={setLanguage}
           onNavigate={navigateTo}
           onLogout={handleLogout}
-          onOpenDialog={(actionKey, topic) => handleActionClick(actionKey, topic)}
+          notificationCount={upcomingCount}
         />
 
+        {/* Main Citizen Content Area */}
+        <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+          {currentRoute === 'user/home' && (
+            <CitizenHomePage
+              user={activeCitizen}
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'appointments' && (
+            <AdvocateDiscoveryPage
+              language={language}
+              onNavigate={navigateTo}
+              initialCategory={activeCategoryFilter || undefined}
+            />
+          )}
+
+          {currentRoute === 'advocate-profile' && selectedAdvocate && (
+            <AdvocateProfilePage
+              advocate={selectedAdvocate}
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'appointment-book' && selectedAdvocate && (
+            <AppointmentBookingFlow
+              user={activeCitizen}
+              advocate={selectedAdvocate}
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'user/appointments' && (
+            <MyAppointmentsPage
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'user/applications' && (
+            <MyApplicationsPage
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'chat' && (
+            <AiAssistantPage
+              user={activeCitizen}
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'rights' && (
+            <KnowYourRightsPage
+              user={activeCitizen}
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'user/profile' && (
+            <UserProfilePage
+              user={activeCitizen}
+              language={language}
+              onNavigate={navigateTo}
+              onUpdateUser={(updated) => {
+                setCurrentUser(updated);
+              }}
+            />
+          )}
+
+          {currentRoute === 'user/saved' && (
+            <SavedResourcesPage
+              user={activeCitizen}
+              language={language}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentRoute === 'user/settings' && (
+            <UserSettingsPage
+              user={activeCitizen}
+              language={language}
+              onLanguageChange={setLanguage}
+              onNavigate={navigateTo}
+              onLogout={handleLogout}
+            />
+          )}
+        </main>
+
+        {/* Footer */}
+        <Footer
+          language={language}
+          onActionClick={handleActionClick}
+        />
+
+        {/* Modal Dialog System */}
         <InteractiveDialogs
           isOpen={dialogState.isOpen}
           onClose={closeDialog}
@@ -263,7 +466,7 @@ export default function App() {
           title={dialogState.title}
           linkData={dialogState.linkData}
         />
-      </>
+      </div>
     );
   }
 

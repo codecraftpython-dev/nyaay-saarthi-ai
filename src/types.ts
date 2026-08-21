@@ -12,6 +12,16 @@ export type AppRoute =
   | 'auth/register/citizen'
   | 'auth/register/advocate'
   | 'user/home'
+  | 'user/profile'
+  | 'user/settings'
+  | 'user/applications'
+  | 'user/appointments'
+  | 'user/saved'
+  | 'appointments'
+  | 'advocate-profile'
+  | 'appointment-book'
+  | 'chat'
+  | 'rights'
   | 'advocate/home'
   | 'advocate-dashboard';
 
@@ -20,6 +30,11 @@ export interface AuthUser {
   name: string;
   email: string;
   phone?: string;
+  dob?: string;
+  state?: string;
+  city?: string;
+  address?: string;
+  profilePicture?: string;
   role: 'citizen' | 'advocate';
   barEnrollment?: string;
   stateBarCouncil?: string;
@@ -31,6 +46,158 @@ export interface AuthUser {
   isVerified?: boolean;
   token?: string;
   createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Advocate {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  profilePicture?: string;
+  isVerified: boolean;
+  practiceAreas: string[];
+  courtLevels: string[];
+  experience: string;
+  experienceYears: number;
+  location: string;
+  city: string;
+  state: string;
+  languages: string[];
+  consultationFee: number;
+  rating: number;
+  reviewCount: number;
+  availability: 'Today' | 'This Week' | 'Available Today' | 'Next Available: Tomorrow';
+  about: string;
+  education: string;
+  barEnrollment: string;
+  courts: string;
+  pastCasesSummary?: string;
+  reviews?: Array<{
+    author: string;
+    rating: number;
+    date: string;
+    comment: string;
+  }>;
+}
+
+export interface Appointment {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  userPhone: string;
+  advocateId: string;
+  advocateName: string;
+  advocatePhoto?: string;
+  advocateSpecialty: string;
+  advocatePhone?: string;
+  category: string;
+  courtLevel: string;
+  date: string;
+  time: string;
+  consultationType: 'Video' | 'Audio' | 'In-person';
+  issue: string;
+  fee: number;
+  status: 'upcoming' | 'completed' | 'cancelled';
+  meetingLink?: string;
+  locationAddress?: string;
+  createdAt: string;
+  applicationId?: string;
+}
+
+export interface ApplicationTimelineItem {
+  stage: string;
+  title: string;
+  description: string;
+  status: 'completed' | 'current' | 'pending';
+  date?: string;
+}
+
+export interface Application {
+  id: string;
+  applicationId: string; // e.g. NS-1024
+  userId: string;
+  advocateId: string;
+  advocateName: string;
+  advocateContact: string;
+  category: string;
+  description: string;
+  appointmentId?: string;
+  appointmentDate?: string;
+  appointmentTime?: string;
+  fee: number;
+  paymentStatus: 'Paid' | 'Pending' | 'Waived';
+  acceptanceStatus: 'Accepted' | 'Under Review' | 'Pending' | 'Clarification Needed';
+  status: 'Submitted' | 'Under Review' | 'In Progress' | 'Authority Review' | 'Resolved' | 'Action Required';
+  timeline: ApplicationTimelineItem[];
+  draftDocument?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LegalRight {
+  id: string;
+  category: 
+    | 'Constitutional'
+    | 'Consumer'
+    | 'Tenant & Property'
+    | 'Employment'
+    | 'Cyber'
+    | 'Women'
+    | 'Children'
+    | 'Senior Citizen'
+    | 'Disability'
+    | 'Police & Criminal Justice'
+    | 'Banking & Financial'
+    | 'Family & Personal';
+  name: string;
+  nameHi: string;
+  shortDescription: string;
+  shortDescriptionHi: string;
+  whoItAppliesTo: string;
+  whoItAppliesToHi: string;
+  legalSource: string;
+  exampleSituation: string;
+  exampleSituationHi: string;
+  possibleAction: string;
+  possibleActionHi: string;
+  relevantAuthority: string;
+  requiredDocuments: string[];
+  relatedResources?: string[];
+  advocateCategoryHint: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'user' | 'assistant';
+  text: string;
+  timestamp: string;
+  structuredData?: {
+    understanding?: string;
+    rights?: string[];
+    legalArea?: string;
+    isActionable?: string;
+    authority?: string;
+    documents?: string[];
+    nextSteps?: string[];
+    legalAid?: string;
+    recommendedCategory?: string;
+    suggestedAdvocateSpecialty?: string;
+    draftTitle?: string;
+    draftBody?: string;
+  };
+}
+
+export interface SavedResource {
+  id: string;
+  userId: string;
+  rightId: string;
+  title: string;
+  category: string;
+  legalSource: string;
+  savedAt: string;
+  notes?: string;
 }
 
 export interface ReviewItem {
@@ -79,3 +246,4 @@ export interface FooterLink {
   description?: string;
   descriptionHi?: string;
 }
+
