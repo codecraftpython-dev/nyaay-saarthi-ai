@@ -1,0 +1,6 @@
+{
+  "name": "Nyaay सारथी",
+  "description": "Citizen legal awareness, AI guidance, and consultation platform simplifying Indian laws and citizen rights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
