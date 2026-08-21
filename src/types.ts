@@ -12,7 +12,8 @@ export type AppRoute =
   | 'auth/register/citizen'
   | 'auth/register/advocate'
   | 'user/home'
-  | 'advocate/home';
+  | 'advocate/home'
+  | 'advocate-dashboard';
 
 export interface AuthUser {
   id: string;

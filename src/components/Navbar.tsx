@@ -32,7 +32,7 @@ export function Navbar({
 
   const handleAuthClick = () => {
     if (currentUser && onNavigate) {
-      onNavigate(currentUser.role === 'citizen' ? 'user/home' : 'advocate/home');
+      onNavigate(currentUser.role === 'citizen' ? 'user/home' : 'advocate-dashboard');
     } else if (onNavigate) {
       onNavigate('auth/login/citizen');
     } else {

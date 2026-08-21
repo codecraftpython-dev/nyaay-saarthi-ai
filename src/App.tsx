@@ -27,15 +27,15 @@ function parseCurrentRoute(): AppRoute {
 
   if (target === 'about' || target === 'about-us') return 'about';
   if (target === 'contact' || target === 'contact-us') return 'contact';
-  if (target === 'auth/role-selection') return 'auth/role-selection';
-  if (target === 'auth/login') return 'auth/login/citizen';
-  if (target === 'auth/login/citizen') return 'auth/login/citizen';
-  if (target === 'auth/login/advocate') return 'auth/login/advocate';
-  if (target === 'auth/register') return 'auth/register/citizen';
-  if (target === 'auth/register/citizen') return 'auth/register/citizen';
-  if (target === 'auth/register/advocate') return 'auth/register/advocate';
-  if (target === 'user/home') return 'user/home';
-  if (target === 'advocate/home') return 'advocate/home';
+  if (target === 'auth/role-selection' || target === 'role-selection') return 'auth/role-selection';
+  if (target === 'auth/login' || target === 'login') return 'auth/login/citizen';
+  if (target === 'auth/login/citizen' || target === 'login/citizen') return 'auth/login/citizen';
+  if (target === 'auth/login/advocate' || target === 'login/advocate') return 'auth/login/advocate';
+  if (target === 'auth/register' || target === 'register') return 'auth/register/citizen';
+  if (target === 'auth/register/citizen' || target === 'register/citizen') return 'auth/register/citizen';
+  if (target === 'auth/register/advocate' || target === 'register/advocate') return 'auth/register/advocate';
+  if (target === 'user/home' || target === 'user-dashboard') return 'user/home';
+  if (target === 'advocate-dashboard' || target === 'advocate/home' || target === 'advocate') return 'advocate-dashboard';
 
   return 'home';
 }
@@ -98,13 +98,15 @@ export default function App() {
       if (!currentUser) {
         resolvedRoute = 'auth/login/citizen';
       } else if (currentUser.role !== 'citizen') {
-        resolvedRoute = 'advocate/home';
+        resolvedRoute = 'advocate-dashboard';
       }
-    } else if (resolvedRoute === 'advocate/home') {
+    } else if (resolvedRoute === 'advocate-dashboard' || resolvedRoute === 'advocate/home') {
       if (!currentUser) {
         resolvedRoute = 'auth/login/advocate';
       } else if (currentUser.role !== 'advocate') {
         resolvedRoute = 'user/home';
+      } else {
+        resolvedRoute = 'advocate-dashboard';
       }
     }
 
@@ -123,7 +125,7 @@ export default function App() {
     if (user.role === 'citizen') {
       navigateTo('user/home');
     } else {
-      navigateTo('advocate/home');
+      navigateTo('advocate-dashboard');
     }
   };
 
@@ -155,7 +157,7 @@ export default function App() {
 
     if (action === 'login-signup') {
       if (currentUser) {
-        navigateTo(currentUser.role === 'citizen' ? 'user/home' : 'advocate/home');
+        navigateTo(currentUser.role === 'citizen' ? 'user/home' : 'advocate-dashboard');
       } else {
         navigateTo('auth/login/citizen');
       }
@@ -265,8 +267,8 @@ export default function App() {
     );
   }
 
-  // 7. Protected Advocate Dashboard View
-  if (currentRoute === 'advocate/home') {
+  // 7. Protected Advocate Dashboard View at /advocate-dashboard
+  if (currentRoute === 'advocate-dashboard' || currentRoute === 'advocate/home') {
     const activeAdvocate = currentUser && currentUser.role === 'advocate' ? currentUser : {
       id: 'demo_advocate',
       name: 'Adv. Vikram Sharma',
