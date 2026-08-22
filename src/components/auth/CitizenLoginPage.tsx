@@ -71,8 +71,8 @@ export function CitizenLoginPage({
     >
       <div className="space-y-5">
         {/* Supporting description */}
-        <div className="p-3 bg-sky-50/70 rounded-xl border border-sky-150 text-center">
-          <p className="text-xs font-semibold text-sky-900 leading-relaxed">
+        <div className="p-3 bg-sky-500/10 backdrop-blur-md rounded-2xl border border-sky-300/30 text-center">
+          <p className="text-xs font-semibold text-sky-950 leading-relaxed">
             {language === 'en'
               ? 'For Indian citizens seeking legal aid, AI guidance & appointment bookings'
               : 'कानूनी सहायता, AI मार्गदर्शन व वकील अपॉइंटमेंट चाहने वाले भारतीय नागरिकों हेतु'}
@@ -80,7 +80,7 @@ export function CitizenLoginPage({
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
+          <div className="p-3 bg-rose-500/10 backdrop-blur-md border border-rose-300/40 text-rose-800 text-xs rounded-2xl font-semibold">
             {errorMsg}
           </div>
         )}
@@ -102,7 +102,7 @@ export function CitizenLoginPage({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={language === 'en' ? 'name@example.com' : 'name@example.com'}
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all font-mono"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono font-medium shadow-inner"
               />
             </div>
           </div>
@@ -116,7 +116,7 @@ export function CitizenLoginPage({
               <button
                 type="button"
                 onClick={() => alert(language === 'en' ? 'Password reset link sent to your registered email in demo.' : 'डेमो: पासवर्ड रीसेट लिंक आपके ईमेल पर भेजा गया।')}
-                className="text-xs font-semibold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+                className="text-xs font-semibold text-sky-700 hover:text-sky-900 hover:underline cursor-pointer"
               >
                 {language === 'en' ? 'Forgot password?' : 'पासवर्ड भूल गए?'}
               </button>
@@ -133,7 +133,7 @@ export function CitizenLoginPage({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all"
+                className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
               />
               <button
                 type="button"
@@ -148,7 +148,7 @@ export function CitizenLoginPage({
 
           {/* Options: Keep me logged in */}
           <div className="flex items-center justify-between text-xs pt-1">
-            <label className="flex items-center gap-2 text-slate-700 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-slate-700 cursor-pointer select-none font-medium">
               <input
                 type="checkbox"
                 checked={keepLoggedIn}
@@ -164,7 +164,7 @@ export function CitizenLoginPage({
             id="citizen-signin-submit-btn"
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm shadow-md shadow-sky-600/20 transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+            className="glass-btn-primary w-full py-3 px-4 rounded-2xl text-white font-bold text-sm shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
           >
             <UserCheck className="w-4 h-4 text-sky-200" />
             <span>{isSubmitting ? (language === 'en' ? 'Signing In...' : 'लॉग इन हो रहा है...') : (language === 'en' ? 'Sign In as Citizen' : 'नागरिक के रूप में साइन इन करें')}</span>
@@ -172,10 +172,10 @@ export function CitizenLoginPage({
         </form>
 
         {/* Quick Demo Fill Section */}
-        <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl space-y-2">
+        <div className="p-3.5 bg-white/50 backdrop-blur-md border border-white/80 rounded-2xl space-y-2 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-sky-500" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-sky-600" />
               <span>{language === 'en' ? 'Quick Demo Fill' : 'क्विक डेमो ऑटो-फ़िल'}</span>
             </span>
           </div>
@@ -185,17 +185,17 @@ export function CitizenLoginPage({
               type="button"
               id="citizen-demo-fill-btn"
               onClick={handleDemoFillCitizen}
-              className="py-1.5 px-2.5 rounded-lg bg-white hover:bg-sky-50 text-sky-700 border border-sky-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="py-1.5 px-2.5 rounded-xl bg-white/80 hover:bg-white text-sky-800 border border-sky-200/80 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-97"
             >
               <span>Citizen Demo</span>
-              <span className="text-[10px] text-sky-500 font-bold">→ Fill</span>
+              <span className="text-[10px] text-sky-600 font-bold">→ Fill</span>
             </button>
 
             <button
               type="button"
               id="advocate-demo-fill-btn"
               onClick={handleDemoFillAdvocate}
-              className="py-1.5 px-2.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="py-1.5 px-2.5 rounded-xl bg-white/80 hover:bg-white text-slate-800 border border-slate-200/80 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-97"
             >
               <span>Advocate Demo</span>
               <span className="text-[10px] text-slate-500 font-bold">→ Switch</span>
@@ -205,13 +205,13 @@ export function CitizenLoginPage({
 
         {/* Bottom Navigation Links */}
         <div className="text-center pt-2 space-y-3">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-600 font-medium">
             {language === 'en' ? "Don't have an account?" : 'खाता नहीं है?'}{' '}
             <button
               type="button"
               id="citizen-to-register-btn"
               onClick={() => onNavigate('auth/register/citizen')}
-              className="font-bold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+              className="font-bold text-sky-700 hover:text-sky-900 hover:underline cursor-pointer"
             >
               {language === 'en' ? 'Create New Account' : 'नया खाता बनाएं'}
             </button>

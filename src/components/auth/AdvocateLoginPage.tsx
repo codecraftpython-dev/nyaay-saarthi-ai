@@ -79,7 +79,7 @@ export function AdvocateLoginPage({
     >
       <div className="space-y-5">
         {/* Supporting description */}
-        <div className="p-3 bg-slate-900/5 rounded-xl border border-slate-200 text-center">
+        <div className="p-3 bg-slate-900/10 backdrop-blur-md rounded-2xl border border-slate-300/40 text-center">
           <p className="text-xs font-semibold text-slate-800 leading-relaxed">
             {language === 'en'
               ? 'For verified advocates & Bar Council registered legal practitioners'
@@ -88,7 +88,7 @@ export function AdvocateLoginPage({
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
+          <div className="p-3 bg-rose-500/10 backdrop-blur-md border border-rose-300/40 text-rose-800 text-xs rounded-2xl font-semibold">
             {errorMsg}
           </div>
         )}
@@ -110,7 +110,7 @@ export function AdvocateLoginPage({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="advocate@barcouncil.org"
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all font-mono"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono font-medium shadow-inner"
               />
             </div>
           </div>
@@ -121,7 +121,7 @@ export function AdvocateLoginPage({
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
                 {language === 'en' ? 'Bar Council Enrollment No.' : 'बार काउंसिल नामांकन संख्या'}
               </label>
-              <span className="text-[10px] text-slate-400 font-semibold">
+              <span className="text-[10px] text-slate-500 font-semibold">
                 {language === 'en' ? '(Optional for Login)' : '(वैकल्पिक)'}
               </span>
             </div>
@@ -135,7 +135,7 @@ export function AdvocateLoginPage({
                 value={barEnrollment}
                 onChange={(e) => setBarEnrollment(e.target.value.toUpperCase())}
                 placeholder="e.g. DL/1234/2018"
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all font-mono uppercase"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono uppercase font-medium shadow-inner"
               />
             </div>
           </div>
@@ -149,7 +149,7 @@ export function AdvocateLoginPage({
               <button
                 type="button"
                 onClick={() => alert(language === 'en' ? 'Password reset link sent to your registered advocate email.' : 'डेमो: पासवर्ड रीसेट लिंक भेजा गया।')}
-                className="text-xs font-semibold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+                className="text-xs font-semibold text-sky-700 hover:text-sky-900 hover:underline cursor-pointer"
               >
                 {language === 'en' ? 'Forgot password?' : 'पासवर्ड भूल गए?'}
               </button>
@@ -166,7 +166,7 @@ export function AdvocateLoginPage({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
               />
               <button
                 type="button"
@@ -181,7 +181,7 @@ export function AdvocateLoginPage({
 
           {/* Options: Keep me logged in & Bar Verified indicator */}
           <div className="flex items-center justify-between text-xs pt-1">
-            <label className="flex items-center gap-2 text-slate-700 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-slate-700 cursor-pointer select-none font-medium">
               <input
                 type="checkbox"
                 checked={keepLoggedIn}
@@ -191,7 +191,7 @@ export function AdvocateLoginPage({
               <span>{language === 'en' ? 'Keep me logged in' : 'मुझे लॉग इन रखें'}</span>
             </label>
 
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-900 bg-sky-500/15 px-2.5 py-0.5 rounded-full border border-sky-300/40">
               <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
               <span>Bar Verified</span>
             </span>
@@ -202,7 +202,7 @@ export function AdvocateLoginPage({
             id="advocate-signin-submit-btn"
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+            className="w-full py-3 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-[0_4px_16px_rgba(15,23,42,0.25)] border border-white/20 transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
           >
             <Briefcase className="w-4 h-4 text-sky-400" />
             <span>{isSubmitting ? (language === 'en' ? 'Verifying Credentials...' : 'सत्यापित हो रहा है...') : (language === 'en' ? 'Sign In as Advocate' : 'अधिवक्ता के रूप में साइन इन करें')}</span>
@@ -210,10 +210,10 @@ export function AdvocateLoginPage({
         </form>
 
         {/* Quick Demo Fill Section */}
-        <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl space-y-2">
+        <div className="p-3.5 bg-white/50 backdrop-blur-md border border-white/80 rounded-2xl space-y-2 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-sky-500" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-sky-600" />
               <span>{language === 'en' ? 'Quick Demo Fill' : 'क्विक डेमो ऑटो-फ़िल'}</span>
             </span>
           </div>
@@ -223,7 +223,7 @@ export function AdvocateLoginPage({
               type="button"
               id="advocate-demo-citizen-btn"
               onClick={handleDemoFillCitizen}
-              className="py-1.5 px-2.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="py-1.5 px-2.5 rounded-xl bg-white/80 hover:bg-white text-slate-800 border border-slate-200/80 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-97"
             >
               <span>Citizen Demo</span>
               <span className="text-[10px] text-slate-500 font-bold">→ Switch</span>
@@ -233,7 +233,7 @@ export function AdvocateLoginPage({
               type="button"
               id="advocate-demo-fill-btn"
               onClick={handleDemoFillAdvocate}
-              className="py-1.5 px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white border border-slate-900 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              className="py-1.5 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white border border-white/20 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-2xs active:scale-97"
             >
               <span>Advocate Demo</span>
               <span className="text-[10px] text-sky-400 font-bold">→ Fill</span>
@@ -243,19 +243,19 @@ export function AdvocateLoginPage({
 
         {/* Bottom Verification Note & Register Link */}
         <div className="text-center pt-2 space-y-3">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-600 font-medium">
             {language === 'en' ? "Don't have an advocate account?" : 'अधिवक्ता खाता नहीं है?'}{' '}
             <button
               type="button"
               id="advocate-to-register-btn"
               onClick={() => onNavigate('auth/register/advocate')}
-              className="font-bold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+              className="font-bold text-sky-700 hover:text-sky-900 hover:underline cursor-pointer"
             >
               {language === 'en' ? 'Create New Account' : 'नया खाता बनाएं'}
             </button>
           </p>
 
-          <p className="text-[11px] text-amber-700 bg-amber-50/80 p-2.5 rounded-xl border border-amber-200/80 leading-relaxed font-medium">
+          <p className="text-[11px] text-amber-900 bg-amber-500/10 backdrop-blur-md p-2.5 rounded-2xl border border-amber-300/40 leading-relaxed font-semibold">
             {language === 'en'
               ? 'Notice: Advocate accounts require State Bar Council verification before activation.'
               : 'सूचना: अधिवक्ता खातों को सक्रिय करने से पहले राज्य बार काउंसिल सत्यापन आवश्यक है।'}

@@ -21,6 +21,7 @@ import {
 import { motion } from 'motion/react';
 import { Language, FooterLink } from '../types';
 import { Footer } from './Footer';
+import { AnimatedGlassBackground } from './AnimatedGlassBackground';
 import logoImg from '../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
 interface AboutUsPageProps {
@@ -39,8 +40,8 @@ export function AboutUsPage({
   // Translations dictionary for the About Us page
   const content = {
     backToHome: {
-      en: '← Back to Home',
-      hi: '← होम पर वापस जाएं',
+      en: 'Back to Home',
+      hi: 'होम पर वापस जाएं',
     },
     heroHeading: {
       en: 'What is Nyaay सारथी?',
@@ -138,13 +139,13 @@ export function AboutUsPage({
       en: 'FOUNDATION OF DIGITAL JUSTICE ECOSYSTEM',
       hi: 'डिजिटल न्याय इकोसिस्टम की सुदृढ़ आधारशिला',
     },
-    exploreServicesBtn: {
-      en: 'Consult an Advocate Now',
-      hi: 'वकील से परामर्श लें',
-    },
     chatAiBtn: {
-      en: 'Ask Legal AI Assistant',
-      hi: 'AI कानूनी सहायक से पूछें',
+      en: 'Chat with AI Legal Assistant',
+      hi: 'AI कानूनी सहायक से बात करें',
+    },
+    exploreServicesBtn: {
+      en: 'Find Verified Advocate',
+      hi: 'सत्यापित वकील खोजें',
     },
   };
 
@@ -152,68 +153,69 @@ export function AboutUsPage({
     {
       num: '01',
       roman: 'I',
-      icon: Scale,
+      subhead: 'TRANSPARENCY',
       title: content.pillar1Title[language],
       desc: content.pillar1Desc[language],
       badge: content.pillar1Badge[language],
-      subhead: language === 'en' ? 'Pillar I • Transparency' : 'स्तम्भ १ • पारदर्शिता',
+      icon: Scale,
+      tagColor: 'bg-sky-500/10 text-sky-950 border-sky-300/40',
+      accentBorder: 'border-white/80',
       highlightColor: 'from-sky-500 to-blue-600',
-      accentBorder: 'border-sky-200 hover:border-sky-400',
-      tagColor: 'bg-sky-50 text-sky-700 border-sky-200/80',
     },
     {
       num: '02',
       roman: 'II',
-      icon: Languages,
+      subhead: 'TRANSLATION',
       title: content.pillar2Title[language],
       desc: content.pillar2Desc[language],
       badge: content.pillar2Badge[language],
-      subhead: language === 'en' ? 'Pillar II • Simplification' : 'स्तम्भ २ • सरलीकरण',
-      highlightColor: 'from-cyan-500 to-sky-600',
-      accentBorder: 'border-cyan-200 hover:border-cyan-400',
-      tagColor: 'bg-cyan-50 text-cyan-800 border-cyan-200/80',
+      icon: Languages,
+      tagColor: 'bg-indigo-500/10 text-indigo-950 border-indigo-300/40',
+      accentBorder: 'border-white/80',
+      highlightColor: 'from-indigo-500 to-purple-600',
     },
     {
       num: '03',
       roman: 'III',
-      icon: Clock,
+      subhead: 'OPERATIONAL 24H',
       title: content.pillar3Title[language],
       desc: content.pillar3Desc[language],
       badge: content.pillar3Badge[language],
-      subhead: language === 'en' ? 'Pillar III • Accountability' : 'स्तम्भ ३ • जवाबदेही',
-      highlightColor: 'from-blue-600 to-indigo-600',
-      accentBorder: 'border-blue-200 hover:border-blue-400',
-      tagColor: 'bg-blue-50 text-blue-800 border-blue-200/80',
+      icon: Clock,
+      tagColor: 'bg-teal-500/10 text-teal-950 border-teal-300/40',
+      accentBorder: 'border-white/80',
+      highlightColor: 'from-teal-500 to-emerald-600',
     },
     {
       num: '04',
       roman: 'IV',
-      icon: Lock,
+      subhead: 'DPDP COMPLIANCE',
       title: content.pillar4Title[language],
       desc: content.pillar4Desc[language],
       badge: content.pillar4Badge[language],
-      subhead: language === 'en' ? 'Pillar IV • Privacy' : 'स्तम्भ ४ • डेटा सुरक्षा',
-      highlightColor: 'from-sky-600 to-teal-600',
-      accentBorder: 'border-teal-200 hover:border-teal-400',
-      tagColor: 'bg-teal-50 text-teal-800 border-teal-200/80',
+      icon: Lock,
+      tagColor: 'bg-blue-500/10 text-blue-950 border-blue-300/40',
+      accentBorder: 'border-white/80',
+      highlightColor: 'from-blue-500 to-sky-600',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F4F9FD] text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950">
+    <div className="min-h-screen text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 relative">
+      <AnimatedGlassBackground />
       
       {/* 1. TOP NAVIGATION FOR ABOUT PAGE */}
-      <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-sky-100/80 shadow-xs transition-colors">
+      <header className="sticky top-0 z-40 w-full bg-white/65 backdrop-blur-xl border-b border-white/70 shadow-[0_4px_24px_rgba(31,38,135,0.06)] transition-all">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-18 sm:h-20 gap-2">
             
-            {/* Top Left: ← Back to Home */}
+            {/* Top Left: Back to Home */}
             <button
               id="about-back-to-home-btn"
               onClick={onBackToHome}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-sky-700 bg-slate-50 hover:bg-sky-50 border border-sky-200/80 shadow-2xs hover:shadow-xs transition-all active:scale-95 group"
+              className="glass-btn inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-800 hover:text-sky-900 bg-white/70 hover:bg-white border border-white/80 shadow-xs transition-all active:scale-97 group cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4 text-sky-600 group-hover:-translate-x-1 transition-transform" />
+              <ArrowLeft className="w-4 h-4 text-sky-600 group-hover:-translate-x-0.5 transition-transform" />
               <span>{content.backToHome[language]}</span>
             </button>
 
@@ -222,44 +224,44 @@ export function AboutUsPage({
               onClick={onBackToHome}
               className="cursor-pointer hidden md:flex items-center gap-2 select-none"
             >
-              <div className="w-7 h-7 rounded-lg bg-white border border-sky-100 p-0.5 shadow-2xs overflow-hidden">
+              <div className="w-8 h-8 rounded-xl bg-white/90 border border-white/80 p-0.5 shadow-xs overflow-hidden">
                 <img 
                   src={logoImg} 
                   alt="Nyaay सारथी Logo" 
-                  className="w-full h-full object-cover rounded-md"
+                  className="w-full h-full object-cover rounded-lg"
                   referrerPolicy="no-referrer"
                 />
               </div>
               <span className="text-sm font-bold text-slate-900">
                 Nyaay <span className="text-sky-600 font-['Noto_Sans_Devanagari',sans-serif] font-extrabold">सारथी</span>
               </span>
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-sky-50 border border-sky-200 text-sky-700 font-semibold">
+              <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-sky-500/15 border border-sky-300/40 text-sky-900 font-bold">
                 {language === 'en' ? 'About Us' : 'हमारे बारे में'}
               </span>
             </div>
 
             {/* Top Right: Language Switcher */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-slate-100/90 p-1 rounded-lg border border-sky-100">
+              <div className="flex items-center bg-white/60 backdrop-blur-md p-1 rounded-2xl border border-white/80 shadow-xs">
                 <button
                   id="about-lang-en-btn"
                   onClick={() => onLanguageChange('en')}
-                  className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                     language === 'en'
-                      ? 'bg-white text-sky-700 shadow-xs font-bold border border-sky-200/70'
-                      : 'text-slate-500 hover:text-slate-900'
+                      ? 'bg-white/95 text-sky-800 shadow-xs font-bold border border-white/90'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  <Globe className="w-3.5 h-3.5 text-sky-500" />
+                  <Globe className="w-3.5 h-3.5 text-sky-600" />
                   <span>English</span>
                 </button>
                 <button
                   id="about-lang-hi-btn"
                   onClick={() => onLanguageChange('hi')}
-                  className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md whitespace-nowrap transition-all ${
+                  className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                     language === 'hi'
-                      ? 'bg-white text-sky-700 shadow-xs font-bold border border-sky-200/70'
-                      : 'text-slate-500 hover:text-slate-900'
+                      ? 'bg-white/95 text-sky-800 shadow-xs font-bold border border-white/90'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   <span>हिंदी</span>
@@ -274,12 +276,8 @@ export function AboutUsPage({
       {/* 2. MAIN BODY OF ABOUT PAGE */}
       <main className="flex-1 flex flex-col">
         
-        {/* HERO SECTION: Centered Logo + Staggered Typography */}
+        {/* HERO SECTION */}
         <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-20 overflow-hidden">
-          {/* Subtle Ambient Background Gradients */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-sky-100/60 via-transparent to-transparent pointer-events-none -z-10" />
-          <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-sky-200/20 blur-3xl rounded-full pointer-events-none -z-10" />
-
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
             {/* Center Logo with Animated Halo Entrance */}
@@ -290,16 +288,16 @@ export function AboutUsPage({
               className="flex justify-center mb-8"
             >
               <div className="relative group">
-                <div className="absolute -inset-2 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-3xl blur-md group-hover:blur-lg transition-all duration-300" />
-                <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-white p-2 border border-sky-200 shadow-xl flex items-center justify-center overflow-hidden">
+                <div className="absolute -inset-3 bg-gradient-to-r from-sky-400/30 to-blue-500/30 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300" />
+                <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-white/90 backdrop-blur-xl p-2.5 border border-white/90 shadow-[0_12px_40px_rgba(31,38,135,0.15)] flex items-center justify-center overflow-hidden">
                   <img
                     src={logoImg}
                     alt="Nyaay सारथी Logo"
-                    className="w-full h-full object-cover rounded-xl"
+                    className="w-full h-full object-cover rounded-2xl"
                     referrerPolicy="no-referrer"
                   />
                 </div>
-                <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-slate-900 text-[10px] uppercase tracking-wider font-extrabold text-sky-300 shadow-sm border border-sky-500/30 whitespace-nowrap">
+                <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3.5 py-0.5 rounded-full bg-slate-900/90 backdrop-blur-md text-[10px] uppercase tracking-wider font-extrabold text-sky-300 shadow-sm border border-white/20 whitespace-nowrap">
                   Digital Legal Portal
                 </div>
               </div>
@@ -311,7 +309,7 @@ export function AboutUsPage({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-sky-100/80 border border-sky-200 text-sky-800 text-xs font-bold uppercase tracking-wider mb-4 shadow-2xs">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sky-900 text-xs font-bold uppercase tracking-wider mb-4 shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-sky-600" />
                 <span>{language === 'en' ? 'E-Governance Initiative' : 'ई-गवर्नेस कानूनी पहल'}</span>
               </span>
@@ -327,7 +325,7 @@ export function AboutUsPage({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-sky-700 max-w-2xl mx-auto leading-snug mb-5">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-sky-800 max-w-2xl mx-auto leading-snug mb-5">
                 {content.heroHeadline[language]}
               </h2>
             </motion.div>
@@ -338,7 +336,7 @@ export function AboutUsPage({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
             >
-              <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto font-normal">
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto font-medium">
                 {content.heroSubHeadline[language]}
               </p>
             </motion.div>
@@ -347,7 +345,7 @@ export function AboutUsPage({
         </section>
 
         {/* 3. VISION & MISSION SECTION */}
-        <section className="py-12 sm:py-16 bg-white/70 border-y border-sky-100/80">
+        <section className="py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
@@ -358,14 +356,14 @@ export function AboutUsPage({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="relative bg-gradient-to-br from-white to-[#F0F7FD] rounded-2xl p-6 sm:p-8 border border-sky-150 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+                className="glass-panel relative bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.07)] hover:bg-white/80 hover:border-sky-300/70 hover:shadow-[0_14px_40px_rgba(31,38,135,0.12),0_0_20px_rgba(74,144,226,0.2)] transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-md shadow-sky-600/20">
-                      <Eye className="w-6 h-6 text-sky-100" />
+                    <div className="w-12 h-12 rounded-2xl bg-sky-500/15 backdrop-blur-md text-sky-700 flex items-center justify-center border border-sky-300/40 shadow-xs">
+                      <Eye className="w-6 h-6" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-100/90 px-3 py-1 rounded-full border border-sky-200/80">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-sky-900 bg-white/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/80 shadow-2xs">
                       {content.visionTag[language]}
                     </span>
                   </div>
@@ -374,12 +372,12 @@ export function AboutUsPage({
                     <span>{content.visionTitle[language]}</span>
                   </h3>
 
-                  <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+                  <p className="text-slate-700 leading-relaxed text-sm sm:text-base font-medium">
                     {content.visionText[language]}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-sky-100/80 flex items-center gap-2 text-xs text-sky-800 font-semibold">
+                <div className="pt-6 mt-6 border-t border-sky-100/60 flex items-center gap-2 text-xs text-sky-900 font-bold">
                   <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
                   <span>{language === 'en' ? 'Equal Justice for Every Indian' : 'प्रत्येक भारतीय के लिए समान न्याय'}</span>
                 </div>
@@ -391,14 +389,14 @@ export function AboutUsPage({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="relative bg-gradient-to-br from-white to-[#F0F7FD] rounded-2xl p-6 sm:p-8 border border-sky-150 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+                className="glass-panel relative bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.07)] hover:bg-white/80 hover:border-sky-300/70 hover:shadow-[0_14px_40px_rgba(31,38,135,0.12),0_0_20px_rgba(74,144,226,0.2)] transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-3 mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-md shadow-slate-900/20">
+                    <div className="w-12 h-12 rounded-2xl bg-slate-900/90 text-white flex items-center justify-center shadow-xs border border-white/20">
                       <Target className="w-6 h-6 text-sky-400" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 bg-white/70 backdrop-blur-md px-3 py-1 rounded-full border border-white/80 shadow-2xs">
                       {content.missionTag[language]}
                     </span>
                   </div>
@@ -407,12 +405,12 @@ export function AboutUsPage({
                     <span>{content.missionTitle[language]}</span>
                   </h3>
 
-                  <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+                  <p className="text-slate-700 leading-relaxed text-sm sm:text-base font-medium">
                     {content.missionText[language]}
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-sky-100/80 flex items-center gap-2 text-xs text-slate-700 font-semibold">
+                <div className="pt-6 mt-6 border-t border-sky-100/60 flex items-center gap-2 text-xs text-slate-800 font-bold">
                   <ShieldCheck className="w-4 h-4 text-sky-600 shrink-0" />
                   <span>{language === 'en' ? 'Empowering Citizens with Legal Awareness' : 'जागरूकता द्वारा नागरिकों का सशक्तिकरण'}</span>
                 </div>
@@ -436,14 +434,14 @@ export function AboutUsPage({
               transition={{ duration: 0.5 }}
               className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-100/80 border border-sky-200 text-sky-800 text-xs font-bold uppercase tracking-wider mb-3 shadow-2xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sky-900 text-xs font-bold uppercase tracking-wider mb-3 shadow-xs">
                 <Building2 className="w-3.5 h-3.5 text-sky-600" />
                 <span>{language === 'en' ? 'Core Architecture' : 'मूल संरचना'}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-['Plus_Jakarta_Sans',sans-serif] mb-3">
                 {content.providingHeading[language]}
               </h2>
-              <p className="text-slate-600 text-base sm:text-lg">
+              <p className="text-slate-600 text-base sm:text-lg font-medium">
                 {content.providingSubHeading[language]}
               </p>
             </motion.div>
@@ -451,13 +449,13 @@ export function AboutUsPage({
             {/* THE FOUR PILLARS ARCHITECTURAL CONTAINER */}
             <div className="relative">
               
-              {/* Architectural Top Architrave / Connecting Header Beam (Desktop) */}
+              {/* Architectural Top Header Beam */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0.9 }}
                 whileInView={{ opacity: 1, scaleX: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="hidden lg:flex items-center justify-between px-6 py-3 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 rounded-t-2xl border border-slate-800 shadow-md text-white mb-2"
+                className="hidden lg:flex items-center justify-between px-6 py-3 bg-slate-900/90 backdrop-blur-xl rounded-t-3xl border border-white/20 shadow-md text-white mb-2"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse" />
@@ -465,7 +463,7 @@ export function AboutUsPage({
                     Nyaay सारथी Architecture
                   </span>
                 </div>
-                <div className="flex items-center gap-8 text-[11px] font-mono text-slate-400 tracking-wider">
+                <div className="flex items-center gap-8 text-[11px] font-mono text-slate-300 tracking-wider">
                   <span>[ I ] TRANSPARENCY</span>
                   <span>[ II ] TRANSLATION</span>
                   <span>[ III ] OPERATIONAL 24H</span>
@@ -477,7 +475,7 @@ export function AboutUsPage({
                 </div>
               </motion.div>
 
-              {/* 4 Pillars Grid (Architectural Columns) */}
+              {/* 4 Pillars Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
                 
                 {pillars.map((pillar, idx) => {
@@ -493,41 +491,41 @@ export function AboutUsPage({
                         delay: idx * 0.15,
                         ease: [0.16, 1, 0.3, 1] 
                       }}
-                      className={`relative bg-white rounded-2xl p-6 sm:p-7 border ${pillar.accentBorder} shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group overflow-hidden`}
+                      className="glass-card relative bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-7 border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.07)] hover:bg-white/80 hover:border-sky-300/70 hover:shadow-[0_14px_40px_rgba(31,38,135,0.12),0_0_20px_rgba(74,144,226,0.25)] transition-all duration-300 flex flex-col justify-between group overflow-hidden"
                     >
-                      {/* Top Architectural Pillar Capital Line */}
+                      {/* Top Highlight Line */}
                       <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${pillar.highlightColor}`} />
 
                       <div>
                         {/* Pillar Header & Roman Numeral */}
                         <div className="flex items-center justify-between gap-2 mb-4">
-                          <span className="text-[10px] font-mono font-extrabold uppercase tracking-widest text-slate-400 group-hover:text-sky-600 transition-colors">
+                          <span className="text-[10px] font-mono font-extrabold uppercase tracking-widest text-slate-500 group-hover:text-sky-700 transition-colors">
                             {pillar.subhead}
                           </span>
-                          <span className="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200/80 font-mono font-bold text-xs text-slate-700 flex items-center justify-center group-hover:bg-sky-50 group-hover:text-sky-700 group-hover:border-sky-200 transition-colors">
+                          <span className="w-7 h-7 rounded-xl bg-white/70 backdrop-blur-md border border-white/80 font-mono font-bold text-xs text-slate-800 flex items-center justify-center group-hover:bg-sky-500/20 group-hover:text-sky-900 group-hover:border-sky-300/60 transition-colors shadow-2xs">
                             {pillar.roman}
                           </span>
                         </div>
 
                         {/* Pillar Icon */}
-                        <div className="w-12 h-12 rounded-xl bg-[#F0F7FD] border border-sky-100 flex items-center justify-center text-sky-600 mb-5 group-hover:scale-105 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300 shadow-2xs">
+                        <div className="w-12 h-12 rounded-2xl bg-sky-500/15 backdrop-blur-md border border-sky-300/40 flex items-center justify-center text-sky-700 mb-5 group-hover:scale-105 group-hover:bg-sky-600 group-hover:text-white transition-all duration-300 shadow-xs">
                           <Icon className="w-6 h-6" />
                         </div>
 
                         {/* Pillar Title */}
-                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-sky-700 transition-colors font-['Plus_Jakarta_Sans',sans-serif]">
+                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-sky-800 transition-colors font-['Plus_Jakarta_Sans',sans-serif]">
                           {pillar.title}
                         </h3>
 
                         {/* Pillar Description */}
-                        <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                        <p className="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
                           {pillar.desc}
                         </p>
                       </div>
 
                       {/* Pillar Base Badge & Technical Highlights */}
-                      <div className="pt-4 border-t border-sky-100/80">
-                        <div className={`text-[11px] font-bold px-3 py-1.5 rounded-lg border ${pillar.tagColor} flex items-center gap-1.5`}>
+                      <div className="pt-4 border-t border-sky-100/60">
+                        <div className={`text-[11px] font-bold px-3 py-1.5 rounded-xl border ${pillar.tagColor} flex items-center gap-1.5 shadow-2xs`}>
                           <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-sky-600" />
                           <span className="line-clamp-1">{pillar.badge}</span>
                         </div>
@@ -539,19 +537,19 @@ export function AboutUsPage({
 
               </div>
 
-              {/* Architectural Bedrock Foundation Base (Desktop) */}
+              {/* Architectural Foundation Base */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0.95 }}
                 whileInView={{ opacity: 1, scaleX: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="hidden lg:flex items-center justify-between px-6 py-3.5 bg-slate-900 rounded-b-2xl border border-slate-800 text-slate-300 text-xs font-mono mt-2 shadow-sm"
+                className="hidden lg:flex items-center justify-between px-6 py-3.5 bg-slate-900/90 backdrop-blur-xl rounded-b-3xl border border-white/20 text-slate-200 text-xs font-mono mt-2 shadow-sm"
               >
                 <div className="flex items-center gap-2 text-sky-400 font-bold">
                   <Layers className="w-4 h-4" />
                   <span>{content.architectureFoundation[language]}</span>
                 </div>
-                <div className="text-slate-400">
+                <div className="text-slate-300 font-medium">
                   <span>Radical Transparency • 24h Routing • BNS Simplification • DPDP Act</span>
                 </div>
                 <div className="text-emerald-400 flex items-center gap-1 font-semibold">
@@ -568,13 +566,13 @@ export function AboutUsPage({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-14 p-6 sm:p-8 bg-gradient-to-r from-sky-600 via-sky-700 to-slate-900 rounded-2xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6"
+              className="mt-14 p-6 sm:p-8 bg-slate-900/90 backdrop-blur-2xl rounded-3xl text-white shadow-[0_16px_48px_rgba(15,23,42,0.2)] border border-white/20 flex flex-col md:flex-row items-center justify-between gap-6"
             >
               <div className="space-y-1.5 text-center md:text-left">
                 <h3 className="text-xl sm:text-2xl font-bold font-['Plus_Jakarta_Sans',sans-serif]">
                   {language === 'en' ? 'Experience Transparent Indian Legal Guidance' : 'पारदर्शी भारतीय कानूनी सहायता का अनुभव करें'}
                 </h3>
-                <p className="text-sky-100 text-xs sm:text-sm max-w-xl">
+                <p className="text-sky-200 text-xs sm:text-sm max-w-xl font-medium">
                   {language === 'en' 
                     ? 'Ask questions to our AI Legal assistant, explore constitutional citizen rights, or book a verified advocate.'
                     : 'हमारे AI सहायक से प्रश्न पूछें, अपने संवैधानिक अधिकारों को समझें अथवा अनुभवी वकील से परामर्श लें।'}
@@ -585,18 +583,18 @@ export function AboutUsPage({
                 <button
                   id="about-chat-ai-cta-btn"
                   onClick={() => onActionClick('chat-ai', language === 'en' ? 'AI Legal Assistant' : 'AI कानूनी सहायक')}
-                  className="px-4 py-2.5 rounded-xl bg-white text-sky-800 hover:bg-sky-50 font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 flex items-center gap-2"
+                  className="glass-btn-primary px-4 py-2.5 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4 text-sky-600" />
+                  <Sparkles className="w-4 h-4 text-sky-200" />
                   <span>{content.chatAiBtn[language]}</span>
                 </button>
 
                 <button
                   id="about-book-appointment-cta-btn"
                   onClick={() => onActionClick('book-appointment', language === 'en' ? 'Book an Advocate Appointment' : 'वकील अपॉइंटमेंट बुक करें')}
-                  className="px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs sm:text-sm border border-sky-400 shadow-md transition-all active:scale-95 flex items-center gap-2"
+                  className="glass-btn-sky px-4 py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs sm:text-sm border border-white/30 shadow-md transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
-                  <UserCheck className="w-4 h-4 text-sky-100" />
+                  <UserCheck className="w-4 h-4 text-sky-300" />
                   <span>{content.exploreServicesBtn[language]}</span>
                 </button>
               </div>
@@ -607,7 +605,7 @@ export function AboutUsPage({
 
       </main>
 
-      {/* 5. FOOTER (Reused existing footer) */}
+      {/* 5. FOOTER */}
       <Footer
         language={language}
         onActionClick={onActionClick}

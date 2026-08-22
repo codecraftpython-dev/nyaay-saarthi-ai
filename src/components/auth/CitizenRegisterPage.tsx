@@ -84,8 +84,8 @@ export function CitizenRegisterPage({
     >
       <div className="space-y-5">
         {/* Supporting description */}
-        <div className="p-3 bg-sky-50/70 rounded-xl border border-sky-150 text-center">
-          <p className="text-xs font-semibold text-sky-900 leading-relaxed">
+        <div className="p-3 bg-sky-500/10 backdrop-blur-md rounded-2xl border border-sky-300/30 text-center">
+          <p className="text-xs font-semibold text-sky-950 leading-relaxed">
             {language === 'en'
               ? 'For citizens seeking legal assistance, document drafting, and appointments'
               : 'कानूनी सहायता, दस्तावेज़ प्रारूपण व वकील अपॉइंटमेंट चाहने वाले नागरिकों हेतु'}
@@ -93,7 +93,7 @@ export function CitizenRegisterPage({
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
+          <div className="p-3 bg-rose-500/10 backdrop-blur-md border border-rose-300/40 text-rose-800 text-xs rounded-2xl font-semibold">
             {errorMsg}
           </div>
         )}
@@ -115,7 +115,7 @@ export function CitizenRegisterPage({
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder={language === 'en' ? 'e.g. Ramesh Kumar' : 'उदा. रमेश कुमार'}
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ export function CitizenRegisterPage({
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
                   placeholder="98765 43210"
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all font-mono"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono font-medium shadow-inner"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ export function CitizenRegisterPage({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all font-mono"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono font-medium shadow-inner"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ export function CitizenRegisterPage({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all"
+                  className="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 />
                 <button
                   type="button"
@@ -207,7 +207,7 @@ export function CitizenRegisterPage({
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all"
+                  className="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 />
                 <button
                   type="button"
@@ -222,7 +222,7 @@ export function CitizenRegisterPage({
 
           {/* Terms Checkbox */}
           <div className="pt-1">
-            <label className="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none">
+            <label className="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none font-medium">
               <input
                 id="citizen-reg-terms-check"
                 type="checkbox"
@@ -244,7 +244,7 @@ export function CitizenRegisterPage({
             id="citizen-register-submit-btn"
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm shadow-md shadow-sky-600/20 transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+            className="glass-btn-primary w-full py-3 px-4 rounded-2xl text-white font-bold text-sm shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
           >
             <UserPlus className="w-4 h-4 text-sky-200" />
             <span>{isSubmitting ? (language === 'en' ? 'Registering Account...' : 'पंजीकरण हो रहा है...') : (language === 'en' ? 'Complete Citizen Registration' : 'नागरिक पंजीकरण पूर्ण करें')}</span>
@@ -253,13 +253,13 @@ export function CitizenRegisterPage({
 
         {/* Bottom Login Link */}
         <div className="text-center pt-2 space-y-2">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-600 font-medium">
             {language === 'en' ? 'Already have an account?' : 'पहले से खाता है?'}{' '}
             <button
               type="button"
               id="citizen-reg-to-login-btn"
               onClick={() => onNavigate('auth/login/citizen')}
-              className="font-bold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+              className="font-bold text-sky-700 hover:text-sky-900 hover:underline cursor-pointer"
             >
               {language === 'en' ? 'Log In' : 'लॉग इन करें'}
             </button>

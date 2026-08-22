@@ -14,25 +14,25 @@ export function Footer({ language, onActionClick }: FooterProps) {
   };
 
   return (
-    <footer id="main-footer" className="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+    <footer id="main-footer" className="relative bg-slate-900/90 backdrop-blur-2xl text-slate-200 pt-16 pb-12 border-t border-white/20 shadow-[0_-8px_32px_rgba(31,38,135,0.1)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Branding & Helpline Badges */}
-        <div className="pb-12 border-b border-slate-800 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={scrollToTop}>
-            <div className="w-11 h-11 rounded-xl bg-white p-0.5 shadow-md flex items-center justify-center overflow-hidden">
+        <div className="pb-10 border-b border-white/15 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={scrollToTop}>
+            <div className="w-12 h-12 rounded-2xl bg-white/90 backdrop-blur-md p-1 shadow-md border border-white/80 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-300">
               <img 
                 src={logoImg} 
                 alt="Nyaay सारथी Logo" 
-                className="w-full h-full object-cover rounded-lg"
+                className="w-full h-full object-cover rounded-xl"
                 referrerPolicy="no-referrer"
               />
             </div>
             <div>
               <span className="text-2xl font-bold tracking-tight text-white font-['Plus_Jakarta_Sans',sans-serif]">
-                Nyaay <span className="text-sky-400 font-['Noto_Sans_Devanagari',sans-serif]">सारथी</span>
+                Nyaay <span className="text-sky-400 font-['Noto_Sans_Devanagari',sans-serif] font-extrabold">सारथी</span>
               </span>
-              <p className="text-xs text-sky-200/70">
+              <p className="text-xs text-sky-200/80 font-medium">
                 {language === 'en'
                   ? 'Digital Citizen Legal Assistance & Guidance'
                   : 'डिजिटल नागरिक कानूनी सहायता व मार्गदर्शन मंच'}
@@ -40,22 +40,22 @@ export function Footer({ language, onActionClick }: FooterProps) {
             </div>
           </div>
 
-          {/* Essential Citizen Helplines */}
+          {/* Essential Citizen Helplines - Frosted Glass Badges */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-sky-500/30 text-xs shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-xs shadow-sm hover:bg-white/15 transition-colors">
               <Phone className="w-3.5 h-3.5 text-sky-400" />
-              <span className="text-sky-200">Cyber Crime:</span>
-              <strong className="text-white font-mono">1930</strong>
+              <span className="text-sky-200 font-medium">Cyber Crime:</span>
+              <strong className="text-white font-mono font-bold tracking-wider">1930</strong>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-sky-500/30 text-xs shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-xs shadow-sm hover:bg-white/15 transition-colors">
               <Phone className="w-3.5 h-3.5 text-sky-400" />
-              <span className="text-sky-200">NALSA Legal Aid:</span>
-              <strong className="text-white font-mono">15100</strong>
+              <span className="text-sky-200 font-medium">NALSA Legal Aid:</span>
+              <strong className="text-white font-mono font-bold tracking-wider">15100</strong>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-sky-500/30 text-xs shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-xs shadow-sm hover:bg-white/15 transition-colors">
               <Phone className="w-3.5 h-3.5 text-sky-400" />
-              <span className="text-sky-200">Consumer:</span>
-              <strong className="text-white font-mono">1915</strong>
+              <span className="text-sky-200 font-medium">Consumer:</span>
+              <strong className="text-white font-mono font-bold tracking-wider">1915</strong>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@ export function Footer({ language, onActionClick }: FooterProps) {
                           );
                         }
                       }}
-                      className="text-slate-300 hover:text-sky-300 transition-colors text-left flex items-center gap-2 group"
+                      className="text-slate-300 hover:text-sky-300 transition-colors text-left flex items-center gap-2 group cursor-pointer"
                     >
                       <span className="group-hover:translate-x-1 transition-transform">
                         {language === 'en' ? link.label : link.labelHi}
@@ -115,7 +115,7 @@ export function Footer({ language, onActionClick }: FooterProps) {
                         link
                       )
                     }
-                    className="text-slate-300 hover:text-sky-300 transition-colors text-left flex items-center gap-2 group"
+                    className="text-slate-300 hover:text-sky-300 transition-colors text-left flex items-center gap-2 group cursor-pointer"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">
                       {language === 'en' ? link.label : link.labelHi}
@@ -143,7 +143,7 @@ export function Footer({ language, onActionClick }: FooterProps) {
                         link
                       )
                     }
-                    className="text-slate-300 hover:text-sky-300 transition-colors text-left flex items-center gap-1.5 group"
+                    className="text-slate-300 hover:text-sky-300 transition-colors text-left flex items-center gap-1.5 group cursor-pointer"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">
                       {language === 'en' ? link.label : link.labelHi}
@@ -158,7 +158,7 @@ export function Footer({ language, onActionClick }: FooterProps) {
         </div>
 
         {/* Bottom Legal Disclaimer & Copyright */}
-        <div className="pt-8 border-t border-slate-800 text-xs text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-white/15 text-xs text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />
             <p>

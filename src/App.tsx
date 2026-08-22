@@ -8,6 +8,7 @@ import { Footer } from './components/Footer';
 import { InteractiveDialogs } from './components/InteractiveDialogs';
 import { AboutUsPage } from './components/AboutUsPage';
 import { ContactUsPage } from './components/ContactUsPage';
+import { AnimatedGlassBackground } from './components/AnimatedGlassBackground';
 import { RoleSelectionPage } from './components/auth/RoleSelectionPage';
 import { CitizenLoginPage } from './components/auth/CitizenLoginPage';
 import { AdvocateLoginPage } from './components/auth/AdvocateLoginPage';
@@ -71,32 +72,34 @@ function parseCurrentRoute(): AppRoute {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('en');
-  const [currentRoute, setCurrentRoute] = useState<AppRoute>(parseCurrentRoute);
-
-  // Authentication State
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('nyay_saathi_user');
-        if (saved) return JSON.parse(saved);
-      } catch (e) {
-        console.error('Failed to parse saved user:', e);
+  const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
+    const route = parseCurrentRoute();
+    const protectedRoutes = [
+      'user/home', 'user/profile', 'user/settings', 
+      'user/applications', 'user/appointments', 'user/saved',
+      'chat', 'appointments', 'rights', 'advocate-profile', 'appointment-book',
+      'advocate-dashboard', 'advocate/home'
+    ];
+    if (protectedRoutes.includes(route)) {
+      if (route === 'advocate-dashboard' || route === 'advocate/home') {
+        return 'auth/login/advocate';
       }
+      return 'auth/login/citizen';
     }
-    // Default fallback demo citizen account for instant testability
-    return {
-      id: 'usr_rajesh_101',
-      name: 'Rajesh Kumar',
-      email: 'rajesh.kumar@gmail.com',
-      phone: '+91 98765 43210',
-      dob: '1992-05-14',
-      state: 'Delhi',
-      city: 'New Delhi',
-      address: 'B-42, Pocket 1, Mayur Vihar Phase 1, New Delhi - 110091',
-      role: 'citizen',
-      createdAt: '2025-01-10',
-    };
+    return route;
   });
+
+  // Authentication State: Always start logged out whenever the app is opened
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+
+  // Clear any persistent auto-login cache so fresh opens always start logged out
+  useEffect(() => {
+    try {
+      localStorage.removeItem('nyay_saathi_user');
+    } catch (e) {
+      console.warn('Storage cleanup:', e);
+    }
+  }, []);
 
   // Portal auxiliary state: selected advocate and pre-filled category
   const [selectedAdvocate, setSelectedAdvocate] = useState<Advocate | null>(() => MOCK_ADVOCATES[0]);
@@ -151,7 +154,8 @@ export default function App() {
     // Route Protection for Citizen Portal
     const citizenProtectedRoutes: AppRoute[] = [
       'user/home', 'user/profile', 'user/settings', 
-      'user/applications', 'user/appointments', 'user/saved'
+      'user/applications', 'user/appointments', 'user/saved',
+      'chat', 'appointments', 'rights', 'advocate-profile', 'appointment-book'
     ];
 
     if (citizenProtectedRoutes.includes(resolvedRoute)) {
@@ -225,7 +229,7 @@ export default function App() {
       return;
     }
 
-    if (action === 'rights') {
+    if (action === 'rights' || action === 'know-rights') {
       navigateTo('rights');
       return;
     }
@@ -326,27 +330,46 @@ export default function App() {
   ].includes(currentRoute);
 
   if (isCitizenPortalRoute) {
+    const citizenOnlyProtectedRoutes: AppRoute[] = [
+      'user/home', 'user/profile', 'user/settings', 
+      'user/applications', 'user/appointments', 'user/saved',
+      'chat', 'appointments', 'rights', 'advocate-profile', 'appointment-book'
+    ];
+
+    if (citizenOnlyProtectedRoutes.includes(currentRoute) && !currentUser) {
+      return (
+        <CitizenLoginPage
+          language={language}
+          onLanguageChange={setLanguage}
+          onNavigate={navigateTo}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      );
+    }
+
     const activeCitizen = (currentUser && currentUser.role === 'citizen') ? currentUser : {
-      id: 'usr_rajesh_101',
-      name: 'Rajesh Kumar',
-      email: 'rajesh.kumar@gmail.com',
-      phone: '+91 98765 43210',
-      dob: '1992-05-14',
-      state: 'Delhi',
-      city: 'New Delhi',
-      address: 'B-42, Pocket 1, Mayur Vihar Phase 1, New Delhi - 110091',
+      id: 'guest_citizen',
+      name: 'Guest Citizen',
+      email: 'citizen@nyaaysarathi.in',
+      phone: '',
+      dob: '',
+      state: 'India',
+      city: '',
+      address: '',
       role: 'citizen' as const,
-      createdAt: '2025-01-10',
+      createdAt: new Date().toISOString().slice(0, 10),
     };
 
     const appointments = getStoredAppointments();
     const upcomingCount = appointments.filter(a => a.status === 'upcoming').length;
 
     return (
-      <div className="min-h-screen bg-[#F4F9FD] text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950">
+      <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 relative">
+        <AnimatedGlassBackground />
         
         {/* Citizen Portal Header */}
         <CitizenNavbar
+          currentUser={currentUser}
           user={activeCitizen}
           language={language}
           currentRoute={currentRoute}
@@ -472,15 +495,18 @@ export default function App() {
 
   // 7. Protected Advocate Dashboard View at /advocate-dashboard
   if (currentRoute === 'advocate-dashboard' || currentRoute === 'advocate/home') {
-    const activeAdvocate = currentUser && currentUser.role === 'advocate' ? currentUser : {
-      id: 'demo_advocate',
-      name: 'Adv. Vikram Sharma',
-      email: 'adv.vikram.sharma@delhibar.org',
-      role: 'advocate' as const,
-      barEnrollment: 'D/1842/2016',
-      stateBarCouncil: 'Bar Council of Delhi',
-      isVerified: true,
-    };
+    if (!currentUser || currentUser.role !== 'advocate') {
+      return (
+        <AdvocateLoginPage
+          language={language}
+          onLanguageChange={setLanguage}
+          onNavigate={navigateTo}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      );
+    }
+
+    const activeAdvocate = currentUser;
 
     return (
       <>
@@ -553,7 +579,8 @@ export default function App() {
 
   // 10. Default Homepage View
   return (
-    <div className="min-h-screen bg-[#F4F9FD] text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] relative">
+      <AnimatedGlassBackground />
       {/* Top Navigation Bar */}
       <Navbar
         language={language}

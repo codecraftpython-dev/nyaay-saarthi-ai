@@ -105,7 +105,7 @@ export function AdvocateRegisterPage({
         courts: courts,
         languages: languages,
         consultationFee: consultationFee,
-        isVerified: false, // newly registered advocate requires review
+        isVerified: false,
         createdAt: new Date().toISOString(),
       };
       onRegisterSuccess(newUser);
@@ -124,7 +124,7 @@ export function AdvocateRegisterPage({
     >
       <div className="space-y-6">
         {/* Supporting text */}
-        <div className="p-3 bg-slate-900/5 rounded-xl border border-slate-200 text-center">
+        <div className="p-3 bg-slate-900/10 backdrop-blur-md rounded-2xl border border-slate-300/40 text-center">
           <p className="text-xs font-semibold text-slate-800 leading-relaxed">
             {language === 'en'
               ? 'For practicing legal professionals registered with State Bar Councils'
@@ -132,14 +132,14 @@ export function AdvocateRegisterPage({
           </p>
         </div>
 
-        {/* Orange/Yellow Verification Warning Notice */}
-        <div className="p-3.5 bg-amber-50 border border-amber-200/90 rounded-2xl flex items-start gap-3 text-amber-800">
+        {/* Verification Notice */}
+        <div className="p-3.5 bg-amber-500/10 backdrop-blur-md border border-amber-300/40 rounded-2xl flex items-start gap-3 text-amber-900">
           <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-          <div className="text-xs space-y-0.5">
-            <p className="font-bold text-amber-900">
+          <div className="text-xs space-y-0.5 font-medium">
+            <p className="font-bold text-amber-950">
               {language === 'en' ? 'Verification Notice' : 'सत्यापन सूचना'}
             </p>
-            <p className="leading-relaxed">
+            <p className="leading-relaxed text-amber-900">
               {language === 'en'
                 ? 'Account requires Bar Council verification before activation. Please provide accurate enrollment details.'
                 : 'खाता सक्रिय करने से पहले बार काउंसिल सत्यापन आवश्यक है। कृपया सटीक नामांकन विवरण प्रदान करें।'}
@@ -148,7 +148,7 @@ export function AdvocateRegisterPage({
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
+          <div className="p-3 bg-rose-500/10 backdrop-blur-md border border-rose-300/40 text-rose-800 text-xs rounded-2xl font-semibold">
             {errorMsg}
           </div>
         )}
@@ -157,7 +157,7 @@ export function AdvocateRegisterPage({
           
           {/* SECTION 1: BASIC INFORMATION */}
           <div className="space-y-3 pt-1">
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-2 pb-2 border-b border-sky-100/60">
               <User className="w-4 h-4 text-sky-600" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
                 {language === 'en' ? '1. Basic Information' : '१. बुनियादी जानकारी'}
@@ -176,7 +176,7 @@ export function AdvocateRegisterPage({
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="e.g. Adv. Priya Sen"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
               />
             </div>
 
@@ -193,7 +193,7 @@ export function AdvocateRegisterPage({
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
                   placeholder="98765 43210"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono font-medium shadow-inner"
                 />
               </div>
 
@@ -208,7 +208,7 @@ export function AdvocateRegisterPage({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="advocate@barcouncil.org"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-mono font-medium shadow-inner"
                 />
               </div>
             </div>
@@ -216,7 +216,7 @@ export function AdvocateRegisterPage({
 
           {/* SECTION 2: PROFESSIONAL DETAILS */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-2 pb-2 border-b border-sky-100/60">
               <Award className="w-4 h-4 text-sky-600" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
                 {language === 'en' ? '2. Professional Details' : '२. पेशेवर विवरण'}
@@ -236,7 +236,7 @@ export function AdvocateRegisterPage({
                   value={barEnrollment}
                   onChange={(e) => setBarEnrollment(e.target.value.toUpperCase())}
                   placeholder="e.g. D/5482/2019"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all uppercase font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all uppercase font-mono font-medium shadow-inner"
                 />
               </div>
 
@@ -248,7 +248,7 @@ export function AdvocateRegisterPage({
                   id="adv-reg-state-bar"
                   value={stateBarCouncil}
                   onChange={(e) => setStateBarCouncil(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 >
                   {stateBarOptions.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
@@ -268,7 +268,7 @@ export function AdvocateRegisterPage({
                   value={practiceAreas}
                   onChange={(e) => setPracticeAreas(e.target.value)}
                   placeholder="e.g. Criminal, Consumer, Property"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 />
               </div>
 
@@ -279,7 +279,7 @@ export function AdvocateRegisterPage({
                 <select
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 >
                   <option>1-3 Years</option>
                   <option>3-5 Years</option>
@@ -301,7 +301,7 @@ export function AdvocateRegisterPage({
                   value={courts}
                   onChange={(e) => setCourts(e.target.value)}
                   placeholder="e.g. High Court, District Court"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 />
               </div>
 
@@ -314,7 +314,7 @@ export function AdvocateRegisterPage({
                   value={languages}
                   onChange={(e) => setLanguages(e.target.value)}
                   placeholder="e.g. English, Hindi"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 />
               </div>
 
@@ -327,7 +327,7 @@ export function AdvocateRegisterPage({
                   value={consultationFee}
                   onChange={(e) => setConsultationFee(e.target.value)}
                   placeholder="e.g. ₹500 / ₹1000"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                 />
               </div>
             </div>
@@ -335,7 +335,7 @@ export function AdvocateRegisterPage({
 
           {/* SECTION 3: DOCUMENT VERIFICATION */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-2 pb-2 border-b border-sky-100/60">
               <FileText className="w-4 h-4 text-sky-600" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
                 {language === 'en' ? '3. Document Verification' : '३. दस्तावेज़ सत्यापन'}
@@ -351,24 +351,24 @@ export function AdvocateRegisterPage({
                 </label>
                 <div 
                   onClick={() => setBarIdFile('bar_council_certificate.pdf')}
-                  className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
+                  className={`border-2 border-dashed rounded-2xl p-4 text-center cursor-pointer transition-all ${
                     barIdFile 
-                      ? 'border-emerald-400 bg-emerald-50/50'
-                      : 'border-slate-300 hover:border-slate-400 bg-slate-50/60'
+                      ? 'border-emerald-400 bg-emerald-500/15 backdrop-blur-md'
+                      : 'border-white/90 hover:border-sky-400 bg-white/50 backdrop-blur-md'
                   }`}
                 >
                   {barIdFile ? (
-                    <div className="flex items-center justify-center gap-2 text-emerald-700 text-xs font-semibold">
-                      <CheckCircle2 className="w-4 h-4" />
+                    <div className="flex items-center justify-center gap-2 text-emerald-800 text-xs font-bold">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       <span>{barIdFile} (Ready)</span>
                     </div>
                   ) : (
                     <div className="space-y-1">
-                      <Upload className="w-5 h-5 text-slate-400 mx-auto" />
+                      <Upload className="w-5 h-5 text-sky-600 mx-auto" />
                       <p className="text-xs font-semibold text-slate-700">
                         {language === 'en' ? 'Drag & drop or Click to Upload' : 'अपलोड करने के लिए क्लिक करें'}
                       </p>
-                      <p className="text-[10px] text-slate-400">PDF, JPG, PNG (Max 10MB)</p>
+                      <p className="text-[10px] text-slate-500 font-medium">PDF, JPG, PNG (Max 10MB)</p>
                     </div>
                   )}
                 </div>
@@ -381,24 +381,24 @@ export function AdvocateRegisterPage({
                 </label>
                 <div 
                   onClick={() => setPhotoFile('advocate_photo.jpg')}
-                  className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
+                  className={`border-2 border-dashed rounded-2xl p-4 text-center cursor-pointer transition-all ${
                     photoFile 
-                      ? 'border-emerald-400 bg-emerald-50/50'
-                      : 'border-slate-300 hover:border-slate-400 bg-slate-50/60'
+                      ? 'border-emerald-400 bg-emerald-500/15 backdrop-blur-md'
+                      : 'border-white/90 hover:border-sky-400 bg-white/50 backdrop-blur-md'
                   }`}
                 >
                   {photoFile ? (
-                    <div className="flex items-center justify-center gap-2 text-emerald-700 text-xs font-semibold">
-                      <CheckCircle2 className="w-4 h-4" />
+                    <div className="flex items-center justify-center gap-2 text-emerald-800 text-xs font-bold">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       <span>{photoFile} (Ready)</span>
                     </div>
                   ) : (
                     <div className="space-y-1">
-                      <Upload className="w-5 h-5 text-slate-400 mx-auto" />
+                      <Upload className="w-5 h-5 text-sky-600 mx-auto" />
                       <p className="text-xs font-semibold text-slate-700">
                         {language === 'en' ? 'Drag & drop or Click to Upload' : 'अपलोड करने के लिए क्लिक करें'}
                       </p>
-                      <p className="text-[10px] text-slate-400">JPG, PNG (Passport size)</p>
+                      <p className="text-[10px] text-slate-500 font-medium">JPG, PNG (Passport size)</p>
                     </div>
                   )}
                 </div>
@@ -409,7 +409,7 @@ export function AdvocateRegisterPage({
 
           {/* SECTION 4: PASSWORD */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-2 pb-2 border-b border-sky-100/60">
               <Lock className="w-4 h-4 text-sky-600" />
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
                 {language === 'en' ? '4. Security & Credentials' : '४. सुरक्षा व पासवर्ड'}
@@ -429,7 +429,7 @@ export function AdvocateRegisterPage({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3.5 pr-9 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                    className="w-full px-3.5 pr-9 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                   />
                   <button
                     type="button"
@@ -453,7 +453,7 @@ export function AdvocateRegisterPage({
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full px-3.5 pr-9 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500/20 focus:border-slate-700 transition-all"
+                    className="w-full px-3.5 pr-9 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all font-medium shadow-inner"
                   />
                   <button
                     type="button"
@@ -469,7 +469,7 @@ export function AdvocateRegisterPage({
 
           {/* Terms Checkbox */}
           <div className="pt-1">
-            <label className="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none">
+            <label className="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none font-medium">
               <input
                 id="adv-reg-terms-check"
                 type="checkbox"
@@ -491,7 +491,7 @@ export function AdvocateRegisterPage({
             id="advocate-register-submit-btn"
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+            className="w-full py-3.5 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-[0_4px_16px_rgba(15,23,42,0.25)] border border-white/20 transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
           >
             <Briefcase className="w-4 h-4 text-sky-400" />
             <span>{isSubmitting ? (language === 'en' ? 'Submitting Application...' : 'आवेदन जमा हो रहा है...') : (language === 'en' ? 'Submit Advocate Application' : 'अधिवक्ता आवेदन जमा करें')}</span>
@@ -500,19 +500,19 @@ export function AdvocateRegisterPage({
 
         {/* Bottom Login Link & Verification notice */}
         <div className="text-center pt-2 space-y-2">
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-600 font-medium">
             {language === 'en' ? 'Already have an account?' : 'पहले से खाता है?'}{' '}
             <button
               type="button"
               id="adv-reg-to-login-btn"
               onClick={() => onNavigate('auth/login/advocate')}
-              className="font-bold text-sky-600 hover:text-sky-800 hover:underline cursor-pointer"
+              className="font-bold text-sky-700 hover:text-sky-900 hover:underline cursor-pointer"
             >
               {language === 'en' ? 'Log In' : 'लॉग इन करें'}
             </button>
           </p>
 
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-slate-500 font-medium">
             {language === 'en'
               ? 'Advocate profiles become active only after verification.'
               : 'अधिवक्ता प्रोफाइल केवल सत्यापन के बाद ही सक्रिय होती हैं।'}

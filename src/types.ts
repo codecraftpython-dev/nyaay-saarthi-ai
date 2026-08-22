@@ -168,11 +168,23 @@ export interface LegalRight {
   advocateCategoryHint: string;
 }
 
+export interface AiCaseSummary {
+  title: string;
+  overview: string;
+  keyPoints: string[];
+  riskLevel: 'Low' | 'Medium' | 'High' | 'Urgent';
+  timelineUrgency: string;
+  next48Hours: string[];
+  advocateBrief: string;
+  estimatedRemedy: string;
+}
+
 export interface ChatMessage {
   id: string;
   sender: 'user' | 'assistant';
   text: string;
   timestamp: string;
+  isAiGenerated?: boolean;
   structuredData?: {
     understanding?: string;
     rights?: string[];
@@ -187,6 +199,8 @@ export interface ChatMessage {
     draftTitle?: string;
     draftBody?: string;
   };
+  summary?: AiCaseSummary;
+  suggestions?: string[];
 }
 
 export interface SavedResource {

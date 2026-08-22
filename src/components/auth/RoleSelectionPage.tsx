@@ -1,6 +1,7 @@
 import React from 'react';
 import { User, Briefcase, ArrowRight, ShieldCheck, Sparkles, Scale, BookOpen, Calendar, ArrowLeft, Globe } from 'lucide-react';
 import { Language, AppRoute } from '../../types';
+import { AnimatedGlassBackground } from '../AnimatedGlassBackground';
 import logoImg from '../../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
 interface RoleSelectionPageProps {
@@ -15,15 +16,16 @@ export function RoleSelectionPage({
   onNavigate,
 }: RoleSelectionPageProps) {
   return (
-    <div className="min-h-screen bg-[#F4F9FD] text-slate-900 flex flex-col justify-between font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950">
+    <div className="min-h-screen text-slate-900 flex flex-col justify-between font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 relative">
+      <AnimatedGlassBackground />
       
       {/* Top Header */}
-      <header className="w-full bg-white/90 backdrop-blur-md border-b border-sky-100 py-3.5 px-4 sm:px-8">
+      <header className="w-full bg-white/65 backdrop-blur-xl border-b border-white/70 shadow-[0_4px_24px_rgba(31,38,135,0.06)] py-3.5 px-4 sm:px-8">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <button
             id="role-selection-back-btn"
             onClick={() => onNavigate('home')}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:text-sky-700 bg-slate-50 hover:bg-sky-50 border border-sky-200/80 shadow-2xs transition-all active:scale-95 group cursor-pointer"
+            className="glass-btn inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-800 hover:text-sky-900 bg-white/70 hover:bg-white border border-white/80 shadow-xs transition-all active:scale-97 group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-sky-600 group-hover:-translate-x-0.5 transition-transform" />
             <span>{language === 'en' ? 'Back to Home' : 'होम पर वापस जाएं'}</span>
@@ -33,11 +35,11 @@ export function RoleSelectionPage({
             onClick={() => onNavigate('home')}
             className="flex items-center gap-2 cursor-pointer select-none"
           >
-            <div className="w-8 h-8 rounded-lg bg-white border border-sky-100 p-0.5 shadow-2xs overflow-hidden">
+            <div className="w-8 h-8 rounded-xl bg-white/90 border border-white/80 p-0.5 shadow-xs overflow-hidden">
               <img 
                 src={logoImg} 
                 alt="Nyaay सारथी Logo" 
-                className="w-full h-full object-cover rounded-md"
+                className="w-full h-full object-cover rounded-lg"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -46,23 +48,23 @@ export function RoleSelectionPage({
             </span>
           </div>
 
-          <div className="flex items-center bg-slate-100/90 p-0.5 sm:p-1 rounded-lg border border-sky-100">
+          <div className="flex items-center bg-white/60 backdrop-blur-md p-1 rounded-2xl border border-white/80 shadow-xs">
             <button
               onClick={() => onLanguageChange('en')}
-              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+              className={`px-2.5 py-1 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
                 language === 'en'
-                  ? 'bg-white text-sky-700 shadow-xs font-bold border border-sky-200/70'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white/95 text-sky-800 shadow-xs font-bold border border-white/90'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               EN
             </button>
             <button
               onClick={() => onLanguageChange('hi')}
-              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+              className={`px-2.5 py-1 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
                 language === 'hi'
-                  ? 'bg-white text-sky-700 shadow-xs font-bold border border-sky-200/70'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white/95 text-sky-800 shadow-xs font-bold border border-white/90'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               HI
@@ -73,10 +75,10 @@ export function RoleSelectionPage({
 
       {/* Main Selection Area */}
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-8">
-        <div className="w-full max-w-4xl bg-white rounded-3xl border border-sky-100/90 shadow-xl p-6 sm:p-10 my-4">
+        <div className="glass-panel w-full max-w-4xl bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/85 shadow-[0_16px_48px_rgba(31,38,135,0.1)] p-6 sm:p-10 my-4">
           
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-100/80 border border-sky-200 text-sky-800 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sky-900 text-xs font-bold uppercase tracking-wider mb-3 shadow-xs">
               <Sparkles className="w-3.5 h-3.5 text-sky-600" />
               <span>{language === 'en' ? 'Get Started' : 'प्रारंभ करें'}</span>
             </div>
@@ -85,7 +87,7 @@ export function RoleSelectionPage({
               {language === 'en' ? 'How would you like to use Nyaay सारथी?' : 'आप न्याय सारथी का उपयोग किस रूप में करना चाहते हैं?'}
             </h1>
             
-            <p className="text-sm sm:text-base text-slate-600 mt-2">
+            <p className="text-sm sm:text-base text-slate-600 mt-2 font-medium">
               {language === 'en'
                 ? 'Choose your portal access to proceed with legal guidance or advocate consultation services.'
                 : 'कानूनी मार्गदर्शन अथवा अधिवक्ता परामर्श सेवाओं के लिए अपना पोर्टल विकल्प चुनें।'}
@@ -97,11 +99,11 @@ export function RoleSelectionPage({
             {/* Card 1: Citizen / User */}
             <div 
               id="select-role-citizen-card"
-              className="bg-[#F8FAFC] hover:bg-sky-50/40 rounded-2xl p-6 sm:p-8 border-2 border-sky-150 hover:border-sky-500 transition-all duration-200 flex flex-col justify-between group shadow-xs hover:shadow-md"
+              className="glass-card bg-white/60 backdrop-blur-xl hover:bg-white/80 rounded-3xl p-6 sm:p-8 border border-white/80 hover:border-sky-300/70 transition-all duration-300 flex flex-col justify-between group shadow-[0_8px_32px_rgba(31,38,135,0.06)] hover:shadow-[0_14px_40px_rgba(31,38,135,0.12),0_0_20px_rgba(74,144,226,0.2)]"
             >
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-sky-600 text-white flex items-center justify-center mb-5 shadow-md shadow-sky-600/20 group-hover:scale-105 transition-transform">
-                  <User className="w-7 h-7 text-sky-100" />
+                <div className="w-14 h-14 rounded-2xl bg-sky-500/15 backdrop-blur-md border border-sky-300/40 text-sky-700 flex items-center justify-center mb-5 shadow-xs group-hover:scale-105 transition-transform">
+                  <User className="w-7 h-7" />
                 </div>
 
                 <div className="flex items-center gap-2 mb-2">
@@ -110,7 +112,7 @@ export function RoleSelectionPage({
                   </h2>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 font-medium">
                   {language === 'en'
                     ? 'Legal awareness, AI guidance, appointments and grievance assistance.'
                     : 'नागरिक अधिकार, AI कानूनी सलाह, शिकायत निवारण व वकील अपॉइंटमेंट।'}
@@ -132,11 +134,11 @@ export function RoleSelectionPage({
                 </div>
               </div>
 
-              <div className="space-y-2.5 pt-4 border-t border-slate-200/70">
+              <div className="space-y-2.5 pt-4 border-t border-sky-100/60">
                 <button
                   id="role-citizen-login-btn"
                   onClick={() => onNavigate('auth/login/citizen')}
-                  className="w-full py-3 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm shadow-sky-600/20 transition-all active:scale-95 cursor-pointer"
+                  className="glass-btn-primary w-full py-3 px-4 rounded-2xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all active:scale-95 cursor-pointer"
                 >
                   <span>{language === 'en' ? 'Continue as Citizen' : 'नागरिक के रूप में जारी रखें'}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -144,7 +146,7 @@ export function RoleSelectionPage({
                 <button
                   id="role-citizen-register-btn"
                   onClick={() => onNavigate('auth/register/citizen')}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold text-xs transition-colors cursor-pointer"
+                  className="glass-btn w-full py-2.5 px-4 rounded-2xl bg-white/70 hover:bg-white text-slate-800 border border-white/80 font-bold text-xs transition-colors cursor-pointer active:scale-97"
                 >
                   {language === 'en' ? 'New Citizen? Create Account' : 'नया खाता बनाएं'}
                 </button>
@@ -154,10 +156,10 @@ export function RoleSelectionPage({
             {/* Card 2: Advocate */}
             <div 
               id="select-role-advocate-card"
-              className="bg-[#F8FAFC] hover:bg-sky-50/40 rounded-2xl p-6 sm:p-8 border-2 border-sky-150 hover:border-slate-800 transition-all duration-200 flex flex-col justify-between group shadow-xs hover:shadow-md"
+              className="glass-card bg-white/60 backdrop-blur-xl hover:bg-white/80 rounded-3xl p-6 sm:p-8 border border-white/80 hover:border-sky-300/70 transition-all duration-300 flex flex-col justify-between group shadow-[0_8px_32px_rgba(31,38,135,0.06)] hover:shadow-[0_14px_40px_rgba(31,38,135,0.12),0_0_20px_rgba(74,144,226,0.2)]"
             >
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-5 shadow-md shadow-slate-900/20 group-hover:scale-105 transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-slate-900/90 text-white flex items-center justify-center mb-5 shadow-xs border border-white/20 group-hover:scale-105 transition-transform">
                   <Briefcase className="w-7 h-7 text-sky-400" />
                 </div>
 
@@ -165,12 +167,12 @@ export function RoleSelectionPage({
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
                     {language === 'en' ? 'Advocate' : 'अधिवक्ता / वकील'}
                   </h2>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-sky-700 bg-sky-100 px-2 py-0.5 rounded-full border border-sky-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-sky-900 bg-sky-500/15 px-2.5 py-0.5 rounded-full border border-sky-300/40">
                     Bar Verified
                   </span>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 font-medium">
                   {language === 'en'
                     ? 'Professional legal profile, consultations, clients and legal references.'
                     : 'पेशेवर प्रोफाइल, क्लाइंट कंसल्टेशन, कानूनी संदर्भ व केस प्रबंधन।'}
@@ -192,11 +194,11 @@ export function RoleSelectionPage({
                 </div>
               </div>
 
-              <div className="space-y-2.5 pt-4 border-t border-slate-200/70">
+              <div className="space-y-2.5 pt-4 border-t border-sky-100/60">
                 <button
                   id="role-advocate-login-btn"
                   onClick={() => onNavigate('auth/login/advocate')}
-                  className="w-full py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95 cursor-pointer"
+                  className="w-full py-3 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(15,23,42,0.25)] border border-white/20 transition-all active:scale-95 cursor-pointer"
                 >
                   <span>{language === 'en' ? 'Continue as Advocate' : 'अधिवक्ता के रूप में जारी रखें'}</span>
                   <ArrowRight className="w-4 h-4 text-sky-400" />
@@ -204,7 +206,7 @@ export function RoleSelectionPage({
                 <button
                   id="role-advocate-register-btn"
                   onClick={() => onNavigate('auth/register/advocate')}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold text-xs transition-colors cursor-pointer"
+                  className="glass-btn w-full py-2.5 px-4 rounded-2xl bg-white/70 hover:bg-white text-slate-800 border border-white/80 font-bold text-xs transition-colors cursor-pointer active:scale-97"
                 >
                   {language === 'en' ? 'Apply for Advocate Account' : 'अधिवक्ता पंजीकरण के लिए आवेदन करें'}
                 </button>
@@ -216,7 +218,7 @@ export function RoleSelectionPage({
         </div>
       </main>
 
-      <footer className="py-4 text-center text-xs text-slate-500 border-t border-sky-100 bg-white/50">
+      <footer className="py-4 text-center text-xs text-slate-500 border-t border-white/70 bg-white/40 backdrop-blur-md">
         <p>© {new Date().getFullYear()} Nyaay सारथी. Citizen Legal Assistance & Advocate Network.</p>
       </footer>
     </div>

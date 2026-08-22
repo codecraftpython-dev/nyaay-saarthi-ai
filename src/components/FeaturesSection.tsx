@@ -28,17 +28,17 @@ export function FeaturesSection({ language }: FeaturesSectionProps) {
   };
 
   return (
-    <section id="features-section" className="py-16 md:py-24 bg-white border-y border-sky-100/80">
+    <section id="features-section" className="py-16 md:py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-xs uppercase tracking-widest font-bold text-sky-700 bg-sky-100 px-3 py-1 rounded-md">
+          <span className="inline-block text-xs uppercase tracking-widest font-bold text-sky-900 bg-white/60 backdrop-blur-md border border-white/80 px-3.5 py-1 rounded-full shadow-[0_4px_16px_rgba(31,38,135,0.05)]">
             {language === 'en' ? 'Core Capabilities' : 'प्रमुख सुविधाएं'}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-4 tracking-tight">
             {language === 'en' ? 'Features We Provide' : 'हमारी प्रमुख सुविधाएं'}
           </h2>
-          <p className="text-slate-600 text-base sm:text-lg">
+          <p className="text-slate-700 text-base sm:text-lg font-medium">
             {language === 'en'
               ? 'Comprehensive digital legal infrastructure built specifically for the day-to-day legal needs of Indian citizens.'
               : 'भारतीय नागरिकों की रोजमर्रा की कानूनी आवश्यकताओं को सरलता से पूरा करने के लिए तैयार डिजिटल मंच।'}
@@ -51,14 +51,14 @@ export function FeaturesSection({ language }: FeaturesSectionProps) {
             <div
               key={feature.id}
               id={`feature-card-${feature.id}`}
-              className="bg-white rounded-2xl p-6 sm:p-7 border border-sky-100 shadow-2xs flex flex-col justify-between"
+              className="glass-card bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-7 border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.07)] hover:bg-white/80 hover:border-sky-300/70 hover:shadow-[0_14px_40px_rgba(31,38,135,0.12),0_0_20px_rgba(74,144,226,0.2)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-sky-500/15 backdrop-blur-md border border-sky-300/40 flex items-center justify-center shadow-xs">
                     {getIcon(feature.iconName)}
                   </div>
-                  <span className="text-[11px] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">
+                  <span className="text-[11px] font-bold tracking-wide uppercase px-3 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sky-900 shadow-2xs">
                     {language === 'en' ? feature.tag : feature.tagHi}
                   </span>
                 </div>
@@ -66,14 +66,14 @@ export function FeaturesSection({ language }: FeaturesSectionProps) {
                 <h3 className="text-lg font-bold text-slate-900 mb-2">
                   {language === 'en' ? feature.title : feature.titleHi}
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 text-sm leading-relaxed font-medium">
                   {language === 'en' ? feature.description : feature.descriptionHi}
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-sky-100/70 flex items-center justify-between text-xs font-semibold text-sky-600">
+              <div className="mt-6 pt-4 border-t border-sky-100/60 flex items-center justify-between text-xs font-bold text-sky-700">
                 <span>{language === 'en' ? 'Core Feature' : 'प्रमुख सुविधा'}</span>
-                <ArrowUpRight className="w-4 h-4 text-sky-400" />
+                <ArrowUpRight className="w-4 h-4 text-sky-500" />
               </div>
             </div>
           ))}

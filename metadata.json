@@ -1,6 +1,8 @@
 {
-  "name": "Nyaay सारथी",
-  "description": "Citizen legal awareness, AI guidance, and consultation platform simplifying Indian laws and citizen rights.",
+  "name": "Remix nyaay_chetan",
+  "description": "Imported from GitHub: chetan0009-ctrl/nyaay_chetan",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

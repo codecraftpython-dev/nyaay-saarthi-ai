@@ -13,9 +13,11 @@ import {
   Mail, 
   Sparkles,
   Lock,
-  FileCheck
+  FileCheck,
+  Loader2
 } from 'lucide-react';
-import { Language, FooterLink } from '../types';
+import { Language, FooterLink, ChatMessage } from '../types';
+import { requestAiLegalGuidance } from '../services/aiService';
 import logoImg from '../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
 interface DialogProps {
@@ -37,7 +39,7 @@ export function InteractiveDialogs({
 }: DialogProps) {
   // Chat AI state
   const [chatInput, setChatInput] = useState('');
-  const [chatMessages, setChatMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
+  const [chatMessages, setChatMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string; id?: string; suggestions?: string[] }>>([
     {
       role: 'assistant',
       text: language === 'en'
@@ -63,40 +65,54 @@ export function InteractiveDialogs({
 
   if (!isOpen) return null;
 
-  const handleSendMessage = (e?: React.FormEvent) => {
+  const handleSendMessage = async (e?: React.FormEvent, customText?: string) => {
     if (e) e.preventDefault();
-    if (!chatInput.trim()) return;
+    const userText = customText || chatInput;
+    if (!userText.trim() || isAiTyping) return;
 
-    const userText = chatInput;
-    setChatMessages((prev) => [...prev, { role: 'user', text: userText }]);
+    const newMessages = [...chatMessages, { role: 'user' as const, text: userText.trim() }];
+    setChatMessages(newMessages);
     setChatInput('');
     setIsAiTyping(true);
 
-    setTimeout(() => {
-      let reply = '';
-      const lower = userText.toLowerCase();
+    try {
+      // Convert to format required by aiService
+      const historyForApi: ChatMessage[] = newMessages.map((m, idx) => ({
+        id: `dialog_msg_${idx}`,
+        sender: m.role,
+        text: m.text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }));
 
-      if (lower.includes('deposit') || lower.includes('rent') || lower.includes('tenant') || lower.includes('किराया')) {
-        reply = language === 'en'
-          ? "Under the Model Tenancy Act & State Rent Control Rules, landlords must refund security deposits within 30 days after adjusting bona fide dues. If withheld unlawfully, you can send a statutory 15-day legal notice or file a petition before the Rent Authority / Consumer Forum."
-          : "मॉडल किरायेदारी कानून के अनुसार मकान मालिक को 30 दिनों के भीतर सुरक्षा जमा लौटाना अनिवार्य है। यदि ऐसा नहीं होता है, तो आप 15 दिन का कानूनी नोटिस भेज सकते हैं या किराया प्राधिकरण / उपभोक्ता अदालत में शिकायत दर्ज कर सकते हैं।";
-      } else if (lower.includes('cyber') || lower.includes('fraud') || lower.includes('scam') || lower.includes('1930') || lower.includes('ठगी')) {
-        reply = language === 'en'
-          ? "CRITICAL: Immediately call national cyber helpline 1930 within the 'Golden Hour' to trigger account freeze across beneficiary bank nodes. Simultaneously file a formal complaint at cybercrime.gov.in with transaction ID and screenshot evidence."
-          : "महत्वपूर्ण: 'गोल्डन ऑवर' के भीतर तुरंत 1930 पर कॉल करें ताकि आरोपी का बैंक खाता तुरंत फ्रीज किया जा सके। इसके साथ ही cybercrime.gov.in पर ट्रांजैक्शन आईडी व स्क्रीनशॉट के साथ शिकायत दर्ज करें।";
-      } else if (lower.includes('fir') || lower.includes('police') || lower.includes('थाना') || lower.includes('पुलिस')) {
-        reply = language === 'en'
-          ? "According to Supreme Court directives (Lalita Kumari judgment) and BNSS rules, any police station MUST register a 'Zero FIR' regardless of territorial jurisdiction for cognizable offences, and transfer it to the concerned precinct."
-          : "सुप्रीम कोर्ट (ललिता कुमारी फैसला) के अनुसार संज्ञेय अपराध में किसी भी थाने को 'ज़ीरो एफआईआर' दर्ज करना अनिवार्य है, चाहे अपराध किसी भी क्षेत्र में हुआ हो।";
-      } else {
-        reply = language === 'en'
-          ? `Thank you for asking about "${userText}". Nyaay सारथी simplifies this under Indian statutory law. For actionable procedural steps or notice drafting, you can also schedule a consultation with our verified advocate network.`
-          : `आपके प्रश्न "${userText}" के लिए धन्यवाद। भारतीय कानून के अंतर्गत इसके स्पष्ट नियम हैं। कानूनी नोटिस तैयार कराने या व्यक्तिगत मार्गदर्शन के लिए आप हमारे सत्यापित वकील से भी परामर्श बुक कर सकते हैं।`;
-      }
+      const aiResponse = await requestAiLegalGuidance({
+        message: userText.trim(),
+        history: historyForApi,
+        language
+      });
 
-      setChatMessages((prev) => [...prev, { role: 'assistant', text: reply }]);
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          text: aiResponse.text,
+          id: aiResponse.id,
+          suggestions: aiResponse.suggestions
+        }
+      ]);
+    } catch (err) {
+      console.error('Error fetching AI answer in dialog:', err);
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          text: language === 'en'
+            ? 'Thank you for your question. Under Indian law, you have rights to statutory notice and formal representation. For detailed step-by-step guidance, please use our full AI Legal Assistant.'
+            : 'आपके प्रश्न के लिए धन्यवाद। भारतीय कानून के तहत आपको वैधानिक नोटिस व सहायता का अधिकार है।'
+        }
+      ]);
+    } finally {
       setIsAiTyping(false);
-    }, 600);
+    }
   };
 
   const handleBookingSubmit = (e: React.FormEvent) => {
@@ -170,7 +186,29 @@ export function InteractiveDialogs({
                           : 'bg-white text-slate-800 rounded-tl-none border border-sky-100/90 shadow-2xs'
                       }`}
                     >
-                      {msg.text}
+                      {msg.role === 'assistant' && (
+                        <div className="flex items-center gap-1.5 mb-1.5 pb-1 border-b border-sky-100/70">
+                          <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-sky-800 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200/80">
+                            <Sparkles className="w-2.5 h-2.5 text-sky-600" />
+                            {language === 'en' ? 'Verified by Gemini AI' : 'Gemini AI द्वारा सत्यापित'}
+                          </span>
+                        </div>
+                      )}
+                      <p className="whitespace-pre-line">{msg.text}</p>
+                      {msg.suggestions && msg.suggestions.length > 0 && (
+                        <div className="mt-2.5 pt-2 border-t border-sky-100 flex flex-wrap gap-1.5">
+                          {msg.suggestions.map((sug, sIdx) => (
+                            <button
+                              key={sIdx}
+                              type="button"
+                              onClick={() => handleSendMessage(undefined, sug)}
+                              className="text-left text-xs bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200/80 rounded-lg px-2.5 py-1 transition-colors"
+                            >
+                              💡 {sug}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     {msg.role === 'user' && (
                       <div className="w-7 h-7 rounded-full bg-slate-800 text-white flex items-center justify-center shrink-0">

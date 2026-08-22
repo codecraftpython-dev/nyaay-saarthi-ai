@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Briefcase, Scale, Award, ShieldCheck, Clock, Calendar, Users, 
-  BookOpen, LogOut, ArrowLeft, CheckCircle2, AlertCircle, ChevronRight, 
+  BookOpen, ArrowLeft, CheckCircle2, AlertCircle, ChevronRight, LogOut,
   ExternalLink, Search, Sparkles, MessageSquare, Video, Phone,
   FileText, Check, X, Undo2, Filter, Settings, User, MapPin, Eye,
   Building, ChevronDown, Bell, HelpCircle
 } from 'lucide-react';
 import { Language, AppRoute, AuthUser } from '../../types';
+import { AnimatedGlassBackground } from '../AnimatedGlassBackground';
 import logoImg from '../../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
 interface ConsultationRequest {
@@ -294,12 +295,13 @@ export function AdvocateDashboardPage({
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F9FD] text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 flex flex-col justify-between">
+    <div className="min-h-screen text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 flex flex-col justify-between relative">
+      <AnimatedGlassBackground />
       
       {/* ========================================================
           1. ADVOCATE DASHBOARD HEADER / NAVBAR (LIGHT THEME)
          ======================================================== */}
-      <header className="w-full bg-white/95 backdrop-blur-md text-slate-900 border-b border-sky-100 sticky top-0 z-40 py-2.5 sm:py-3 px-4 sm:px-8 shadow-xs">
+      <header className="w-full bg-white/65 backdrop-blur-xl text-slate-900 border-b border-white/70 sticky top-0 z-40 py-2.5 sm:py-3 px-4 sm:px-8 shadow-[0_4px_24px_rgba(31,38,135,0.06)]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Left: Nyaay Saathi Logo & 'Advocate Portal' sub-badge */}
@@ -368,14 +370,6 @@ export function AdvocateDashboardPage({
             </button>
 
             <button
-              onClick={() => onOpenDialog('chat-ai', 'AI Legal Research & Drafting')}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all cursor-pointer flex items-center gap-1.5 group"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500 group-hover:rotate-12 transition-transform" />
-              <span>{language === 'en' ? 'Chat to AI' : 'AI से बात करें'}</span>
-            </button>
-
-            <button
               onClick={() => {
                 setActiveView('bns');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -428,17 +422,6 @@ export function AdvocateDashboardPage({
                 HI
               </button>
             </div>
-
-            {/* Standalone Log Out Button */}
-            <button
-              id="advocate-top-logout-btn"
-              onClick={onLogout}
-              title={language === 'en' ? 'Log Out of Portal' : 'पोर्टल से लॉग आउट करें'}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-rose-600 hover:text-rose-700 bg-rose-50/70 hover:bg-rose-100/90 border border-rose-200/80 shadow-2xs transition-all active:scale-95 cursor-pointer"
-            >
-              <LogOut className="w-3.5 h-3.5 text-rose-600" />
-              <span>{language === 'en' ? 'Log Out' : 'लॉग आउट'}</span>
-            </button>
 
             {/* Advocate Profile Avatar with Interactive Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -541,6 +524,7 @@ export function AdvocateDashboardPage({
                       <p className="text-[10px] text-rose-500">{language === 'en' ? 'End session & return to home' : 'सत्र समाप्त करें'}</p>
                     </div>
                   </button>
+
                 </div>
               )}
             </div>

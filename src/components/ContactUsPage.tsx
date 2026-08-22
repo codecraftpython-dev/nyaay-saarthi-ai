@@ -20,6 +20,7 @@ import {
 import { motion } from 'motion/react';
 import { Language, FooterLink } from '../types';
 import { Footer } from './Footer';
+import { AnimatedGlassBackground } from './AnimatedGlassBackground';
 import logoImg from '../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
 interface ContactUsPageProps {
@@ -73,8 +74,8 @@ export function ContactUsPage({
   // Translations dictionary
   const t = {
     backToHome: {
-      en: '← Back to Home',
-      hi: '← होम पर वापस जाएं',
+      en: 'Back to Home',
+      hi: 'होम पर वापस जाएं',
     },
     pageBadge: {
       en: 'Unified Support Channel',
@@ -139,28 +140,28 @@ export function ContactUsPage({
       hi: '24-घंटे उत्तर प्रोटोकॉल',
     },
     protocolDesc: {
-      en: 'Every citizen and advocate inquiry is logged with an auditable reference ticket and attended promptly.',
-      hi: 'प्रत्येक नागरिक व अधिवक्ता के प्रश्न को ऑडिट करने योग्य संदर्भ टिकट के साथ शीघ्रता से देखा जाता है।',
+      en: 'All citizen grievances and advocate inquiries receive first routing within 24 hours.',
+      hi: 'सभी नागरिक शिकायतों एवं अधिवक्ता पूछताछ पर 24 घंटे के भीतर प्रारंभिक कार्यवाही की जाती है।',
     },
     whoWeServeTitle: {
-      en: 'Covering Both Stakeholders',
-      hi: 'दोनों पक्षों के लिए सुलभ',
+      en: 'Who We Support',
+      hi: 'हम किसकी सहायता करते हैं',
     },
     citizenScope: {
-      en: 'Citizens & Litigants: Case guidance, legal information, consumer disputes & platform navigation.',
-      hi: 'नागरिक एवं वादकारी: केस मार्गदर्शन, कानूनी जानकारी, उपभोक्ता विवाद व पोर्टल सहायता।',
+      en: 'Citizen Support: Guidance on filing disputes, legal notices, appointments, and scheme eligibility.',
+      hi: 'नागरिक सहायता: विवाद दर्ज करने, नोटिस ड्राफ्ट, अपॉइंटमेंट और सरकारी योजनाओं की पात्रता पर मार्गदर्शन।',
     },
     advocateScope: {
-      en: 'Advocates & Legal Practitioners: Onboarding, verification, client connect & technical assistance.',
-      hi: 'अधिवक्ता एवं विधिक पेशेवर: ऑनबोर्डिंग, सत्यापन, क्लाइंट समन्वय व तकनीकी सहायता।',
+      en: 'Advocate Support: Verification assistance, Bar Council credentials, case management desk.',
+      hi: 'अधिवक्ता सहायता: सत्यापन सहायता, बार काउंसिल साख, एवं केस प्रबंधन डेस्क।',
     },
     formHeading: {
       en: 'Send Us a Message',
       hi: 'हमें संदेश भेजें',
     },
     formSubtext: {
-      en: 'Fill out this quick form and our support team will respond to your registered email.',
-      hi: 'यह फॉर्म भरें और हमारी सहायता टीम आपके पंजीकृत ईमेल पर उत्तर देगी।',
+      en: 'Fill out this unified form and our support desk will respond via email.',
+      hi: 'यह साझा फॉर्म भरें और हमारी सपोर्ट टीम ईमेल द्वारा आपसे संपर्क करेगी।',
     },
     fullNameLabel: {
       en: 'Full Name',
@@ -179,20 +180,20 @@ export function ContactUsPage({
       hi: 'name@example.com',
     },
     subjectLabel: {
-      en: 'Subject / Topic',
-      hi: 'विषय / संदर्भ',
+      en: 'Subject / Legal Topic',
+      hi: 'विषय / कानूनी मामला',
     },
     subjectPlaceholder: {
-      en: 'Brief summary of your query...',
-      hi: 'अपने प्रश्न का संक्षिप्त विषय...',
+      en: 'Brief subject of your query',
+      hi: 'अपनी पूछताछ का संक्षिप्त विषय लिखें',
     },
     messageLabel: {
       en: 'Message / Query Details',
-      hi: 'संदेश / प्रश्न का विस्तृत विवरण',
+      hi: 'संदेश / विस्तृत विवरण',
     },
     messagePlaceholder: {
-      en: 'Please provide details of how we can assist you...',
-      hi: 'कृपया विस्तार से बताएं कि हम आपकी किस प्रकार सहायता कर सकते हैं...',
+      en: 'Describe your issue or question in detail...',
+      hi: 'अपनी समस्या या प्रश्न का विस्तार से विवरण दें...',
     },
     sendBtn: {
       en: 'Send Message',
@@ -200,53 +201,35 @@ export function ContactUsPage({
     },
     sendingBtn: {
       en: 'Sending...',
-      hi: 'भेजा जा रहा है...',
+      hi: 'भेज रहे हैं...',
     },
     successTitle: {
-      en: 'Message Sent Successfully',
-      hi: 'संदेश सफलतापूर्वक भेजा गया',
+      en: 'Message Received Successfully!',
+      hi: 'संदेश सफलतापूर्वक प्राप्त हुआ!',
     },
     successDesc: {
-      en: 'Thank you for reaching out. Our unified team will review your message and reply shortly.',
-      hi: 'संपर्क करने के लिए धन्यवाद। हमारी एकीकृत टीम आपके संदेश की समीक्षा कर शीघ्र उत्तर देगी।',
+      en: 'Thank you for reaching out. Our support team will review your message and reply to your email within 24 business hours.',
+      hi: 'संपर्क करने के लिए धन्यवाद। हमारी सहायता टीम आपके संदेश की समीक्षा करेगी और २४ कार्य घंटों के भीतर आपके ईमेल पर उत्तर देगी।',
     },
     sendAnotherBtn: {
       en: 'Send Another Message',
       hi: 'दूसरा संदेश भेजें',
     },
-    // Official Legal Resources Section
-    legalResourcesHeading: {
-      en: 'Official Legal Resources',
-      hi: 'आधिकारिक विधिक संसाधन',
-    },
     legalResourcesBadge: {
-      en: 'Government of India Portals',
-      hi: 'भारत सरकार आधिकारिक पोर्टल',
+      en: 'Official Statutory Gateways',
+      hi: 'आधिकारिक वैधानिक प्रवेश द्वार',
+    },
+    legalResourcesHeading: {
+      en: 'Important Legal & Government Resources',
+      hi: 'महत्वपूर्ण विधिक एवं सरकारी संसाधन',
     },
     legalResourcesSubtext: {
-      en: 'Direct access to official statutory databases, constitutional repositories, and apex judicial portals.',
-      hi: 'आधिकारिक वैधानिक डेटाबेस, संविधान रिपॉजिटरी एवं शीर्ष न्यायिक पोर्टलों तक सीधी पहुँच।',
+      en: 'Direct access to official Government of India judicial and legislative portals.',
+      hi: 'भारत सरकार के आधिकारिक न्यायिक एवं विधायी पोर्टल्स तक सीधी पहुँच।',
     },
   };
 
-  // Official Government Legal Resources List
   const officialLegalResources = [
-    {
-      id: 'india-code',
-      title: {
-        en: 'India Code',
-        hi: 'India Code (इंडिया कोड)',
-      },
-      description: {
-        en: 'Official database of Central and State legislation of India.',
-        hi: 'भारत के केंद्रीय और राज्य कानूनों का आधिकारिक डिजिटल डेटाबेस।',
-      },
-      url: 'https://www.indiacode.nic.in/',
-      linkLabel: {
-        en: 'Visit India Code →',
-        hi: 'India Code पोर्टल पर जाएं →',
-      },
-    },
     {
       id: 'constitution-of-india',
       title: {
@@ -314,10 +297,11 @@ export function ContactUsPage({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F4F9FD] text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950">
+    <div className="min-h-screen text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 relative">
+      <AnimatedGlassBackground />
       
-      {/* 1. TOP NAVIGATION HEADER (Matching Website Theme) */}
-      <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-sky-100/80 shadow-xs transition-colors">
+      {/* 1. TOP NAVIGATION HEADER */}
+      <header className="sticky top-0 z-40 w-full bg-white/65 backdrop-blur-xl border-b border-white/70 shadow-[0_4px_24px_rgba(31,38,135,0.06)] transition-all">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-18 sm:h-20 gap-2">
             
@@ -326,28 +310,28 @@ export function ContactUsPage({
               <button
                 id="contact-back-to-home-btn"
                 onClick={onBackToHome}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:text-sky-700 bg-slate-50 hover:bg-sky-50 border border-sky-200/80 shadow-2xs hover:shadow-xs transition-all active:scale-95 group cursor-pointer"
+                className="glass-btn inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-semibold text-slate-800 hover:text-sky-900 bg-white/70 hover:bg-white border border-white/80 shadow-xs transition-all active:scale-97 group cursor-pointer"
               >
-                <ArrowLeft className="w-4 h-4 text-sky-600 group-hover:-translate-x-1 transition-transform" />
+                <ArrowLeft className="w-4 h-4 text-sky-600 group-hover:-translate-x-0.5 transition-transform" />
                 <span>{t.backToHome[language]}</span>
               </button>
 
               <div 
                 onClick={onBackToHome}
-                className="cursor-pointer hidden sm:flex items-center gap-2 select-none pl-2 border-l border-slate-200"
+                className="cursor-pointer hidden sm:flex items-center gap-2 select-none pl-2 border-l border-white/80"
               >
-                <div className="w-7 h-7 rounded-lg bg-white border border-sky-100 p-0.5 shadow-2xs overflow-hidden">
+                <div className="w-8 h-8 rounded-xl bg-white/90 border border-white/80 p-0.5 shadow-xs overflow-hidden">
                   <img 
                     src={logoImg} 
                     alt="Nyaay सारथी Logo" 
-                    className="w-full h-full object-cover rounded-md"
+                    className="w-full h-full object-cover rounded-lg"
                     referrerPolicy="no-referrer"
                   />
                 </div>
                 <span className="text-sm font-bold text-slate-900">
                   Nyaay <span className="text-sky-600 font-['Noto_Sans_Devanagari',sans-serif] font-extrabold">सारथी</span>
                 </span>
-                <span className="text-[11px] px-2 py-0.5 rounded-full bg-sky-50 border border-sky-200 text-sky-700 font-semibold">
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-sky-500/15 border border-sky-300/40 text-sky-900 font-bold">
                   {language === 'en' ? 'Support' : 'सहायता'}
                 </span>
               </div>
@@ -355,26 +339,26 @@ export function ContactUsPage({
 
             {/* Top Right: Language Switcher */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center bg-slate-100/90 p-1 rounded-lg border border-sky-100">
+              <div className="flex items-center bg-white/60 backdrop-blur-md p-1 rounded-2xl border border-white/80 shadow-xs">
                 <button
                   id="contact-lang-en-btn"
                   onClick={() => onLanguageChange('en')}
-                  className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md whitespace-nowrap transition-all cursor-pointer ${
+                  className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                     language === 'en'
-                      ? 'bg-white text-sky-700 shadow-xs font-bold border border-sky-200/70'
-                      : 'text-slate-500 hover:text-slate-900'
+                      ? 'bg-white/95 text-sky-800 shadow-xs font-bold border border-white/90'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  <Globe className="w-3.5 h-3.5 text-sky-500" />
+                  <Globe className="w-3.5 h-3.5 text-sky-600" />
                   <span>English</span>
                 </button>
                 <button
                   id="contact-lang-hi-btn"
                   onClick={() => onLanguageChange('hi')}
-                  className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md whitespace-nowrap transition-all cursor-pointer ${
+                  className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                     language === 'hi'
-                      ? 'bg-white text-sky-700 shadow-xs font-bold border border-sky-200/70'
-                      : 'text-slate-500 hover:text-slate-900'
+                      ? 'bg-white/95 text-sky-800 shadow-xs font-bold border border-white/90'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   <span>हिंदी</span>
@@ -390,7 +374,7 @@ export function ContactUsPage({
       <main className="flex-1 flex flex-col">
         
         {/* HERO SECTION */}
-        <section className="pt-10 pb-8 sm:pt-14 sm:pb-10 bg-gradient-to-b from-sky-50/80 via-[#F4F9FD] to-[#F4F9FD] border-b border-sky-100/60">
+        <section className="pt-10 pb-8 sm:pt-14 sm:pb-10">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -398,7 +382,7 @@ export function ContactUsPage({
               transition={{ duration: 0.5 }}
               className="space-y-3"
             >
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-100/80 border border-sky-200 text-sky-800 text-xs font-bold uppercase tracking-wider shadow-2xs">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sky-900 text-xs font-bold uppercase tracking-wider shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-sky-600" />
                 <span>{t.pageBadge[language]}</span>
               </div>
@@ -407,18 +391,18 @@ export function ContactUsPage({
                 {t.pageHeading[language]}
               </h1>
               
-              <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              <p className="text-slate-700 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-medium">
                 {t.pageSubtitle[language]}
               </p>
 
               {/* Stakeholder Badges Pill */}
               <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-sky-200 text-slate-700 text-xs font-semibold shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-800 text-xs font-semibold shadow-2xs">
                   <User className="w-3.5 h-3.5 text-sky-600" />
                   <span>Citizens & Litigants</span>
                 </span>
                 <span className="text-slate-400 font-bold">•</span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-sky-200 text-slate-700 text-xs font-semibold shadow-2xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-800 text-xs font-semibold shadow-2xs">
                   <Briefcase className="w-3.5 h-3.5 text-sky-600" />
                   <span>Advocates & Legal Professionals</span>
                 </span>
@@ -436,12 +420,12 @@ export function ContactUsPage({
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="p-4 sm:p-5 bg-sky-50/70 border border-sky-200/80 rounded-2xl mb-8 flex items-start sm:items-center gap-3.5 shadow-2xs"
+              className="p-4 sm:p-5 glass-panel bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl mb-8 flex items-start sm:items-center gap-3.5 shadow-xs"
             >
-              <div className="w-9 h-9 rounded-xl bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+              <div className="w-10 h-10 rounded-2xl bg-sky-500/15 backdrop-blur-md border border-sky-300/40 text-sky-700 flex items-center justify-center shrink-0 shadow-2xs">
                 <Users className="w-5 h-5" />
               </div>
-              <div className="text-xs sm:text-sm text-slate-700 space-y-0.5">
+              <div className="text-xs sm:text-sm text-slate-800 space-y-0.5 font-medium">
                 <p className="font-bold text-sky-950">
                   {t.unifiedNoteHeading[language]}
                 </p>
@@ -451,22 +435,21 @@ export function ContactUsPage({
               </div>
             </motion.div>
 
-            {/* Main Unified Grid: Left = Channels & Scope, Right = Unified Message Form */}
+            {/* Main Unified Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
-              {/* LEFT COLUMN (5 cols): Unified Channels & Service Scope */}
+              {/* LEFT COLUMN (5 cols) */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
                 className="lg:col-span-5 space-y-5"
               >
-                {/* Header */}
                 <div>
                   <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
                     {t.directChannelsHeading[language]}
                   </h2>
-                  <p className="text-slate-600 text-xs sm:text-sm mt-1">
+                  <p className="text-slate-600 text-xs sm:text-sm mt-1 font-medium">
                     {t.directChannelsSubtext[language]}
                   </p>
                 </div>
@@ -475,24 +458,24 @@ export function ContactUsPage({
                 <div className="space-y-3.5">
                   
                   {/* Email Channel Card */}
-                  <div className="p-4 sm:p-5 bg-white rounded-2xl border border-sky-150 shadow-2xs hover:border-sky-300 transition-all group">
+                  <div className="glass-card p-4 sm:p-5 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.06)] hover:bg-white/80 hover:border-sky-300/70 transition-all duration-300 group">
                     <div className="flex items-start gap-3.5">
-                      <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
+                      <div className="w-10 h-10 rounded-2xl bg-sky-500/15 backdrop-blur-md text-sky-700 flex items-center justify-center shrink-0 border border-sky-300/40 group-hover:scale-105 transition-transform shadow-2xs">
                         <Mail className="w-5 h-5" />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-800">
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-900">
                           {t.emailLabel[language]}
                         </span>
                         <div>
                           <a 
                             href={`mailto:${t.emailAddress}`}
-                            className="font-mono text-sm sm:text-base font-bold text-sky-700 hover:text-sky-800 hover:underline break-all"
+                            className="font-mono text-sm sm:text-base font-bold text-sky-700 hover:text-sky-900 hover:underline break-all"
                           >
                             {t.emailAddress}
                           </a>
                         </div>
-                        <p className="text-xs text-slate-500 pt-0.5">
+                        <p className="text-xs text-slate-500 font-medium pt-0.5">
                           {t.emailDesc[language]}
                         </p>
                       </div>
@@ -500,13 +483,13 @@ export function ContactUsPage({
                   </div>
 
                   {/* Phone Helpline Card */}
-                  <div className="p-4 sm:p-5 bg-white rounded-2xl border border-sky-150 shadow-2xs hover:border-sky-300 transition-all group">
+                  <div className="glass-card p-4 sm:p-5 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.06)] hover:bg-white/80 hover:border-sky-300/70 transition-all duration-300 group">
                     <div className="flex items-start gap-3.5">
-                      <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
+                      <div className="w-10 h-10 rounded-2xl bg-sky-500/15 backdrop-blur-md text-sky-700 flex items-center justify-center shrink-0 border border-sky-300/40 group-hover:scale-105 transition-transform shadow-2xs">
                         <Phone className="w-5 h-5" />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-800">
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-900">
                           {t.phoneLabel[language]}
                         </span>
                         <div>
@@ -514,7 +497,7 @@ export function ContactUsPage({
                             {t.phoneNumber}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-500 pt-0.5">
+                        <p className="text-xs text-slate-500 font-medium pt-0.5">
                           {t.phoneDesc[language]}
                         </p>
                       </div>
@@ -522,25 +505,25 @@ export function ContactUsPage({
                   </div>
 
                   {/* Turnaround & Service Scope Card */}
-                  <div className="p-5 bg-white rounded-2xl border border-sky-150 shadow-2xs space-y-4">
+                  <div className="glass-card p-5 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.06)] space-y-4">
                     
                     <div className="flex items-center gap-2 text-xs font-bold text-slate-900 uppercase tracking-wider">
                       <Scale className="w-4 h-4 text-sky-600" />
                       <span>{t.whoWeServeTitle[language]}</span>
                     </div>
 
-                    <div className="space-y-2.5 text-xs text-slate-600">
-                      <div className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <div className="space-y-2.5 text-xs text-slate-700 font-medium">
+                      <div className="flex items-start gap-2 p-2.5 rounded-2xl bg-white/50 backdrop-blur-md border border-white/70">
                         <User className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
                         <span>{t.citizenScope[language]}</span>
                       </div>
-                      <div className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                      <div className="flex items-start gap-2 p-2.5 rounded-2xl bg-white/50 backdrop-blur-md border border-white/70">
                         <Briefcase className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
                         <span>{t.advocateScope[language]}</span>
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center gap-2 text-[11px] text-slate-500">
+                    <div className="pt-2 border-t border-sky-100/60 flex items-center gap-2 text-[11px] text-slate-600 font-semibold">
                       <Clock className="w-3.5 h-3.5 text-sky-600" />
                       <span>{t.protocolDesc[language]}</span>
                     </div>
@@ -558,17 +541,17 @@ export function ContactUsPage({
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="lg:col-span-7"
               >
-                <div className="bg-white rounded-2xl border border-sky-200 shadow-sm p-6 sm:p-8">
+                <div className="glass-panel bg-white/65 backdrop-blur-2xl rounded-3xl border border-white/85 shadow-[0_12px_40px_rgba(31,38,135,0.08)] p-6 sm:p-8">
                   
                   {/* Form Header */}
-                  <div className="mb-6 pb-4 border-b border-sky-100">
+                  <div className="mb-6 pb-4 border-b border-sky-100/60">
                     <div className="flex items-center gap-2">
                       <MessageSquare className="w-5 h-5 text-sky-600" />
                       <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
                         {t.formHeading[language]}
                       </h2>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                    <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
                       {t.formSubtext[language]}
                     </p>
                   </div>
@@ -578,23 +561,23 @@ export function ContactUsPage({
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="p-6 sm:p-8 bg-emerald-50 border border-emerald-200 rounded-xl text-center space-y-4"
+                      className="p-6 sm:p-8 bg-emerald-500/10 backdrop-blur-md border border-emerald-300/40 rounded-3xl text-center space-y-4 shadow-xs"
                     >
-                      <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-md">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-md">
                         <CheckCircle2 className="w-7 h-7" />
                       </div>
                       <div>
                         <h3 className="text-lg font-bold text-emerald-950">
                           {t.successTitle[language]}
                         </h3>
-                        <p className="text-xs sm:text-sm text-emerald-800 mt-1 max-w-md mx-auto">
+                        <p className="text-xs sm:text-sm text-emerald-900 font-medium mt-1 max-w-md mx-auto">
                           {t.successDesc[language]}
                         </p>
                       </div>
                       <div className="pt-2">
                         <button
                           onClick={handleReset}
-                          className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm shadow-xs transition-all active:scale-95 cursor-pointer"
+                          className="glass-btn-primary px-5 py-2.5 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-xs transition-all active:scale-95 cursor-pointer"
                         >
                           {t.sendAnotherBtn[language]}
                         </button>
@@ -613,10 +596,10 @@ export function ContactUsPage({
                           <button
                             type="button"
                             onClick={() => setFormData({ ...formData, userType: 'Citizen' })}
-                            className={`p-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                            className={`p-2.5 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer active:scale-97 ${
                               formData.userType === 'Citizen'
-                                ? 'bg-sky-50 border-sky-500 text-sky-900 font-bold shadow-xs'
-                                : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                                ? 'bg-sky-500/20 border-sky-400 text-sky-950 font-bold shadow-xs'
+                                : 'bg-white/50 border-white/80 text-slate-700 hover:bg-white/80'
                             }`}
                           >
                             <User className="w-4 h-4 text-sky-600" />
@@ -625,10 +608,10 @@ export function ContactUsPage({
                           <button
                             type="button"
                             onClick={() => setFormData({ ...formData, userType: 'Advocate' })}
-                            className={`p-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer ${
+                            className={`p-2.5 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 border transition-all cursor-pointer active:scale-97 ${
                               formData.userType === 'Advocate'
-                                ? 'bg-sky-50 border-sky-500 text-sky-900 font-bold shadow-xs'
-                                : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                                ? 'bg-sky-500/20 border-sky-400 text-sky-950 font-bold shadow-xs'
+                                : 'bg-white/50 border-white/80 text-slate-700 hover:bg-white/80'
                             }`}
                           >
                             <Briefcase className="w-4 h-4 text-sky-600" />
@@ -649,7 +632,7 @@ export function ContactUsPage({
                             value={formData.fullName}
                             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                             placeholder={t.fullNamePlaceholder[language]}
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all placeholder:text-slate-400"
+                            className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all placeholder:text-slate-400 font-medium shadow-inner"
                           />
                         </div>
 
@@ -663,7 +646,7 @@ export function ContactUsPage({
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             placeholder={t.emailPlaceholder[language]}
-                            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all placeholder:text-slate-400 font-mono"
+                            className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all placeholder:text-slate-400 font-mono shadow-inner"
                           />
                         </div>
                       </div>
@@ -678,7 +661,7 @@ export function ContactUsPage({
                           value={formData.subject}
                           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                           placeholder={t.subjectPlaceholder[language]}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all placeholder:text-slate-400"
+                          className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all placeholder:text-slate-400 font-medium shadow-inner"
                         />
                       </div>
 
@@ -693,7 +676,7 @@ export function ContactUsPage({
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                           placeholder={t.messagePlaceholder[language]}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition-all placeholder:text-slate-400 resize-y"
+                          className="w-full px-3.5 py-2.5 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 text-slate-900 text-sm focus:bg-white/95 focus:outline-none focus:ring-2 focus:ring-sky-500/25 focus:border-sky-400 transition-all placeholder:text-slate-400 resize-y font-medium shadow-inner"
                         />
                       </div>
 
@@ -702,9 +685,9 @@ export function ContactUsPage({
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="w-full sm:w-auto px-7 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+                          className="glass-btn-primary w-full sm:w-auto px-7 py-3 rounded-2xl text-white font-bold text-sm shadow-[0_4px_16px_rgba(37,99,235,0.25)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
                         >
-                          <Send className="w-4 h-4 text-sky-400" />
+                          <Send className="w-4 h-4 text-sky-200" />
                           <span>{isSubmitting ? t.sendingBtn[language] : t.sendBtn[language]}</span>
                         </button>
                       </div>
@@ -720,20 +703,20 @@ export function ContactUsPage({
           </div>
         </section>
 
-        {/* 4. OFFICIAL LEGAL RESOURCES SECTION (Immediately before Footer) */}
-        <section className="py-12 sm:py-16 bg-white border-t border-sky-150/80">
+        {/* 4. OFFICIAL LEGAL RESOURCES SECTION */}
+        <section className="py-12 sm:py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             
             {/* Section Header */}
             <div className="mb-8 sm:mb-10 text-center sm:text-left">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100/80 border border-sky-200 text-sky-800 text-xs font-bold uppercase tracking-wider mb-2 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 text-sky-900 text-xs font-bold uppercase tracking-wider mb-2 shadow-xs">
                 <BookOpen className="w-3.5 h-3.5 text-sky-600" />
                 <span>{t.legalResourcesBadge[language]}</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
                 {t.legalResourcesHeading[language]}
               </h2>
-              <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+              <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed font-medium">
                 {t.legalResourcesSubtext[language]}
               </p>
             </div>
@@ -743,22 +726,19 @@ export function ContactUsPage({
               {officialLegalResources.map((resource, index) => (
                 <div
                   key={resource.id}
-                  className="p-5 sm:p-6 bg-[#F8FAFC] hover:bg-sky-50/40 rounded-2xl border border-sky-150/90 shadow-2xs hover:border-sky-300 hover:shadow-xs transition-all flex flex-col justify-between group"
+                  className="glass-card p-5 sm:p-6 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.06)] hover:bg-white/85 hover:border-sky-300/70 hover:shadow-[0_14px_40px_rgba(31,38,135,0.1),0_0_20px_rgba(74,144,226,0.2)] transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div>
-                    {/* Heading / Title */}
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-sky-700 transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-sky-800 transition-colors">
                       {resource.title[language]}
                     </h3>
                     
-                    {/* Short Description */}
-                    <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed font-medium">
                       {resource.description[language]}
                     </p>
                   </div>
 
-                  {/* Clickable Official Website Link */}
-                  <div className="pt-4 mt-2 border-t border-slate-200/60">
+                  <div className="pt-4 mt-3 border-t border-sky-100/60">
                     <a
                       href={resource.url}
                       target="_blank"
@@ -778,7 +758,7 @@ export function ContactUsPage({
 
       </main>
 
-      {/* 4. FOOTER (Reused existing footer) */}
+      {/* 4. FOOTER */}
       <Footer
         language={language}
         onActionClick={onActionClick}
