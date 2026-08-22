@@ -72,6 +72,18 @@ function parseCurrentRoute(): AppRoute {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('en');
+
+  // Authentication State: Initialize from persistent storage if present
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
+    try {
+      const data = typeof window !== 'undefined' ? localStorage.getItem('nyay_saathi_user') : null;
+      if (data) return JSON.parse(data);
+    } catch (e) {
+      console.warn('Storage read:', e);
+    }
+    return null;
+  });
+
   const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
     const route = parseCurrentRoute();
     const protectedRoutes = [
@@ -80,26 +92,29 @@ export default function App() {
       'chat', 'appointments', 'rights', 'advocate-profile', 'appointment-book',
       'advocate-dashboard', 'advocate/home'
     ];
+    let storedUser: AuthUser | null = null;
+    try {
+      const data = typeof window !== 'undefined' ? localStorage.getItem('nyay_saathi_user') : null;
+      if (data) storedUser = JSON.parse(data);
+    } catch (e) {
+      // ignore
+    }
     if (protectedRoutes.includes(route)) {
-      if (route === 'advocate-dashboard' || route === 'advocate/home') {
-        return 'auth/login/advocate';
+      if (!storedUser) {
+        if (route === 'advocate-dashboard' || route === 'advocate/home') {
+          return 'auth/login/advocate';
+        }
+        return 'auth/login/citizen';
       }
-      return 'auth/login/citizen';
+      if (storedUser.role === 'advocate' && !['advocate-dashboard', 'advocate/home'].includes(route)) {
+        return 'advocate-dashboard';
+      }
+      if (storedUser.role === 'citizen' && ['advocate-dashboard', 'advocate/home'].includes(route)) {
+        return 'user/home';
+      }
     }
     return route;
   });
-
-  // Authentication State: Always start logged out whenever the app is opened
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
-
-  // Clear any persistent auto-login cache so fresh opens always start logged out
-  useEffect(() => {
-    try {
-      localStorage.removeItem('nyay_saathi_user');
-    } catch (e) {
-      console.warn('Storage cleanup:', e);
-    }
-  }, []);
 
   // Portal auxiliary state: selected advocate and pre-filled category
   const [selectedAdvocate, setSelectedAdvocate] = useState<Advocate | null>(() => MOCK_ADVOCATES[0]);
@@ -134,7 +149,7 @@ export default function App() {
     };
   }, []);
 
-  const navigateTo = (route: AppRoute, params?: any) => {
+  const navigateTo = (route: AppRoute, params?: any, overrideUser?: AuthUser | null) => {
     let resolvedRoute: AppRoute = route;
 
     // Default aliases
@@ -151,6 +166,16 @@ export default function App() {
       setActiveCategoryFilter(null);
     }
 
+    const effectiveUser = overrideUser !== undefined ? overrideUser : (currentUser || (() => {
+      try {
+        const data = typeof window !== 'undefined' ? localStorage.getItem('nyay_saathi_user') : null;
+        if (data) return JSON.parse(data);
+      } catch (e) {
+        // ignore
+      }
+      return null;
+    })());
+
     // Route Protection for Citizen Portal
     const citizenProtectedRoutes: AppRoute[] = [
       'user/home', 'user/profile', 'user/settings', 
@@ -159,15 +184,15 @@ export default function App() {
     ];
 
     if (citizenProtectedRoutes.includes(resolvedRoute)) {
-      if (!currentUser) {
+      if (!effectiveUser) {
         resolvedRoute = 'auth/login/citizen';
-      } else if (currentUser.role !== 'citizen') {
+      } else if (effectiveUser.role !== 'citizen') {
         resolvedRoute = 'advocate-dashboard';
       }
     } else if (resolvedRoute === 'advocate-dashboard' || resolvedRoute === 'advocate/home') {
-      if (!currentUser) {
+      if (!effectiveUser) {
         resolvedRoute = 'auth/login/advocate';
-      } else if (currentUser.role !== 'advocate') {
+      } else if (effectiveUser.role !== 'advocate') {
         resolvedRoute = 'user/home';
       } else {
         resolvedRoute = 'advocate-dashboard';
@@ -180,27 +205,27 @@ export default function App() {
   };
 
   const handleLoginSuccess = (user: AuthUser) => {
-    setCurrentUser(user);
     try {
       localStorage.setItem('nyay_saathi_user', JSON.stringify(user));
     } catch (e) {
       console.error('Error saving user to localStorage:', e);
     }
+    setCurrentUser(user);
     if (user.role === 'citizen') {
-      navigateTo('user/home');
+      navigateTo('user/home', undefined, user);
     } else {
-      navigateTo('advocate-dashboard');
+      navigateTo('advocate-dashboard', undefined, user);
     }
   };
 
   const handleLogout = () => {
-    setCurrentUser(null);
     try {
       localStorage.removeItem('nyay_saathi_user');
     } catch (e) {
       console.error('Error clearing user localStorage:', e);
     }
-    navigateTo('home');
+    setCurrentUser(null);
+    navigateTo('home', undefined, null);
   };
 
   const handleActionClick = (action: string, title?: string, linkData?: FooterLink) => {
