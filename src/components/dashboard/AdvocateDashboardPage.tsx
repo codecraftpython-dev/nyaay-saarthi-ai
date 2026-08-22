@@ -4,10 +4,11 @@ import {
   BookOpen, ArrowLeft, CheckCircle2, AlertCircle, ChevronRight, LogOut,
   ExternalLink, Search, Sparkles, MessageSquare, Video, Phone,
   FileText, Check, X, Undo2, Filter, Settings, User, MapPin, Eye,
-  Building, ChevronDown, Bell, HelpCircle
+  Building, ChevronDown, Bell, HelpCircle, Bot
 } from 'lucide-react';
 import { Language, AppRoute, AuthUser } from '../../types';
 import { AnimatedGlassBackground } from '../AnimatedGlassBackground';
+import { AiAssistantPage } from '../citizen/AiAssistantPage';
 import logoImg from '../../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
 interface ConsultationRequest {
@@ -153,6 +154,7 @@ interface AdvocateDashboardPageProps {
   onNavigate: (route: AppRoute) => void;
   onLogout: () => void;
   onOpenDialog: (actionKey: string, topic?: string) => void;
+  initialView?: 'feed' | 'history' | 'bns' | 'chat';
 }
 
 export function AdvocateDashboardPage({
@@ -162,12 +164,19 @@ export function AdvocateDashboardPage({
   onNavigate,
   onLogout,
   onOpenDialog,
+  initialView = 'feed',
 }: AdvocateDashboardPageProps) {
   // Requests state
   const [requests, setRequests] = useState<ConsultationRequest[]>(INITIAL_REQUESTS);
   const [filterTab, setFilterTab] = useState<'all' | 'pending' | 'accepted' | 'rejected'>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeView, setActiveView] = useState<'feed' | 'history' | 'bns'>('feed');
+  const [activeView, setActiveView] = useState<'feed' | 'history' | 'bns' | 'chat'>(initialView);
+
+  useEffect(() => {
+    if (initialView) {
+      setActiveView(initialView);
+    }
+  }, [initialView]);
 
   // Avatar Dropdown State
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false);
@@ -382,6 +391,22 @@ export function AdvocateDashboardPage({
             >
               <Scale className="w-3.5 h-3.5 text-sky-600" />
               <span>{language === 'en' ? 'IPC / BNS Reference' : 'IPC / BNS संदर्भ'}</span>
+            </button>
+
+            <button
+              id="advocate-nav-chat"
+              onClick={() => {
+                setActiveView('chat');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeView === 'chat'
+                  ? 'bg-sky-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
+              }`}
+            >
+              <Bot className="w-3.5 h-3.5 text-sky-600" />
+              <span>{language === 'en' ? 'Chat to AI' : 'AI से बात करें'}</span>
             </button>
 
             <button
@@ -632,6 +657,18 @@ export function AdvocateDashboardPage({
           >
             <Scale className="w-4 h-4" />
             <span>{language === 'en' ? 'IPC / BNS Quick Matrix' : 'BNS धारा संदर्भ'}</span>
+          </button>
+
+          <button
+            onClick={() => setActiveView('chat')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 ${
+              activeView === 'chat'
+                ? 'bg-sky-600 text-white shadow-xs'
+                : 'bg-white text-slate-700 hover:bg-sky-50 border border-slate-200'
+            }`}
+          >
+            <Bot className="w-4 h-4" />
+            <span>{language === 'en' ? 'Chat to AI' : 'AI से बात करें'}</span>
           </button>
         </div>
 
@@ -1064,7 +1101,10 @@ export function AdvocateDashboardPage({
                     : 'नागरिक विवादों हेतु कानूनी नोटिस व शिकायत प्रारूप सेकंडों में तैयार करें।'}
                 </p>
                 <button
-                  onClick={() => onOpenDialog('chat-ai', 'AI Legal Assistant')}
+                  onClick={() => {
+                    setActiveView('chat');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                   className="w-full py-2.5 px-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-white" />
@@ -1247,6 +1287,19 @@ export function AdvocateDashboardPage({
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* ========================================================
+            VIEW 4: AI ASSISTANT (CHAT TO AI)
+           ======================================================== */}
+        {activeView === 'chat' && (
+          <div className="animate-in fade-in duration-200">
+            <AiAssistantPage
+              user={user}
+              language={language}
+              onNavigate={onNavigate}
+            />
           </div>
         )}
 

@@ -106,7 +106,7 @@ export default function App() {
         }
         return 'auth/login/citizen';
       }
-      if (storedUser.role === 'advocate' && !['advocate-dashboard', 'advocate/home'].includes(route)) {
+      if (storedUser.role === 'advocate' && !['advocate-dashboard', 'advocate/home', 'chat'].includes(route)) {
         return 'advocate-dashboard';
       }
       if (storedUser.role === 'citizen' && ['advocate-dashboard', 'advocate/home'].includes(route)) {
@@ -186,7 +186,7 @@ export default function App() {
     if (citizenProtectedRoutes.includes(resolvedRoute)) {
       if (!effectiveUser) {
         resolvedRoute = 'auth/login/citizen';
-      } else if (effectiveUser.role !== 'citizen') {
+      } else if (effectiveUser.role !== 'citizen' && resolvedRoute !== 'chat') {
         resolvedRoute = 'advocate-dashboard';
       }
     } else if (resolvedRoute === 'advocate-dashboard' || resolvedRoute === 'advocate/home') {
@@ -352,7 +352,7 @@ export default function App() {
     'appointments',
     'advocate-profile',
     'appointment-book'
-  ].includes(currentRoute);
+  ].includes(currentRoute) && currentUser?.role !== 'advocate';
 
   if (isCitizenPortalRoute) {
     const citizenOnlyProtectedRoutes: AppRoute[] = [
@@ -518,19 +518,11 @@ export default function App() {
     );
   }
 
-  // 7. Protected Advocate Dashboard View at /advocate-dashboard
-  if (currentRoute === 'advocate-dashboard' || currentRoute === 'advocate/home') {
-    if (!currentUser || currentUser.role !== 'advocate') {
-      return (
-        <AdvocateLoginPage
-          language={language}
-          onLanguageChange={setLanguage}
-          onNavigate={navigateTo}
-          onLoginSuccess={handleLoginSuccess}
-        />
-      );
-    }
-
+  // 7. Protected Advocate Dashboard View at /advocate-dashboard or /chat for Advocate
+  if (
+    (currentRoute === 'advocate-dashboard' || currentRoute === 'advocate/home' || currentRoute === 'chat') &&
+    currentUser?.role === 'advocate'
+  ) {
     const activeAdvocate = currentUser;
 
     return (
@@ -542,6 +534,7 @@ export default function App() {
           onNavigate={navigateTo}
           onLogout={handleLogout}
           onOpenDialog={(actionKey, topic) => handleActionClick(actionKey, topic)}
+          initialView={currentRoute === 'chat' ? 'chat' : 'feed'}
         />
 
         <InteractiveDialogs
@@ -554,6 +547,19 @@ export default function App() {
         />
       </>
     );
+  }
+
+  if (currentRoute === 'advocate-dashboard' || currentRoute === 'advocate/home') {
+    if (!currentUser || currentUser.role !== 'advocate') {
+      return (
+        <AdvocateLoginPage
+          language={language}
+          onLanguageChange={setLanguage}
+          onNavigate={navigateTo}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      );
+    }
   }
 
   // 8. About Us Page
