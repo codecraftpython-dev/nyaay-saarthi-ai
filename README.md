@@ -988,19 +988,6 @@ Create a Pull Request with:
 
 ------------------------------------------------------------------------
 
-# 📄 License
-
-Add the project's chosen license here, for example:
-
-``` text
-MIT License
-```
-
-Only use the MIT License if the repository is actually intended to be
-released under MIT.
-
-------------------------------------------------------------------------
-
 # 👥 Project
 
 **Nyaay सारथी --- Digital Legal Awareness & Guidance**
