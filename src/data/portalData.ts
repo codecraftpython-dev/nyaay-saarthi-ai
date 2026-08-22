@@ -1,4 +1,4 @@
-import { Advocate, LegalRight, Application, Appointment, SavedResource, ChatMessage, AuthUser, Language } from '../types';
+import { Advocate, LegalRight, Application, Appointment, SavedResource, ChatMessage, AuthUser, Language, AdvocateFeedback } from '../types';
 
 export const DEFAULT_CITIZEN_AVATAR = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%230284C7"><circle cx="50" cy="50" r="50" fill="%23E0F2FE"/><circle cx="50" cy="38" r="18" fill="%230284C7"/><path d="M18 85 C22 64 36 58 50 58 C64 58 78 64 82 85 Z" fill="%230284C7"/></svg>`;
 
@@ -499,6 +499,42 @@ const APPOINTMENTS_KEY = 'nyay_saathi_appointments';
 const APPLICATIONS_KEY = 'nyay_saathi_applications';
 const SAVED_KEY = 'nyay_saathi_saved_resources';
 const CHAT_KEY = 'nyay_saathi_chat_history';
+const FEEDBACK_KEY = 'nyay_saathi_feedback';
+
+export const INITIAL_FEEDBACKS: AdvocateFeedback[] = [
+  {
+    id: 'fb-1',
+    userId: 'demo_citizen',
+    userName: 'Rajesh Kumar',
+    advocateName: 'Adv. Priya Sharma',
+    rating: 4.8,
+    caseInformation: 'Consumer Notice & E-Daakhil Laptop Defect Claim (NS-1024)',
+    review: 'Adv. Priya was extremely patient and clearly explained the statutory 15-day notice format. The entire process was transparent and reassuring.',
+    createdAt: '21 Aug 2026'
+  }
+];
+
+export function getStoredFeedback(): AdvocateFeedback[] {
+  if (typeof window === 'undefined') return INITIAL_FEEDBACKS;
+  try {
+    const data = localStorage.getItem(FEEDBACK_KEY);
+    if (data) return JSON.parse(data);
+  } catch (e) {
+    console.error('Failed to parse feedback', e);
+  }
+  return INITIAL_FEEDBACKS;
+}
+
+export function saveFeedback(feedback: AdvocateFeedback): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const list = getStoredFeedback();
+    const updated = [feedback, ...list.filter(f => f.id !== feedback.id)];
+    localStorage.setItem(FEEDBACK_KEY, JSON.stringify(updated));
+  } catch (e) {
+    console.error('Failed to save feedback', e);
+  }
+}
 
 export function getStoredUser(fallback?: AuthUser | null): AuthUser {
   if (typeof window === 'undefined') {

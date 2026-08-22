@@ -261,3 +261,14 @@ export interface FooterLink {
   descriptionHi?: string;
 }
 
+export interface AdvocateFeedback {
+  id: string;
+  userId: string;
+  userName: string;
+  advocateName: string;
+  rating: number;
+  caseInformation: string;
+  review: string;
+  createdAt: string;
+}
+

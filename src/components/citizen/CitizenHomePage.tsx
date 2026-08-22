@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Bot, Calendar, BookOpen, FileText, ArrowRight, Sparkles, 
   Clock, CheckCircle2, ShieldCheck, PhoneCall, ChevronRight,
-  ExternalLink, UserCheck, AlertCircle, Bookmark, MessageSquare
+  ExternalLink, UserCheck, AlertCircle, Bookmark, MessageSquare,
+  Star, ThumbsUp
 } from 'lucide-react';
-import { Language, AppRoute, AuthUser, Application, Appointment } from '../../types';
-import { getStoredApplications, getStoredAppointments } from '../../data/portalData';
+import { Language, AppRoute, AuthUser, Application, Appointment, AdvocateFeedback } from '../../types';
+import { getStoredApplications, getStoredAppointments, getStoredFeedback } from '../../data/portalData';
+import { AdvocateFeedbackModal } from './AdvocateFeedbackModal';
 
 interface CitizenHomePageProps {
   user: AuthUser;
@@ -32,6 +34,9 @@ export function CitizenHomePage({
 
   const applications = getStoredApplications();
   const appointments = getStoredAppointments();
+
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [feedbacks, setFeedbacks] = useState<AdvocateFeedback[]>(() => getStoredFeedback());
 
   const recentAppointments = appointments.slice(0, 2);
   const recentApplications = applications.slice(0, 2);
@@ -529,6 +534,94 @@ export function CitizenHomePage({
         </div>
 
       </section>
+
+      {/* 5. Advocate Consultation Feedback Section (Lower Section of Citizen Dashboard) */}
+      <section className="glass-panel bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/80 shadow-[0_8px_32px_rgba(31,38,135,0.06)] relative overflow-hidden space-y-5">
+        <div className="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-amber-200/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+          <div className="space-y-1.5 max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold border border-amber-200/60 shadow-2xs">
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+              <span>{language === 'en' ? 'Advocate Consultation Feedback' : 'अधिवक्ता परामर्श प्रतिक्रिया'}</span>
+            </div>
+
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+              {language === 'en' ? 'Share Your Consultation Experience' : 'अपने परामर्श का अनुभव व प्रतिक्रिया साझा करें'}
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+              {language === 'en'
+                ? 'Had a legal consultation with an advocate? Provide your rating, case details, and review to help build a transparent and trusted legal assistance ecosystem.'
+                : 'क्या आपने किसी अधिवक्ता से परामर्श प्राप्त किया है? साथी नागरिकों के मार्गदर्शन हेतु अपनी रेटिंग, केस विवरण और समीक्षा साझा करें।'}
+            </p>
+          </div>
+
+          <button
+            id="btn-give-feedback"
+            onClick={() => setIsFeedbackModalOpen(true)}
+            className="glass-btn-primary py-3 px-6 rounded-2xl text-white text-xs sm:text-sm font-bold shadow-[0_4px_16px_rgba(37,99,235,0.25)] flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 active:scale-95 group"
+          >
+            <MessageSquare className="w-4 h-4 text-sky-100 group-hover:scale-110 transition-transform" />
+            <span>{language === 'en' ? 'Give Feedback' : 'प्रतिक्रिया दें'}</span>
+          </button>
+        </div>
+
+        {/* Display Previous Feedbacks if any exist */}
+        {feedbacks.length > 0 && (
+          <div className="pt-3 border-t border-sky-100 space-y-3 relative z-10">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">
+                {language === 'en' ? 'Recent Citizen Reviews & Ratings' : 'हालिया समीक्षाएं व रेटिंग'}
+              </h4>
+              <span className="text-[11px] text-slate-500 font-medium">
+                {feedbacks.length} {language === 'en' ? 'Feedback Submitted' : 'प्रतिक्रियाएं'}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              {feedbacks.map((fb) => (
+                <div
+                  key={fb.id}
+                  className="p-4 rounded-2xl bg-white/70 backdrop-blur-md border border-white/90 shadow-2xs hover:shadow-xs transition-all space-y-2"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h5 className="text-xs sm:text-sm font-bold text-slate-900">{fb.advocateName}</h5>
+                      <p className="text-[11px] text-sky-700 font-medium line-clamp-1">{fb.caseInformation}</p>
+                    </div>
+
+                    <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-500/15 text-amber-900 font-bold text-xs border border-amber-300/40 shrink-0">
+                      <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+                      <span>{Number(fb.rating).toFixed(1)}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-slate-600 italic font-medium leading-relaxed">
+                    "{fb.review}"
+                  </p>
+
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium pt-1 border-t border-slate-100">
+                    <span>By {fb.userName}</span>
+                    <span>{fb.createdAt}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Advocate Feedback Modal */}
+      <AdvocateFeedbackModal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+        language={language}
+        currentUser={user}
+        onFeedbackSubmitted={(newFb) => {
+          setFeedbacks((prev) => [newFb, ...prev.filter(f => f.id !== newFb.id)]);
+        }}
+      />
 
     </div>
   );

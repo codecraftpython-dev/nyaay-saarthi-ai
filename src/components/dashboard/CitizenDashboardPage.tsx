@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   User, Bot, Calendar, BookOpen, ShieldCheck, LogOut, ArrowLeft, 
   MessageSquare, FileText, Clock, CheckCircle2, ChevronRight, Sparkles,
-  Search, Bell, AlertCircle, PhoneCall, ExternalLink, Globe
+  Search, Bell, AlertCircle, PhoneCall, ExternalLink, Globe, Star
 } from 'lucide-react';
-import { Language, AppRoute, AuthUser } from '../../types';
+import { Language, AppRoute, AuthUser, AdvocateFeedback } from '../../types';
 import logoImg from '../../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
+import { AdvocateFeedbackModal } from '../citizen/AdvocateFeedbackModal';
+import { getStoredFeedback } from '../../data/portalData';
 
 interface CitizenDashboardPageProps {
   user: AuthUser;
@@ -24,6 +26,8 @@ export function CitizenDashboardPage({
   onLogout,
   onOpenDialog,
 }: CitizenDashboardPageProps) {
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [feedbacks, setFeedbacks] = useState<AdvocateFeedback[]>(() => getStoredFeedback());
   return (
     <div className="min-h-screen bg-[#F4F9FD] text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 flex flex-col justify-between">
       
@@ -385,7 +389,70 @@ export function CitizenDashboardPage({
 
         </div>
 
+        {/* Lower Feedback Section */}
+        <div className="mt-8 bg-white rounded-3xl p-6 sm:p-8 border border-sky-100 shadow-xs relative overflow-hidden space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-900 text-xs font-bold border border-amber-200/60 shadow-2xs">
+                <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+                <span>{language === 'en' ? 'Advocate Consultation Feedback' : 'अधिवक्ता परामर्श प्रतिक्रिया'}</span>
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                {language === 'en' ? 'Share Your Consultation Experience' : 'अपने परामर्श का अनुभव साझा करें'}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                {language === 'en'
+                  ? 'Had a consultation with an advocate? Provide rating, case details, and your honest review.'
+                  : 'क्या आपने किसी अधिवक्ता से परामर्श लिया है? अपनी रेटिंग, केस जानकारी व समीक्षा साझा करें।'}
+              </p>
+            </div>
+
+            <button
+              id="citizen-dashboard-btn-give-feedback"
+              onClick={() => setIsFeedbackModalOpen(true)}
+              className="py-2.5 px-5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-sky-600/20 flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 active:scale-95"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>{language === 'en' ? 'Give Feedback' : 'प्रतिक्रिया दें'}</span>
+            </button>
+          </div>
+
+          {feedbacks.length > 0 && (
+            <div className="pt-3 border-t border-slate-100 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                {language === 'en' ? 'Recent Citizen Feedbacks' : 'हालिया प्रतिक्रियाएं'}
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {feedbacks.map((fb) => (
+                  <div key={fb.id} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-slate-900">{fb.advocateName}</p>
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-100 text-amber-900 font-bold text-[11px]">
+                        <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                        {Number(fb.rating).toFixed(1)}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-sky-700 font-semibold">{fb.caseInformation}</p>
+                    <p className="text-xs text-slate-600 italic">"{fb.review}"</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
       </main>
+
+      {/* Advocate Feedback Modal */}
+      <AdvocateFeedbackModal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+        language={language}
+        currentUser={user}
+        onFeedbackSubmitted={(newFb) => {
+          setFeedbacks((prev) => [newFb, ...prev.filter(f => f.id !== newFb.id)]);
+        }}
+      />
 
       {/* Footer */}
       <footer className="py-4 text-center text-xs text-slate-500 border-t border-sky-100 bg-white/50 mt-12">
