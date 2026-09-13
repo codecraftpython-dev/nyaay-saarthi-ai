@@ -5,7 +5,7 @@ import {
   AlertTriangle, CreditCard
 } from 'lucide-react';
 import { Language, AppRoute, Appointment } from '../../types';
-import { getStoredAppointments, updateAppointmentStatus, saveAppointment } from '../../data/portalData';
+import { updateAppointmentStatus, saveAppointment } from '../../data/portalData';
 import { apiGetAppointments, apiUpdateAppointmentStatus, apiCreateAppointment } from '../../services/apiClient';
 import { AdvocateResponseTimer } from './AdvocateResponseTimer';
 
@@ -19,7 +19,7 @@ export function MyAppointmentsPage({
   onNavigate,
 }: MyAppointmentsPageProps) {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed' | 'cancelled'>('upcoming');
-  const [appointments, setAppointments] = useState<Appointment[]>(() => getStoredAppointments());
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [rescheduleModalApt, setRescheduleModalApt] = useState<Appointment | null>(null);
   const [newDate, setNewDate] = useState('');
@@ -29,14 +29,14 @@ export function MyAppointmentsPage({
   const refreshAppointments = async () => {
     try {
       const serverApts = await apiGetAppointments();
-      if (serverApts && serverApts.length > 0) {
+      if (serverApts) {
         setAppointments(serverApts);
         return;
       }
     } catch (e) {
       // fallback
     }
-    setAppointments(getStoredAppointments());
+    setAppointments([]);
   };
 
   useEffect(() => {

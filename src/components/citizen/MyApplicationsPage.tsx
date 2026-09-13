@@ -5,7 +5,6 @@ import {
   Calendar, UserCheck, X, FileCode
 } from 'lucide-react';
 import { Language, AppRoute, Application } from '../../types';
-import { getStoredApplications } from '../../data/portalData';
 import { apiGetApplications } from '../../services/apiClient';
 
 interface MyApplicationsPageProps {
@@ -17,7 +16,7 @@ export function MyApplicationsPage({
   language,
   onNavigate,
 }: MyApplicationsPageProps) {
-  const [applications, setApplications] = useState<Application[]>(() => getStoredApplications());
+  const [applications, setApplications] = useState<Application[]>([]);
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
   const [copiedDraft, setCopiedDraft] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>('All');
@@ -27,7 +26,7 @@ export function MyApplicationsPage({
     async function loadApplications() {
       try {
         const serverApps = await apiGetApplications();
-        if (serverApps && serverApps.length > 0) {
+        if (serverApps) {
           setApplications(serverApps);
         }
       } catch (e) {

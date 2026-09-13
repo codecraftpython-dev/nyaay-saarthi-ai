@@ -171,10 +171,14 @@ export async function apiUpdateAppointmentStatus(
   }
 }
 
-export async function apiGetApplications(userId?: string): Promise<Application[]> {
+export async function apiGetApplications(userId?: string, advocateId?: string): Promise<Application[]> {
   try {
-    const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-    const res = await fetch(`/api/applications${query}`);
+    const query = new URLSearchParams();
+    if (userId) query.set('userId', userId);
+    if (advocateId) query.set('advocateId', advocateId);
+    
+    const queryString = query.toString() ? `?${query.toString()}` : '';
+    const res = await fetch(`/api/applications${queryString}`);
     if (!res.ok) return [];
     const data = await res.json();
     return data.applications || [];
@@ -183,8 +187,22 @@ export async function apiGetApplications(userId?: string): Promise<Application[]
   }
 }
 
+export async function apiUpdateApplicationStatus(
+  id: string, 
+  updates: { status?: string; acceptanceStatus?: string }
+): Promise<void> {
+  try {
+    await fetch(`/api/applications/${encodeURIComponent(id)}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates),
+    });
+  } catch (e) {
+    console.warn('Backend application status update failed:', e);
+  }
+}
+
 export async function apiCreateApplication(app: Application): Promise<Application> {
-  // Sync to local cache first
   saveLocalApplication(app);
 
   try {

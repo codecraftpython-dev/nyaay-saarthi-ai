@@ -43,7 +43,7 @@ export function AdvocateDiscoveryPage({
     async function loadAdvocates() {
       try {
         const data = await apiGetAdvocates();
-        if (data && data.length > 0) {
+        if (data) {
           setAdvocatesList(data);
         }
       } catch (e) {

@@ -9,7 +9,7 @@ import {
 import { Language, AppRoute, AuthUser } from '../../types';
 import { AnimatedGlassBackground } from '../AnimatedGlassBackground';
 import { AiAssistantPage } from '../citizen/AiAssistantPage';
-import { apiGetAdvocateProfile, apiUpdateAdvocateProfile } from '../../services/apiClient';
+import { apiGetAdvocateProfile, apiUpdateAdvocateProfile, apiGetApplications, apiUpdateApplicationStatus } from '../../services/apiClient';
 import { saveStoredUser } from '../../data/portalData';
 import logoImg from '../../assets/images/nyaay_sarathi_logo_1787153284213.jpg';
 
@@ -35,118 +35,12 @@ interface ConsultationRequest {
   attachments?: string[];
 }
 
-const INITIAL_REQUESTS: ConsultationRequest[] = [
-  {
-    id: 'req-101',
-    citizenName: 'Rajesh Kumar',
-    citizenNameHi: 'राजेश कुमार',
-    avatarColor: 'from-sky-500 to-blue-600',
-    initials: 'RK',
-    category: 'Cybercrime & Banking Fraud',
-    categoryHi: 'साइबर अपराध व बैंकिंग धोखाधड़ी',
-    categoryType: 'cybercrime',
-    summary: 'Unauthorized debit of ₹65,000 via fraudulent banking APK. Bank refused chargeback claim citing OTP transmission. Need urgent legal notice under RBI Ombudsman Scheme & Section 43/66 IT Act.',
-    summaryHi: 'फर्जी बैंकिंग ऐप द्वारा ₹65,000 की अनधिकृत निकासी। बैंक ने ओटीपी का हवाला देकर दावा खारिज किया। आरबीआई लोकपाल योजना व आईटी एक्ट के तहत कानूनी नोटिस की आवश्यकता है।',
-    city: 'New Delhi, DL',
-    timeAgo: '15 mins ago',
-    timeAgoHi: '15 मिनट पहले',
-    preferredMode: 'Video Consultation',
-    preferredModeHi: 'वीडियो परामर्श',
-    urgency: 'High',
-    status: 'pending',
-    attachments: ['Bank_Complaint_Ref.pdf', 'Transaction_SMS_Log.png']
-  },
-  {
-    id: 'req-102',
-    citizenName: 'Priya Sharma',
-    citizenNameHi: 'प्रिया शर्मा',
-    avatarColor: 'from-emerald-500 to-teal-600',
-    initials: 'PS',
-    category: 'Property Dispute & Title Verification',
-    categoryHi: 'संपत्ति विवाद व स्वामित्व सत्यापन',
-    categoryType: 'property',
-    summary: 'Builder in Noida Sector 76 delayed possession by 32 months and demands illegal escalation charges. Seeking advice on filing Section 18 RERA complaint and refund of ₹14.5 Lakh with interest.',
-    summaryHi: 'नोएडा सेक्टर 76 में बिल्डर ने 32 महीने से पजेशन रोका और अतिरिक्त शुल्क की मांग कर रहा है। रेरा (RERA) धारा 18 के तहत शिकायत व ₹14.5 लाख रिफंड पर सलाह चाहिए।',
-    city: 'Noida, UP',
-    timeAgo: '42 mins ago',
-    timeAgoHi: '42 मिनट पहले',
-    preferredMode: 'Document Scrutiny',
-    preferredModeHi: 'दस्तावेज़ समीक्षा',
-    urgency: 'Medium',
-    status: 'pending',
-    attachments: ['Builder_Allotment_Letter.pdf', 'Payment_Receipts.pdf']
-  },
-  {
-    id: 'req-103',
-    citizenName: 'Amit Patel',
-    citizenNameHi: 'अमित पटेल',
-    avatarColor: 'from-amber-500 to-orange-600',
-    initials: 'AP',
-    category: 'Consumer Grievance & Defective Product',
-    categoryHi: 'उपभोक्ता शिकायत व दोषपूर्ण उत्पाद',
-    categoryType: 'consumer',
-    summary: 'Commercial 10kVA solar inverter unit delivered with internal coil damage. Manufacturer refusing replacement despite 3-year warranty. Seeking guidance on Consumer Commission District Forum filing.',
-    summaryHi: '10kVA सोलर इन्वर्टर यूनिट क्षतिग्रस्त अवस्था में डिलीवर हुई। 3 वर्ष की वारंटी के बावजूद कंपनी बदलने से मना कर रही है। जिला उपभोक्ता आयोग में वाद दायर करने हेतु सहायता चाहिए।',
-    city: 'Ahmedabad, GJ',
-    timeAgo: '1 hour ago',
-    timeAgoHi: '1 घंटा पहले',
-    preferredMode: 'Video Consultation',
-    preferredModeHi: 'वीडियो परामर्श',
-    urgency: 'Normal',
-    status: 'pending',
-    attachments: ['Purchase_Invoice_Warranty.pdf']
-  },
-  {
-    id: 'req-104',
-    citizenName: 'Sunita Verma',
-    citizenNameHi: 'सुनीता वर्मा',
-    avatarColor: 'from-violet-500 to-purple-600',
-    initials: 'SV',
-    category: 'Tenancy & Security Deposit Recovery',
-    categoryHi: 'किरायेदारी व सिक्योरिटी डिपोज़िट वसूली',
-    categoryType: 'tenancy',
-    summary: 'Landlord wrongfully withholding ₹1,20,000 security deposit for apartment in Indiranagar after giving proper 30-day notice. Seeking draft of formal legal demand notice under Model Tenancy Act principles.',
-    summaryHi: '30 दिन का नोटिस देने के बाद भी मकान मालिक ₹1,20,000 की सिक्योरिटी डिपोज़िट नहीं लौटा रहा। औपचारिक कानूनी नोटिस प्रारूप व मार्गदर्शन की आवश्यकता।',
-    city: 'Bengaluru, KA',
-    timeAgo: '2 hours ago',
-    timeAgoHi: '2 घंटे पहले',
-    preferredMode: 'Phone Call',
-    preferredModeHi: 'फ़ोन कॉल',
-    urgency: 'Medium',
-    status: 'pending',
-    attachments: ['Rental_Agreement_Executed.pdf']
-  },
-  {
-    id: 'req-105',
-    citizenName: 'Rohan Mehta',
-    citizenNameHi: 'रोहन मेहता',
-    avatarColor: 'from-rose-500 to-pink-600',
-    initials: 'RM',
-    category: 'Cheque Bounce (Sec 138 NI Act)',
-    categoryHi: 'चेक बाउंस (धारा 138 एनआई एक्ट)',
-    categoryType: 'cheque',
-    summary: 'Business partner issued ₹4,50,000 cheque towards vendor settlement which bounced with memo "Funds Insufficient". 15-day statutory notice period is expiring in 4 days.',
-    summaryHi: 'व्यावसायिक सहयोगी द्वारा जारी ₹4,50,000 का चेक "फंड्स इनसफिशिएंट" के साथ बाउंस हुआ। 15-दिवसीय वैधानिक नोटिस अवधि 4 दिनों में समाप्त हो रही है।',
-    city: 'Mumbai, MH',
-    timeAgo: '3 hours ago',
-    timeAgoHi: '3 घंटे पहले',
-    preferredMode: 'Video Consultation',
-    preferredModeHi: 'वीडियो परामर्श',
-    urgency: 'High',
-    status: 'pending',
-    attachments: ['Dishonoured_Cheque_Scan.pdf', 'Bank_Return_Memo.pdf']
-  }
-];
+const INITIAL_REQUESTS: ConsultationRequest[] = [];
 
 const BNS_REFERENCE_DATA = [
-  { ipc: '420', ipcTitle: 'Cheating and dishonestly inducing delivery of property', bns: '318(4)', bnsTitle: 'Cheating', description: 'Punishment extends up to 7 years with fine.' },
-  { ipc: '302', ipcTitle: 'Punishment for murder', bns: '103(1)', bnsTitle: 'Murder', description: 'Death or imprisonment for life, and liable to fine.' },
-  { ipc: '376', ipcTitle: 'Punishment for rape', bns: '64', bnsTitle: 'Rape', description: 'Rigorous imprisonment not less than 10 years extending to life.' },
-  { ipc: '304A', ipcTitle: 'Causing death by negligence', bns: '106(1)', bnsTitle: 'Death by Rash/Negligent Act', description: 'Imprisonment up to 5 years and fine.' },
-  { ipc: '500', ipcTitle: 'Punishment for defamation', bns: '356', bnsTitle: 'Defamation', description: 'Simple imprisonment up to 2 years, or fine, or community service.' },
-  { ipc: '379', ipcTitle: 'Punishment for theft', bns: '303(2)', bnsTitle: 'Theft', description: 'Imprisonment up to 3 years, or fine, or both (community service for petty theft).' },
-  { ipc: '498A', ipcTitle: 'Husband or relative subjecting woman to cruelty', bns: '85', bnsTitle: 'Cruelty to Woman', description: 'Imprisonment up to 3 years and liable to fine.' },
-  { ipc: '124A', ipcTitle: 'Sedition (Old IPC)', bns: '152', bnsTitle: 'Acts endangering sovereignty, unity and integrity of India', description: 'Replaced sedition with offense against state integrity.' },
+  { ipc: "420", ipcTitle: "Cheating", bns: "318(4)", bnsTitle: "Cheating", description: "Cheating and dishonestly inducing delivery of property" },
+  { ipc: "302", ipcTitle: "Murder", bns: "103(1)", bnsTitle: "Punishment for Murder", description: "Whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine." },
+  { ipc: "376", ipcTitle: "Rape", bns: "64", bnsTitle: "Punishment for rape", description: "Whoever commits rape shall be punished with rigorous imprisonment." }
 ];
 
 interface AdvocateDashboardPageProps {
@@ -170,6 +64,7 @@ export function AdvocateDashboardPage({
 }: AdvocateDashboardPageProps) {
   // Requests state
   const [requests, setRequests] = useState<ConsultationRequest[]>(INITIAL_REQUESTS);
+  const [requestsLoading, setRequestsLoading] = useState(false);
   const [filterTab, setFilterTab] = useState<'all' | 'pending' | 'accepted' | 'rejected'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'feed' | 'history' | 'bns' | 'chat'>(initialView);
@@ -246,6 +141,39 @@ export function AdvocateDashboardPage({
             city: adv.city || u.city || user.city || '',
             state: adv.state || u.state || user.state || '',
           });
+
+          // Fetch applications for this advocate
+          const apps = await apiGetApplications(undefined, adv.id);
+          if (isMounted) {
+             const mappedRequests = apps.map(app => ({
+                id: app.id,
+                citizenName: app.citizenName || 'Citizen',
+                citizenNameHi: app.citizenName || 'नागरिक',
+                avatarColor: 'from-sky-500 to-blue-600',
+                initials: (app.citizenName || 'CZ').substring(0, 2).toUpperCase(),
+                category: app.category,
+                categoryHi: app.category,
+                categoryType: 'consumer' as any,
+                summary: app.description,
+                summaryHi: app.description,
+                city: 'Online',
+                timeAgo: 'Just now',
+                timeAgoHi: 'अभी-अभी',
+                preferredMode: 'Video Consultation' as const,
+                preferredModeHi: 'वीडियो परामर्श',
+                urgency: 'Medium' as const,
+                status: ((app.acceptanceStatus?.toLowerCase() === 'accepted' || app.status?.toLowerCase() === 'in progress') 
+                  ? 'accepted' 
+                  : (app.acceptanceStatus?.toLowerCase() === 'rejected' ? 'rejected' : 'pending')) as 'pending' | 'accepted' | 'rejected',
+                scheduledTime: app.appointmentDate && app.appointmentTime ? `${app.appointmentDate} ${app.appointmentTime}` : undefined,
+                attachments: []
+             }));
+             
+             if (mappedRequests) {
+               setRequests(mappedRequests);
+             }
+             setRequestsLoading(false);
+          }
         }
       } catch (err: any) {
         console.error('[AdvocateDashboard] Error loading profile from database:', err);
@@ -286,21 +214,22 @@ export function AdvocateDashboardPage({
   }, []);
 
   // Handle Accepting a Consultation Request
-  const handleAcceptRequest = (id: string) => {
+  const handleAcceptRequest = async (id: string) => {
     setRequests(prev => prev.map(req => {
       if (req.id === id) {
         return {
           ...req,
           status: 'accepted',
-          scheduledTime: 'Today at 5:00 PM (Video Room Ready)',
+          scheduledTime: req.scheduledTime || 'Today at 5:00 PM (Video Room Ready)',
         };
       }
       return req;
     }));
+    await apiUpdateApplicationStatus(id, { acceptanceStatus: 'Accepted', status: 'In Progress' });
   };
 
   // Handle Rejecting a Consultation Request
-  const handleRejectRequest = (id: string) => {
+  const handleRejectRequest = async (id: string) => {
     setRequests(prev => prev.map(req => {
       if (req.id === id) {
         return {
@@ -310,6 +239,7 @@ export function AdvocateDashboardPage({
       }
       return req;
     }));
+    await apiUpdateApplicationStatus(id, { acceptanceStatus: 'Rejected', status: 'Rejected' });
   };
 
   // Handle Undo of Accept / Reject

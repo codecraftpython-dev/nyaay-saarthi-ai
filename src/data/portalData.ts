@@ -3,7 +3,6 @@ import { Advocate, LegalRight, Application, Appointment, SavedResource, ChatMess
 export const DEFAULT_CITIZEN_AVATAR = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%230284C7"><circle cx="50" cy="50" r="50" fill="%23E0F2FE"/><circle cx="50" cy="38" r="18" fill="%230284C7"/><path d="M18 85 C22 64 36 58 50 58 C64 58 78 64 82 85 Z" fill="%230284C7"/></svg>`;
 
 export const INITIAL_ADVOCATES: Advocate[] = [
-
   {
     id: "adv-1",
     name: "Adv. Priya Sharma",
@@ -27,196 +26,57 @@ export const INITIAL_ADVOCATES: Advocate[] = [
     barEnrollment: "D/1420/2015 (Bar Council of Delhi)",
     courts: "Delhi High Court, Patiala House Courts, Saket District Court, NCDRC",
     pastCasesSummary: "Resolved over 210+ consumer compensation claims and recovered ₹1.8 Cr for defrauded retail clients.",
-    reviews: [
-      {
-        author: "Alok Nambiar",
-        rating: 5,
-        date: "14 Aug 2026",
-        comment: "Adv. Priya provided clear guidance on my E-Daakhil consumer notice. Very patient and articulate."
-      },
-      {
-        author: "Meenakshi Sundaram",
-        rating: 5,
-        date: "02 Aug 2026",
-        comment: "Helped our family recover our withheld apartment security deposit within a week."
-      }
-    ]
+    reviews: []
   },
   {
     id: "adv-2",
-    name: "Adv. Vikram Singhania",
-    email: "vikram.singhania@mumbaicourt.org",
-    phone: "+91 98200 98765",
+    name: "Adv. Rajesh Iyer",
+    email: "rajesh.iyer.law@gmail.com",
+    phone: "+91 98400 11223",
     isVerified: true,
-    practiceAreas: ["Property & Tenancy", "Civil Law", "Commercial Law"],
-    courtLevels: ["High Court", "Supreme Court", "District Court"],
-    experience: "14+ Years Experience",
-    experienceYears: 14,
+    practiceAreas: ["Family Law", "Property Law", "Civil Law"],
+    courtLevels: ["High Court", "District Court", "Family Court"],
+    experience: "15+ Years Experience",
+    experienceYears: 15,
     location: "Mumbai, Maharashtra",
     city: "Mumbai",
     state: "Maharashtra",
-    languages: ["English", "Hindi", "Marathi"],
+    languages: ["English", "Marathi", "Hindi"],
     consultationFee: 1200,
     rating: 4.8,
-    reviewCount: 198,
-    availability: "Today",
-    about: "Advocate-on-Record practising before Bombay High Court & City Civil Court. Expert in RERA property title verification, builder delay compensation, eviction notices, and family partition deeds.",
-    education: "B.A. LL.B. (Hons) - Government Law College (GLC), Mumbai",
-    barEnrollment: "MAH/2311/2010 (Bar Council of Maharashtra & Goa)",
-    courts: "Bombay High Court, City Civil Court Fort, Dindoshi Sessions Court, MahaRERA",
-    pastCasesSummary: "Handled 150+ successful RERA & Tenancy adjudications for home buyers.",
-    reviews: [
-      {
-        author: "Kavita Rao",
-        rating: 5,
-        date: "19 Aug 2026",
-        comment: "Excellent advice on RERA builder possession delay. Saved us from a bad clause."
-      }
-    ]
+    reviewCount: 89,
+    availability: "Next Available: Tomorrow",
+    about: "Expert in family disputes, divorce settlements, child custody, and ancestral property partition. Focuses on out-of-court settlements and mediation.",
+    education: "LL.B. (Government Law College, Mumbai)",
+    barEnrollment: "MAH/789/2008 (Bar Council of Maharashtra & Goa)",
+    courts: "Bombay High Court, Bandra Family Court",
+    pastCasesSummary: "Successfully mediated 300+ family disputes and property partitions.",
+    reviews: []
   },
   {
     id: "adv-3",
     name: "Adv. Arvind Swaminathan",
-    email: "swaminathan.law@chennaibar.org",
+    email: "arvind.swami.legal@yahoo.com",
     phone: "+91 94440 11223",
     isVerified: true,
-    practiceAreas: ["Labour & Employment", "Cyber Law", "Constitutional Law"],
-    courtLevels: ["High Court", "District Court", "Other Courts / Forums"],
-    experience: "8+ Years Experience",
-    experienceYears: 8,
-    location: "Bengaluru & Chennai",
-    city: "Bengaluru",
-    state: "Karnataka",
-    languages: ["English", "Tamil", "Kannada", "Hindi"],
-    consultationFee: 600,
-    rating: 4.9,
-    reviewCount: 88,
-    availability: "Available Today",
-    about: "Advocate dedicated to employee rights, unlawful termination, unpaid wages/severance recovery, IT workplace harassment (POSH), and IT Act data theft issues.",
-    education: "LL.B. (NLSIU Bengaluru), PG Diploma in Cyber Law",
-    barEnrollment: "KAR/891/2016 (Bar Council of Karnataka)",
-    courts: "Karnataka High Court, City Civil Court Bengaluru, Labour Court",
-    pastCasesSummary: "Assisted 120+ IT and corporate professionals in wage settlements and wrongful dismissal claims."
-  },
-  {
-    id: "adv-4",
-    name: "Adv. Neha Choudhary",
-    email: "neha.choudhary@rajasthanbar.com",
-    phone: "+91 97820 44556",
-    isVerified: true,
-    practiceAreas: ["Family & Matrimonial", "Women Rights", "Civil Law"],
-    courtLevels: ["District Court", "High Court"],
-    experience: "11+ Years Experience",
-    experienceYears: 11,
-    location: "Jaipur, Rajasthan",
-    city: "Jaipur",
-    state: "Rajasthan",
-    languages: ["Hindi", "English"],
-    consultationFee: 500,
-    rating: 4.9,
-    reviewCount: 165,
-    availability: "Available Today",
-    about: "Specialist in Family Court proceedings, mutual divorce, maintenance rights under Sec 125 CrPC / BNSS, Domestic Violence Act protections, and child custody arrangements with empathetic guidance.",
-    education: "LL.B., LL.M. (University of Rajasthan)",
-    barEnrollment: "R/1190/2013 (Bar Council of Rajasthan)",
-    courts: "Rajasthan High Court Bench Jaipur, Family Court Jaipur, Sessions Court",
-    pastCasesSummary: "Resolved 250+ family disputes with emphasis on amicable mediation."
-  },
-  {
-    id: "adv-5",
-    name: "Adv. Tariq Mansoori",
-    email: "tariq.mansoori@lucknowbar.in",
-    phone: "+91 94150 77889",
-    isVerified: true,
-    practiceAreas: ["Criminal Law", "Police & Bail", "Constitutional Law"],
-    courtLevels: ["High Court", "Supreme Court", "District Court"],
-    experience: "16+ Years Experience",
-    experienceYears: 16,
-    location: "Lucknow & Prayagraj, UP",
-    city: "Lucknow",
-    state: "Uttar Pradesh",
-    languages: ["Hindi", "Urdu", "English"],
-    consultationFee: 1000,
-    rating: 4.8,
-    reviewCount: 210,
-    availability: "Next Available: Tomorrow",
-    about: "Practising criminal defence advocate before Allahabad High Court (Lucknow Bench). Expert in Anticipatory Bail, Regular Bail under BNSS, Zero FIR enforcement, and quashing of frivolous criminal complaints.",
-    education: "B.A. LL.B. (AMU Aligarh), Advocate-on-Record",
-    barEnrollment: "UP/4512/2008 (Bar Council of Uttar Pradesh)",
-    courts: "Allahabad High Court, Lucknow District & Sessions Court",
-    pastCasesSummary: "Secured over 300+ bail grants and represented citizens in arbitrary arrest petitions."
-  },
-  {
-    id: "adv-6",
-    name: "Adv. Ananya Sen",
-    email: "ananya.sen@calcuttabar.org",
-    phone: "+91 98300 33445",
-    isVerified: true,
-    practiceAreas: ["Banking & Financial", "Consumer Law", "Cyber Law"],
-    courtLevels: ["High Court", "District Court", "Other Courts / Forums"],
-    experience: "7+ Years Experience",
-    experienceYears: 7,
-    location: "Kolkata, West Bengal",
-    city: "Kolkata",
-    state: "West Bengal",
-    languages: ["Bengali", "English", "Hindi"],
-    consultationFee: 500,
+    practiceAreas: ["Cyber Law", "Labour & Wages", "Corporate Law"],
+    courtLevels: ["Supreme Court", "High Court", "Tribunals"],
+    experience: "12+ Years Experience",
+    experienceYears: 12,
+    location: "Chennai, Tamil Nadu",
+    city: "Chennai",
+    state: "Tamil Nadu",
+    languages: ["English", "Tamil"],
+    consultationFee: 1500,
     rating: 4.7,
-    reviewCount: 94,
+    reviewCount: 215,
     availability: "Available Today",
-    about: "Specialized in banking fraud, unauthorised UPI withdrawals, loan recovery harassment by digital lenders (RBI Fair Practices Code), and SARFAESI notices.",
-    education: "LL.B. (University of Calcutta)",
-    barEnrollment: "WB/742/2017 (Bar Council of West Bengal)",
-    courts: "Calcutta High Court, Bankshall Court, DRT Kolkata, District Consumer Forum",
-    pastCasesSummary: "Successfully stalled illegal recovery agent actions for 80+ families and reversed phishing losses."
-  },
-  {
-    id: "adv-7",
-    name: "Adv. Harpreet Singh",
-    email: "harpreet.law@chandigarhcourt.org",
-    phone: "+91 98880 55667",
-    isVerified: true,
-    practiceAreas: ["Property & Tenancy", "Criminal Law", "Civil Law"],
-    courtLevels: ["High Court", "District Court"],
-    experience: "10+ Years Experience",
-    experienceYears: 10,
-    location: "Chandigarh, Punjab & Haryana",
-    city: "Chandigarh",
-    state: "Punjab",
-    languages: ["Punjabi", "Hindi", "English"],
-    consultationFee: 700,
-    rating: 4.8,
-    reviewCount: 112,
-    availability: "This Week",
-    about: "Practising in Punjab & Haryana High Court. Specialist in agricultural land disputes, property mutations, unauthorized encroachments, and rent disputes under the East Punjab Urban Rent Restriction Act.",
-    education: "LL.B. (Panjab University, Chandigarh)",
-    barEnrollment: "P/928/2014 (Bar Council of Punjab & Haryana)",
-    courts: "Punjab & Haryana High Court, District Courts Sector 43 Chandigarh",
-    pastCasesSummary: "Helped 90+ non-resident and local citizens safeguard ancestral property."
-  },
-  {
-    id: "adv-8",
-    name: "Adv. K. Venkatraman",
-    email: "venkat.law@supremecourtofindia.in",
-    phone: "+91 98110 88990",
-    isVerified: true,
-    practiceAreas: ["Constitutional Law", "Supreme Court Special Leave", "Civil Law"],
-    courtLevels: ["Supreme Court", "High Court"],
-    experience: "22+ Years Experience",
-    experienceYears: 22,
-    location: "New Delhi & Hyderabad",
-    city: "New Delhi",
-    state: "Delhi",
-    languages: ["English", "Telugu", "Hindi"],
-    consultationFee: 2000,
-    rating: 5.0,
-    reviewCount: 310,
-    availability: "Next Available: Tomorrow",
-    about: "Senior Advocate-on-Record at the Supreme Court of India. Renowned for constitutional writ petitions (Articles 32 & 226), Special Leave Petitions (SLPs), and high-stake appellate review.",
-    education: "LL.B. (Osmania University), Master of Laws (Oxford)",
-    barEnrollment: "D/312/2002 (Bar Council of Delhi & SCBA)",
-    courts: "Supreme Court of India, Delhi High Court, Telangana High Court",
-    pastCasesSummary: "Argued 400+ appellate petitions before Supreme Court Constitutional benches."
+    about: "Leading cyber security and labour law advocate. Specializes in employment termination disputes, PF/gratuity claims, and corporate digital fraud.",
+    education: "LL.B., PGD in Cyber Law (NALSAR)",
+    barEnrollment: "MS/1122/2011 (Bar Council of Tamil Nadu)",
+    courts: "Madras High Court, Labour Courts Chennai",
+    pastCasesSummary: "Represented major IT unions and secured unpaid dues for over 500 tech workers.",
+    reviews: []
   }
 ];
 
@@ -369,129 +229,9 @@ export const INITIAL_LEGAL_RIGHTS: LegalRight[] = [
   }
 ];
 
-export const INITIAL_APPLICATIONS: Application[] = [
-  {
-    id: "app-1024",
-    applicationId: "NS-1024",
-    userId: "demo_citizen",
-    advocateId: "adv-1",
-    advocateName: "Adv. Priya Sharma",
-    advocateContact: "+91 98101 23456",
-    category: "Consumer Complaint",
-    description: "Defective commercial laptop purchased online. Vendor refused refund citing 7-day policy. Drafting statutory notice & E-Daakhil claim.",
-    appointmentId: "apt-101",
-    appointmentDate: "22 Aug 2026",
-    appointmentTime: "04:00 PM",
-    fee: 750,
-    paymentStatus: "Paid",
-    acceptanceStatus: "Accepted",
-    status: "Under Review",
-    timeline: [
-      { stage: "Created", title: "Application Created", description: "Citizen logged initial inquiry and problem summary", status: "completed", date: "20 Aug 2026, 11:32 AM" },
-      { stage: "Documents", title: "Documents Added", description: "Tax invoice, warranty card & email transcripts attached", status: "completed", date: "20 Aug 2026, 02:15 PM" },
-      { stage: "Appointment", title: "Appointment Scheduled", description: "Video consultation confirmed with Adv. Priya Sharma", status: "completed", date: "21 Aug 2026, 10:00 AM" },
-      { stage: "Advocate Review", title: "Advocate Review", description: "Advocate reviewing purchase terms and drafting formal 15-day notice", status: "current", date: "21 Aug 2026, 03:30 PM" },
-      { stage: "Submitted", title: "Notice Dispatched / E-Daakhil Filed", description: "Final complaint submission to relevant consumer commission", status: "pending" },
-      { stage: "Authority Review", title: "Authority Review", description: "Notice response from counterparty or hearing date listing", status: "pending" },
-      { stage: "Resolved", title: "Resolution & Settlement", description: "Full refund or order compliance achieved", status: "pending" },
-    ],
-    draftDocument: `LEGAL NOTICE UNDER SECTION 35 OF THE CONSUMER PROTECTION ACT, 2019
+export const INITIAL_APPLICATIONS: Application[] = [];
 
-To,
-The Managing Director,
-NexTech Electronics Private Limited,
-Warehouse Block C, Okhla Industrial Area, New Delhi - 110020
-
-SUBJECT: DEMAND FOR REFUND OF ₹84,999/- ALONG WITH COMPENSATION FOR DEFICIENT SERVICE AND SUPPLY OF DEFECTIVE PRODUCT (ORDER #NX-98212).
-
-Sir/Madam,
-Under instructions from our client, Rajesh Kumar, residing at New Delhi, we hereby serve you with this formal Legal Notice:
-
-1. That on 10th August 2026, our client placed an order for one UltraPro Business Laptop against invoice amount of ₹84,999/-.
-2. That upon delivery, the machine failed to power on and exhibited motherboard failure, verified by your own technician inspection report dated 12th August 2026.
-3. That contrary to statutory mandates under Section 84 of the Consumer Protection Act 2019, your customer grievance desk arbitrarily denied replacement/refund.
-
-TAKE NOTICE that you are hereby called upon to refund the full sum of ₹84,999/- along with ₹15,000/- towards mental agony within 15 (fifteen) days of receipt of this notice, failing which our client shall initiate appropriate E-Daakhil proceedings before the District Consumer Disputes Redressal Commission at your sole risk and costs.
-
-Adv. Priya Sharma (Enrolment No: D/1420/2015)
-Counsel for the Complainant`,
-    createdAt: "2026-08-20T11:32:00.000Z",
-    updatedAt: "2026-08-21T03:30:00.000Z"
-  },
-  {
-    id: "app-1019",
-    applicationId: "NS-1019",
-    userId: "demo_citizen",
-    advocateId: "adv-3",
-    advocateName: "Adv. Arvind Swaminathan",
-    advocateContact: "+91 94440 11223",
-    category: "Cyber Financial Fraud",
-    description: "Phishing transaction of ₹42,000 on debit card. 1930 acknowledgement number CFC-2026-9812 generated. Bank lien freeze tracking.",
-    appointmentDate: "18 Aug 2026",
-    appointmentTime: "11:30 AM",
-    fee: 600,
-    paymentStatus: "Paid",
-    acceptanceStatus: "Accepted",
-    status: "In Progress",
-    timeline: [
-      { stage: "Created", title: "Application Created", description: "Reported unauthorized debits and SMS links", status: "completed", date: "17 Aug 2026" },
-      { stage: "Documents", title: "Documents Added", description: "Bank statement, fraudulent SMS screenshots uploaded", status: "completed", date: "17 Aug 2026" },
-      { stage: "Appointment", title: "Appointment Scheduled", description: "Consultation on nodal bank escalation completed", status: "completed", date: "18 Aug 2026" },
-      { stage: "Advocate Review", title: "Advocate Review", description: "Drafted formal representation to Bank Nodal Officer & RBI Ombudsman", status: "completed", date: "19 Aug 2026" },
-      { stage: "Submitted", title: "Application Submitted", description: "Representation dispatched via registered post and RBI CMS portal", status: "current", date: "20 Aug 2026" },
-      { stage: "Authority Review", title: "Authority Review", description: "Awaiting Bank Ombudsman zero-liability review under RBI Circular 2017", status: "pending" },
-      { stage: "Resolved", title: "Resolved", description: "Funds credited back to citizen account", status: "pending" },
-    ],
-    createdAt: "2026-08-17T09:15:00.000Z",
-    updatedAt: "2026-08-20T14:20:00.000Z"
-  }
-];
-
-export const INITIAL_APPOINTMENTS: Appointment[] = [
-  {
-    id: "apt-101",
-    userId: "demo_citizen",
-    userName: "Rajesh Kumar",
-    userEmail: "rajesh.kumar@gmail.com",
-    userPhone: "+91 9876543210",
-    advocateId: "adv-1",
-    advocateName: "Adv. Priya Sharma",
-    advocateSpecialty: "Consumer Law • Cyber Law",
-    advocatePhone: "+91 98101 23456",
-    category: "Consumer Complaint",
-    courtLevel: "District Court & Consumer Forum",
-    date: "2026-08-22",
-    time: "04:00 PM",
-    consultationType: "Video",
-    issue: "Product purchased online was defective and seller refused replacement.",
-    fee: 750,
-    status: "upcoming",
-    meetingLink: "https://meet.google.com/nya-ay-sarathi-session-101",
-    applicationId: "NS-1024",
-    createdAt: "2026-08-20T11:35:00.000Z"
-  },
-  {
-    id: "apt-102",
-    userId: "demo_citizen",
-    userName: "Rajesh Kumar",
-    userEmail: "rajesh.kumar@gmail.com",
-    userPhone: "+91 9876543210",
-    advocateId: "adv-3",
-    advocateName: "Adv. Arvind Swaminathan",
-    advocateSpecialty: "Cyber Law • Labour & Wages",
-    advocatePhone: "+91 94440 11223",
-    category: "Cyber Financial Fraud",
-    courtLevel: "Other Courts / Forums",
-    date: "2026-08-18",
-    time: "11:30 AM",
-    consultationType: "Audio",
-    issue: "Golden hour reporting and bank lien freeze coordination for unauthorized UPI transaction.",
-    fee: 600,
-    status: "completed",
-    applicationId: "NS-1019",
-    createdAt: "2026-08-17T09:20:00.000Z"
-  }
-];
+export const INITIAL_APPOINTMENTS: Appointment[] = [];
 
 // LocalStorage helpers
 const USER_KEY = 'nyay_saathi_user';
@@ -501,18 +241,7 @@ const SAVED_KEY = 'nyay_saathi_saved_resources';
 const CHAT_KEY = 'nyay_saathi_chat_history';
 const FEEDBACK_KEY = 'nyay_saathi_feedback';
 
-export const INITIAL_FEEDBACKS: AdvocateFeedback[] = [
-  {
-    id: 'fb-1',
-    userId: 'demo_citizen',
-    userName: 'Rajesh Kumar',
-    advocateName: 'Adv. Priya Sharma',
-    rating: 4.8,
-    caseInformation: 'Consumer Notice & E-Daakhil Laptop Defect Claim (NS-1024)',
-    review: 'Adv. Priya was extremely patient and clearly explained the statutory 15-day notice format. The entire process was transparent and reassuring.',
-    createdAt: '21 Aug 2026'
-  }
-];
+export const INITIAL_FEEDBACKS: AdvocateFeedback[] = [];
 
 export function getStoredFeedback(): AdvocateFeedback[] {
   if (typeof window === 'undefined') return INITIAL_FEEDBACKS;

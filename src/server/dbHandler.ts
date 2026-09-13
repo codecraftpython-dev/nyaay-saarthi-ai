@@ -158,6 +158,7 @@ function formatApplicationRow(row: any): Application {
     id: row.id,
     applicationId: row.application_id,
     userId: row.user_id,
+    citizenName: row.citizen_name || 'Citizen',
     advocateId: row.advocate_id || '',
     advocateName: row.advocate_name || '',
     advocateContact: row.advocate_contact || '',
@@ -230,12 +231,11 @@ export async function handleRegister(req: Request, res: Response) {
       return;
     }
 
+    await initDatabase();
     const pool = getPool();
     const passwordHash = await bcrypt.hash(password, 10);
     const userId = (cleanRole === 'advocate' ? 'adv_' : 'usr_') + Date.now().toString().slice(-6);
-
     if (pool) {
-      await initDatabase();
 
       // Check for existing account
       const existing = await pool.query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [cleanEmail]);
@@ -434,10 +434,9 @@ export async function handleLogin(req: Request, res: Response) {
       return;
     }
 
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
 
       const userRes = await pool.query('SELECT * FROM users WHERE LOWER(email) = LOWER($1)', [cleanEmail]);
       if (userRes.rows.length === 0) {
@@ -532,51 +531,34 @@ export async function handleLogin(req: Request, res: Response) {
           role: 'citizen',
           createdAt: new Date().toISOString(),
         };
+        memoryUsers.set('demo_citizen', { user: demoUser, password: 'Citizen@2026' });
         res.json({ user: demoUser, advocate: null });
         return;
       }
 
-      if (cleanEmail === 'adv.vikram.sharma@delhibar.org' && password === 'Advocate@2026') {
+      const matchAdv = INITIAL_ADVOCATES.find(a => a.email.toLowerCase() === cleanEmail);
+      if (matchAdv && password === 'Advocate@2026') {
+        const advId = `user_${matchAdv.id}`;
         const demoAdvUser: AuthUser = {
-          id: 'demo_advocate_vikram',
-          name: 'Adv. Vikram Sharma',
-          email: 'adv.vikram.sharma@delhibar.org',
-          phone: '+91 98110 22334',
+          id: advId,
+          name: matchAdv.name,
+          email: matchAdv.email,
+          phone: matchAdv.phone || '',
           role: 'advocate',
-          barEnrollment: 'D/1842/2016',
-          stateBarCouncil: 'Bar Council of Delhi',
-          practiceAreas: ['Constitutional Law', 'Criminal Defense'],
-          experience: '8+ Years',
-          courts: 'Delhi High Court & Supreme Court of India',
-          consultationFee: '₹800 / Session',
+          barEnrollment: matchAdv.barEnrollment,
+          stateBarCouncil: matchAdv.state || 'Bar Council of Delhi',
+          practiceAreas: matchAdv.practiceAreas,
+          experience: matchAdv.experience,
+          courts: matchAdv.courts,
+          consultationFee: `₹${matchAdv.consultationFee} / ${matchAdv.consultationDuration || '30 mins'}`,
           isVerified: true,
+          city: matchAdv.city,
+          state: matchAdv.state,
           createdAt: new Date().toISOString(),
         };
-        const demoAdvRecord: Advocate = {
-          id: 'demo_advocate_vikram',
-          userId: 'demo_advocate_vikram',
-          name: 'Adv. Vikram Sharma',
-          email: 'adv.vikram.sharma@delhibar.org',
-          phone: '+91 98110 22334',
-          barEnrollment: 'D/1842/2016',
-          stateBarCouncil: 'Bar Council of Delhi',
-          practiceAreas: ['Constitutional Law', 'Criminal Defense'],
-          courtLevels: ['High Court', 'Supreme Court'],
-          experience: '8+ Years',
-          experienceYears: 8,
-          location: 'New Delhi, Delhi NCR',
-          city: 'New Delhi',
-          state: 'Delhi NCR',
-          languages: ['English', 'Hindi', 'Punjabi'],
-          consultationFee: 800,
-          rating: 4.9,
-          reviewCount: 42,
-          availability: 'Available Today',
-          about: 'Senior Advocate practicing before the Delhi High Court and Supreme Court of India.',
-          education: 'B.A. LL.B. (Hons) - National Law University Delhi',
-          courts: 'Delhi High Court & Supreme Court of India',
-          isVerified: true,
-        };
+        const demoAdvRecord: Advocate = { ...matchAdv, userId: advId };
+        memoryUsers.set(advId, { user: demoAdvUser, passwordHash: await bcrypt.hash('Advocate@2026', 10) });
+        memoryAdvocates.set(advId, demoAdvRecord);
         res.json({ user: demoAdvUser, advocate: demoAdvRecord });
         return;
       }
@@ -617,10 +599,9 @@ export async function handleGetAdvocateProfile(req: Request, res: Response) {
     }
 
     const cleanUserId = userId.trim();
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
 
       const query = `
         SELECT
@@ -811,10 +792,9 @@ export async function handleUpdateAdvocateProfile(req: Request, res: Response) {
       ? languages
       : (typeof languages === 'string' ? languages.split(',').map((s: string) => s.trim()).filter(Boolean) : null);
 
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
       const client = await pool.connect();
       try {
         await client.query('BEGIN');
@@ -979,10 +959,9 @@ export async function handleUpdateAdvocateProfile(req: Request, res: Response) {
 export async function handleGetUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
       const userRes = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
       if (userRes.rows.length === 0) {
         res.status(404).json({ error: 'User not found' });
@@ -1018,9 +997,9 @@ export async function handleUpdateUser(req: Request, res: Response) {
     const { id } = req.params;
     const { name, phone, dob, state, city, address, profilePicture } = req.body || {};
 
+    await initDatabase();
     const pool = getPool();
     if (pool) {
-      await initDatabase();
       const updateText = `
         UPDATE users 
         SET 
@@ -1118,9 +1097,9 @@ export async function handleChangePassword(req: Request, res: Response) {
       return;
     }
 
+    await initDatabase();
     const pool = getPool();
     if (pool) {
-      await initDatabase();
       const userRes = await pool.query('SELECT password_hash FROM users WHERE id = $1', [id]);
       if (userRes.rows.length === 0) {
         res.status(404).json({ error: 'User not found.' });
@@ -1152,10 +1131,9 @@ export async function handleChangePassword(req: Request, res: Response) {
 export async function handleGetAdvocates(req: Request, res: Response) {
   try {
     const { search, courtLevel, practiceArea, city } = req.query;
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
 
       let query = 'SELECT * FROM advocates WHERE 1=1';
       const params: any[] = [];
@@ -1201,10 +1179,9 @@ export async function handleGetAdvocates(req: Request, res: Response) {
 export async function handleGetAdvocateById(req: Request, res: Response) {
   try {
     const { id } = req.params;
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
       const result = await pool.query('SELECT * FROM advocates WHERE id = $1', [id]);
       if (result.rows.length === 0) {
         // Check initial mock
@@ -1235,10 +1212,9 @@ export async function handleGetAppointments(req: Request, res: Response) {
   try {
     const userId = (req.query.userId as string) || (req.headers['x-user-id'] as string);
     const advocateId = req.query.advocateId as string;
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
 
       let query = 'SELECT * FROM appointments WHERE 1=1';
       const params: any[] = [];
@@ -1278,11 +1254,10 @@ export async function handleCreateAppointment(req: Request, res: Response) {
       return;
     }
 
+    await initDatabase();
     const pool = getPool();
     const aptId = apt.id || `apt_${Date.now()}`;
-
     if (pool) {
-      await initDatabase();
 
       // Ensure user exists in users table to satisfy foreign key
       const userCheck = await pool.query('SELECT id FROM users WHERE id = $1', [apt.userId]);
@@ -1365,9 +1340,9 @@ export async function handleUpdateAppointmentStatus(req: Request, res: Response)
       return;
     }
 
+    await initDatabase();
     const pool = getPool();
     if (pool) {
-      await initDatabase();
 
       const isAccepted = status === 'upcoming' || status === 'confirmed';
       const isExpired = status === 'expired' || status === 'no-response';
@@ -1423,20 +1398,33 @@ export async function handleUpdateAppointmentStatus(req: Request, res: Response)
 export async function handleGetApplications(req: Request, res: Response) {
   try {
     const userId = (req.query.userId as string) || (req.headers['x-user-id'] as string);
+    await initDatabase();
     const pool = getPool();
-
     if (pool) {
-      await initDatabase();
 
-      let query = 'SELECT * FROM applications WHERE 1=1';
+      let query = `
+        SELECT a.*, u.name as citizen_name
+        FROM applications a
+        LEFT JOIN users u ON a.user_id = u.id
+        WHERE 1=1
+      `;
       const params: any[] = [];
+      let paramCount = 1;
 
       if (userId) {
         params.push(userId);
-        query += ` AND user_id = $${params.length}`;
+        query += ` AND a.user_id = $${paramCount}`;
+        paramCount++;
       }
 
-      query += ' ORDER BY created_at DESC';
+      const advocateId = req.query.advocateId as string;
+      if (advocateId) {
+        params.push(advocateId);
+        query += ` AND a.advocate_id = $${paramCount}`;
+        paramCount++;
+      }
+
+      query += ' ORDER BY a.created_at DESC';
 
       const result = await pool.query(query, params);
       const applications = result.rows.map(formatApplicationRow);
@@ -1462,12 +1450,11 @@ export async function handleCreateApplication(req: Request, res: Response) {
       return;
     }
 
+    await initDatabase();
     const pool = getPool();
     const id = appData.id || `app_${Date.now()}`;
     const applicationId = appData.applicationId || `NS-${Date.now().toString().slice(-4)}`;
-
     if (pool) {
-      await initDatabase();
 
       // Ensure user exists in users table
       const userCheck = await pool.query('SELECT id FROM users WHERE id = $1', [appData.userId]);
@@ -1540,9 +1527,9 @@ export async function handleUpdateApplicationStatus(req: Request, res: Response)
     const { id } = req.params;
     const { status, acceptanceStatus } = req.body || {};
 
+    await initDatabase();
     const pool = getPool();
     if (pool) {
-      await initDatabase();
 
       const updateText = `
         UPDATE applications

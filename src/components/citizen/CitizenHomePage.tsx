@@ -6,7 +6,8 @@ import {
   Star, ThumbsUp, AlertTriangle, RefreshCw, CreditCard
 } from 'lucide-react';
 import { Language, AppRoute, AuthUser, Application, Appointment, AdvocateFeedback } from '../../types';
-import { getStoredApplications, getStoredAppointments, getStoredFeedback, updateAppointmentStatus } from '../../data/portalData';
+import { getStoredFeedback, updateAppointmentStatus } from '../../data/portalData';
+import { apiGetAppointments, apiGetApplications } from '../../services/apiClient';
 import { AdvocateFeedbackModal } from './AdvocateFeedbackModal';
 import { AdvocateResponseTimer } from './AdvocateResponseTimer';
 
@@ -33,12 +34,22 @@ export function CitizenHomePage({
     return language === 'en' ? 'Good evening' : 'शुभ संध्या';
   };
 
-  const [appointments, setAppointments] = useState<Appointment[]>(() => getStoredAppointments());
-  const [applications, setApplications] = useState<Application[]>(() => getStoredApplications());
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
 
-  const refreshData = () => {
-    setAppointments(getStoredAppointments());
-    setApplications(getStoredApplications());
+  const refreshData = async () => {
+    try {
+      const serverApts = await apiGetAppointments();
+      if (serverApts) setAppointments(serverApts);
+      else setAppointments([]);
+      
+      const serverApps = await apiGetApplications();
+      if (serverApps) setApplications(serverApps);
+      else setApplications([]);
+    } catch (e) {
+      setAppointments([]);
+      setApplications([]);
+    }
   };
 
   useEffect(() => {

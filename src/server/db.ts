@@ -6,6 +6,7 @@ const { Pool } = pg;
 
 let pool: pg.Pool | null = null;
 let initializationPromise: Promise<boolean> | null = null;
+let failedToConnect = false;
 
 /**
  * Returns a reusable PostgreSQL connection pool.
@@ -13,6 +14,7 @@ let initializationPromise: Promise<boolean> | null = null;
  */
 export function getPool(): pg.Pool | null {
   if (pool) return pool;
+  if (failedToConnect) return null;
 
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
@@ -60,8 +62,9 @@ export async function initDatabase(): Promise<boolean> {
       return false;
     }
 
-    const client = await dbPool.connect();
+    let client;
     try {
+      client = await dbPool.connect();
       console.log('[PostgreSQL] Initializing database tables and indexes...');
 
       // 1. Users Table
@@ -330,9 +333,12 @@ export async function initDatabase(): Promise<boolean> {
       return true;
     } catch (err: any) {
       console.error('[PostgreSQL] Error during database initialization:', err.message);
+      console.warn('[PostgreSQL] Falling back to in-memory store due to connection failure.');
+      failedToConnect = true;
+      pool = null;
       return false;
     } finally {
-      client.release();
+      if (client) client.release();
     }
   })();
 

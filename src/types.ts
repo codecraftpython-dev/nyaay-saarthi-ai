@@ -130,6 +130,7 @@ export interface Application {
   id: string;
   applicationId: string; // e.g. NS-1024
   userId: string;
+  citizenName?: string;
   advocateId: string;
   advocateName: string;
   advocateContact: string;

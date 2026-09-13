@@ -33,7 +33,8 @@ import { SavedResourcesPage } from './components/citizen/SavedResourcesPage';
 import { UserSettingsPage } from './components/citizen/UserSettingsPage';
 
 import { Language, AppRoute, AuthUser, FooterLink, Advocate } from './types';
-import { MOCK_ADVOCATES, getStoredAppointments, getStoredApplications } from './data/portalData';
+import { MOCK_ADVOCATES } from './data/portalData';
+import { apiGetAppointments } from './services/apiClient';
 
 function parseCurrentRoute(): AppRoute {
   if (typeof window === 'undefined') return 'home';
@@ -76,6 +77,7 @@ function parseCurrentRoute(): AppRoute {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('en');
+  const [upcomingCount, setUpcomingCount] = useState(0);
 
   // Authentication State: Initialize from persistent storage if present
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(() => {
@@ -96,6 +98,8 @@ export default function App() {
       'chat', 'appointments', 'rights', 'advocate-profile', 'appointment-book',
       'advocate-dashboard', 'advocate/home', 'advocate/user-profile', 'advocate/documents'
     ];
+
+
     let storedUser: AuthUser | null = null;
     try {
       const data = typeof window !== 'undefined' ? localStorage.getItem('nyay_saathi_user') : null;
@@ -119,6 +123,16 @@ export default function App() {
     }
     return route;
   });
+
+  useEffect(() => {
+    if (currentUser?.role === 'citizen') {
+      apiGetAppointments().then(res => {
+        if (res) {
+          setUpcomingCount(res.filter(a => a.status === 'upcoming').length);
+        }
+      }).catch(() => {});
+    }
+  }, [currentUser, currentRoute]);
 
   // Portal auxiliary state: selected advocate and pre-filled category
   const [selectedAdvocate, setSelectedAdvocate] = useState<Advocate | null>(() => MOCK_ADVOCATES[0]);
@@ -394,9 +408,6 @@ export default function App() {
       role: 'citizen' as const,
       createdAt: new Date().toISOString().slice(0, 10),
     };
-
-    const appointments = getStoredAppointments();
-    const upcomingCount = appointments.filter(a => a.status === 'upcoming').length;
 
     return (
       <div className="min-h-screen bg-transparent text-slate-900 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-sky-200 selection:text-sky-950 relative">
