@@ -1,999 +1,393 @@
-# Nyaay सारथी ⚖️
-
-### Digital Legal Awareness, Guidance & Advocate Connect Platform
-
-> **Nyaay सारथी** is a modern Indian civic-tech platform designed to
-> make legal information easier to understand and access. It connects
-> citizens with legal-awareness resources, AI-assisted guidance,
-> advocates, appointments, applications, and case-related activity in
-> one platform.
-
-**Live Website:** https://nyaay-saarthii.onrender.com/
-
-------------------------------------------------------------------------
-
-## 📌 Overview
-
-Nyaay सारथी is built around a simple idea:
-
-**Make legal awareness understandable, make the next step clearer, and
-make professional legal assistance easier to reach.**
-
-The platform provides separate experiences for:
-
--   👤 **Citizens**
--   ⚖️ **Advocates / Lawyers**
--   🤖 **AI Legal Assistance**
--   📚 **Legal Rights & Awareness**
--   📅 **Advocate Appointment Management**
--   📝 **Applications / Complaint Tracking**
--   🔐 **Authentication & Profile Management**
-
-The system is designed as a **legal-awareness and navigation platform**,
-not as an AI lawyer or a replacement for a qualified advocate.
-
-------------------------------------------------------------------------
-
-## 🎯 Problem Statement
-
-Many citizens struggle to understand:
-
--   What legal rights they have
--   Whether their situation may require formal action
--   Which authority or forum they should approach
--   What documents they may need
--   How to prepare an application or complaint
--   Whether they may be eligible for free legal aid
--   Which type of advocate they should consult
--   How to track applications and appointments
-
-Traditional legal information can be difficult to understand because of
-complex terminology, scattered resources, and limited access to
-professional guidance.
-
-### Nyaay सारथी addresses this gap by bringing these capabilities together in a single digital platform.
-
-------------------------------------------------------------------------
-
-# ✨ Core Features
-
-## 🏠 Public Website
-
-The public-facing experience provides access to:
-
--   Home
--   About Us
--   Contact Us
--   Chat to AI
--   Book an Appointment
--   Know Your Rights
--   Login / Signup
--   English / Hindi language controls
-
-The interface follows a light, trustworthy civic-tech visual style with:
-
--   Blue navigation elements
--   White/light backgrounds
--   Soft blue gradients
--   Rounded cards
--   Clear typography
--   Consistent iconography
--   Responsive layouts
-
-------------------------------------------------------------------------
-
-# 👤 Citizen Portal
-
-After successful citizen authentication, the user enters the dedicated
-citizen interface.
-
-### Citizen Navigation
-
--   Home
--   Book an Appointment
--   Know Your Rights
--   Chat to AI
--   My Applications
--   Profile
-
-The citizen portal is designed to provide a centralized dashboard for
-legal awareness and assistance.
-
-------------------------------------------------------------------------
-
-## 👤 Citizen Profile
-
-Route:
-
-``` text
-/user/profile
-```
-
-The profile area can contain:
-
--   Profile picture
--   Name
--   Email
--   Mobile number
--   Date of birth
--   State
--   City
-
-### Profile Actions
-
--   Edit Profile
--   Change Password
--   My Applications
--   My Appointments
--   Saved Resources
--   Logout
-
-The architecture is designed to remain extensible so additional citizen
-services can be added later.
-
-------------------------------------------------------------------------
-
-# 🤖 AI Legal Assistant
-
-Route:
-
-``` text
-/chat
-```
-
-The AI assistant is one of the core features of Nyaay सारथी.
-
-### Opening Experience
-
-The interface introduces the assistant with:
-
-> **How can Nyaay सारथी help you today?**
-
-Users can describe their issue naturally in simple language.
-
-### Example Topics
-
--   Landlord/security-deposit disputes
--   Online payment or UPI fraud
--   Consumer complaints
--   Fundamental rights
--   Government grievances
--   Free legal aid
--   Police complaints
--   Tenant disputes
--   Employment-related issues
--   Cybercrime
--   Banking disputes
-
-### AI Response Structure
-
-The assistant is designed to organize responses into useful sections:
-
-1.  **Understanding Your Situation**
-2.  **Your Possible Rights**
-3.  **Is This Potentially Actionable?**
-4.  **Relevant Authority / Forum**
-5.  **What You May Need**
-6.  **What You Can Do Next**
-7.  **Legal Aid**
-8.  **Advocate Assistance**
-9.  **Application / Complaint**
-10. **Status**
-
-### AI Actions
-
-Depending on the conversation, users can access actions such as:
-
--   Generate Application
--   Find Advocate
--   Save Conversation
--   Start New Chat
--   Track Status
-
-### AI Follow-up / Quick Topics
-
-The interface supports quick issue starters so citizens can begin
-without knowing how to phrase a legal question.
-
-### Important AI Limitation
-
-Nyaay सारथी should **not** be represented as an AI lawyer.
-
-AI-generated information is intended for general legal awareness and
-procedural guidance. Users should consult a qualified advocate for
-professional legal advice.
-
-------------------------------------------------------------------------
-
-# 📚 Know Your Rights
-
-Route:
-
-``` text
-/rights
-```
-
-The rights portal provides searchable, category-based legal awareness.
-
-### Categories
-
--   Constitutional Rights
--   Consumer Rights
--   Tenant & Property Rights
--   Employment Rights
--   Cyber Rights
--   Women's Rights
--   Children's Rights
--   Senior Citizen Rights
--   Rights of Persons with Disabilities
--   Police & Criminal Justice
--   Banking & Financial Rights
--   Family & Personal Rights
-
-### Right Information Structure
-
-Each right/resource can provide:
-
--   Right name
--   Simple explanation
--   Who it applies to
--   Relevant legal source
--   Example situation
--   What a person can do
--   Relevant authority
--   Useful documents
--   Related resources
-
-### Contextual CTA
-
-The rights experience connects users back to the AI assistant through:
-
-**Talk to Nyaay सारथी**
-
-The underlying architecture can later be extended into a verified legal
-RAG system using official government and legal sources.
-
-------------------------------------------------------------------------
-
-# ⚖️ Book an Appointment
-
-Route:
-
-``` text
-/appointments
-```
-
-The appointment system helps citizens discover advocates based on their
-requirements.
-
-### Advocate Discovery Filters
-
--   Practice Area
--   Court / Jurisdiction
--   Location
--   Language
--   Experience
--   Consultation Fee
--   Availability
--   Rating
-
-### Advocate Card
-
-Each advocate profile can display:
-
--   Profile photo
--   Advocate name
--   Verification badge
--   Practice areas
--   Experience
--   Location
--   Languages
--   Consultation fee
--   Rating
--   Availability status
-
-### Actions
-
--   View Profile
--   Book Appointment
-
-The system is designed to make advocate discovery more relevant instead
-of requiring citizens to search through unrelated profiles.
-
-------------------------------------------------------------------------
-
-# 📝 My Applications
-
-Route:
-
-``` text
-/user/applications
-```
-
-The citizen can view applications, complaints, or consultation-related
-requests.
-
-Each application can contain:
-
--   Application ID
--   Brief case information
--   Lawyer / advocate name
--   Advocate contact details
--   Appointment date
--   Appointment time
--   Application/consultation date
--   Lawyer fee
--   Application status
--   Acceptance status
-
-### Activity / History
-
-The citizen can also access recent activity such as:
-
--   Previous applications
--   Lawyer appointments
--   Consultation dates
--   Hearing dates
--   Application updates
-
-The interface follows a ticket/case-card approach so multiple
-applications remain easy to scan.
-
-------------------------------------------------------------------------
-
-# ⚖️ Advocate Portal
-
-Nyaay सारथी also provides a dedicated advocate experience.
-
-### Advocate Navigation
-
-The advocate interface includes functionality around:
-
--   Home / Dashboard
--   Record History
--   IPC / BNS Reference
--   About Us
--   AI Chat
--   Profile / Advocate account
-
-------------------------------------------------------------------------
-
-## 👨‍⚖️ Advocate Dashboard
-
-The advocate dashboard is designed around incoming citizen consultation
-requests.
-
-It can show:
-
--   Pending requests
--   Accepted requests
--   Declined requests
--   Consultation requests feed
--   Search requests
--   Today's consultations
--   Scheduled consultations
--   Citizen case summaries
--   Advocate verification information
--   Consultation fee / slot information
-
-### Consultation Request Actions
-
-Advocates can review incoming citizen requests and:
-
--   Accept
--   Decline
--   Review request details
--   View relevant citizen/case information
--   Manage consultations
-
-------------------------------------------------------------------------
-
-# 🤖 AI Chat for Advocates
-
-The advocate portal also includes access to the same AI assistance
-experience used in the citizen interface.
-
-The feature is intended to provide consistent AI-assisted legal
-information and case-support functionality while preserving the existing
-advocate portal UI and navigation.
-
-Possible uses include:
-
--   Case summarization
--   Legal issue identification
--   Indian-law awareness
--   Drafting assistance
--   Legal research assistance
--   Advocate recommendations where applicable
--   IPC/BNS-related reference support
-
-The AI functionality should remain an **assistance tool**, not a
-substitute for professional legal judgment.
-
-------------------------------------------------------------------------
-
-# 📖 IPC / BNS Reference
-
-The advocate experience includes a legal reference area for Indian
-criminal-law information.
-
-The architecture can be expanded to support:
-
--   IPC references
--   BNS references
--   Section explanations
--   Related provisions
--   Search
--   Case/context references
--   Verified legal sources
-
-This module is intended for reference and awareness and should be kept
-aligned with verified/current legal sources.
-
-------------------------------------------------------------------------
-
-# 📜 Record History
-
-The advocate portal provides a record/history-oriented workflow for
-previously handled consultation activity.
-
-The architecture can support:
-
--   Previous consultation requests
--   Accepted cases
--   Consultation history
--   Citizen/case summaries
--   Dates and appointment information
--   Status tracking
-
-------------------------------------------------------------------------
-
-# 🔐 Authentication
-
-The application uses role-aware authentication for different platform
-users.
-
-### Supported Roles
-
-``` text
-Citizen
-Advocate
-```
-
-The authentication architecture is intended to support:
-
--   Login
--   Signup
--   Password protection
--   Session/authentication handling
--   Role-based routing
--   Logout
--   Profile management
--   Protected pages
-
-### Role-Based Experience
-
-After successful authentication, the application routes the user to the
-appropriate interface:
-
-``` text
-Citizen Login
-      ↓
-Citizen Portal
-
-Advocate Login
-      ↓
-Advocate Portal
-```
-
-------------------------------------------------------------------------
-
-# 🌐 Language Support
-
-The interface provides English/Hindi language controls.
-
-The architecture can be extended so that additional legal-awareness
-content and AI responses can support Indian languages in future
-versions.
-
-------------------------------------------------------------------------
-
-# 🎨 UI / UX Design
-
-Nyaay सारथी uses a consistent visual language across public, citizen,
-and advocate experiences.
-
-### Design Direction
-
--   Light blue civic-tech theme
--   White backgrounds
--   Soft blue gradients
--   Blue primary actions
--   Rounded cards
--   Glass/soft-card effects where appropriate
--   Clear hierarchy
--   Minimal visual clutter
--   Accessible iconography
--   Professional legal/public-service appearance
-
-### Design Goal
-
-The interface should feel:
-
-**Trustworthy + Modern + Accessible + Indian + Professional**
-
-rather than looking like a generic AI chatbot.
-
-------------------------------------------------------------------------
-
-# 🧭 Main Application Flow
-
-``` text
-                    Nyaay सारथी
-                         │
-             ┌───────────┴───────────┐
-             │                       │
-          Citizen                 Advocate
-             │                       │
-        Authentication          Authentication
-             │                       │
-             ▼                       ▼
-      Citizen Portal           Advocate Portal
-             │                       │
-     ┌───────┼────────┐       ┌──────┼─────────┐
-     │       │        │       │      │         │
-     ▼       ▼        ▼       ▼      ▼         ▼
-   Rights   AI Chat  Apps    Requests History AI Chat
-     │       │        │       │      │         │
-     └───────┴────────┘       └──────┴─────────┘
-             │                       │
-             ▼                       ▼
-       Find Advocate            Legal Reference
-             │
-             ▼
-      Book Appointment
-```
-
-------------------------------------------------------------------------
-
-# 🏗️ Technical Architecture
-
-The project is designed around a modern full-stack architecture.
-
-``` text
-Frontend
-React + TypeScript + Vite
-        │
-        │ REST/API
-        ▼
-Backend
-Node.js + Express + TypeScript
-        │
-        ├──────────────► MongoDB
-        │
-        └──────────────► Gemini API
-```
-
-------------------------------------------------------------------------
-
-# 🛠️ Technology Stack
-
-## Frontend
-
--   React
--   TypeScript
--   Vite
--   Tailwind CSS
--   shadcn/ui / reusable component system
--   React Router
--   Lucide Icons
-
-## Backend
-
--   Node.js
--   Express
--   TypeScript
-
-## Database
-
--   MongoDB
-
-## Authentication
-
--   JWT-based authentication
--   Secure password hashing
--   Role-based access control
-
-## AI
-
--   Gemini API
--   AI-assisted legal-awareness workflow
--   Architecture prepared for future RAG integration
-
-## Deployment
-
--   Render
--   MongoDB Atlas / MongoDB-compatible deployment
--   GitHub
-
-------------------------------------------------------------------------
-
-# 📁 Suggested Project Structure
-
-``` text
-Nyaay-Saarthi/
-│
-├── public/
-│   └── logo.jpg
-│
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── data/
-│   ├── server/
-│   ├── services/
-│   ├── App.tsx
-│   ├── index.css
-│   ├── main.tsx
-│   ├── types.ts
-│   └── vite-env.d.ts
-│
-├── .gitignore
-├── bun.lock
-├── index.html
-├── metadata.json
-├── package.json
-├── README.md
-├── server.ts
-├── tsconfig.json
-└── vite.config.ts
-```
-
-> The exact folder structure may differ from the implementation; this
-> represents the recommended separation of frontend and backend
-> responsibilities.
-
-------------------------------------------------------------------------
-
-# ⚙️ Local Development
-
-## 1. Clone the repository
-
-``` bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd Nyaay-Saarthi
-```
-
-## 2. Install dependencies
-
-Frontend:
-
-``` bash
-cd frontend
-npm install
-```
-
-Backend:
-
-``` bash
-cd ../backend
-npm install
-```
-
-------------------------------------------------------------------------
-
-## 3. Configure Environment Variables
-
-Create a `.env` file in the backend.
+# ⚖️ NyaaySarthi
+
+### Your Guide. Your Rights. Your Justice.
+
+NyaaySarthi is a digital legal awareness, guidance, and
+advocate-consultation platform focused on making legal information and
+access to professional legal support easier for citizens in India.
+
+> **Disclaimer:** NyaaySarthi provides general legal information and
+> guidance. It is not a substitute for professional legal advice or
+> legal representation. Users should consult a qualified advocate for
+> advice specific to their situation.
+
+## 🚀 Key Features
+
+### 🤖 AI Legal Assistant
+
+-   AI-powered general legal awareness and guidance
+-   Multi-turn conversations
+-   Indian-law-focused information
+-   Guidance for rights, complaints, applications and basic procedures
+-   Consumer-law, cyber-fraud, FIR and other legal-awareness topics
+-   Multilingual support: English, Hindi, Bengali, Telugu, Tamil,
+    Marathi, Gujarati and Kannada
+-   Legal disclaimer and safety guardrails
+-   Available for both citizens and advocates
+
+### 👤 Citizen Portal
+
+-   Citizen account registration and login
+-   Personalized citizen profile
+-   Persistent profile information using PostgreSQL
+-   Know Your Rights resources
+-   AI Legal Assistant
+-   Advocate discovery
+-   Appointment/consultation booking
+-   Applications and status tracking
+-   Saved legal resources
+-   Account settings
+
+Citizen registration stores relevant profile information such as Full
+Name, Mobile Number, Email Address, Date of Birth, State/UT,
+City/District, Residential Address and password.
+
+### ⚖️ Advocate Portal
+
+-   Advocate registration
+-   Professional profile
+-   Consultation requests
+-   Client/case information
+-   Client document review
+-   Advocate profile management
+-   AI Legal Assistant
+
+Advocate registration supports Advocate Name, Mobile Number, Email
+Address, Bar Council Enrollment Number, State Bar Council, Practice
+Areas, Years of Experience, Courts/Jurisdictions, Languages,
+Consultation Fee, Consultation Duration and verification/document
+information.
+
+### 🔎 Advocate Discovery
+
+Citizens can find advocates using practice area, court level, city,
+language and experience.
+
+Example practice areas include Criminal Law, Family Law, Cyber Law,
+Corporate Law, Property Law and Consumer Disputes.
+
+### 📅 Appointment Booking
+
+-   Advocate consultation requests
+-   Available appointment slots
+-   Booking information
+-   Consultation fee and duration display
+-   User appointment history
+
+### 💰 Consultation Fee
+
+Fee and duration are stored separately.
 
 Example:
 
-``` env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-GEMINI_API_KEY=your_gemini_api_key
-NODE_ENV=development
+``` text
+consultation_fee = 500
+consultation_duration = 30 minutes
 ```
 
-For the Vite frontend, use:
-
-``` env
-VITE_API_URL=http://localhost:5000
-```
-
-Use the variable names required by the actual implementation if they
-differ.
-
-### Never commit secrets
-
-Do not upload:
+Displayed as:
 
 ``` text
-.env
-.env.local
-API keys
-JWT secrets
-Database credentials
+₹500 / 30 mins
 ```
 
-to GitHub.
+This prevents incorrect formatting such as `₹50030`.
 
-------------------------------------------------------------------------
+### 📚 Know Your Rights
 
-# ▶️ Run the Application
+Resources include: - Fundamental Rights - Constitutional rights -
+FIR-related guidance - Domestic violence protection - Cyber-fraud
+reporting - Consumer disputes - General legal awareness -
+Complaint/application guidance
 
-## Backend
+### 📝 Applications & Status
 
-``` bash
-cd backend
-npm run dev
+-   Application information
+-   Required document guidance
+-   Complaint/application guidance
+-   Status tracking
+-   Previous applications
+
+### 🆘 Important Helplines
+
+-   **112** --- Emergency Response Support
+-   **1091** --- Women Helpline
+-   **1930** --- Cyber Crime Helpline
+
+Users should verify current official contact information before relying
+on a helpline.
+
+## 🔐 Authentication & Data Persistence
+
+NyaaySarthi supports role-based authentication:
+
+``` text
+Citizen → Citizen Dashboard
+Advocate → Advocate Dashboard
 ```
 
-## Frontend
+User-specific profile data is retrieved using the authenticated account
+rather than hardcoded/default profile data.
 
-Open another terminal:
+Passwords are stored using secure password hashing and never as
+plaintext.
 
-``` bash
-cd frontend
-npm run dev
+## 🗄️ PostgreSQL
+
+PostgreSQL is used for persistent application data such as: - User
+accounts - Citizen profiles - Advocate profiles - Appointments -
+Applications - Verification-related information
+
+For advocates:
+
+``` text
+users.id
+   ↓
+advocates.user_id
 ```
 
-Then open the Vite development URL shown in the terminal.
+This connects each advocate account to the correct professional profile.
 
-------------------------------------------------------------------------
-
-# 🚀 Deployment on Render
-
-The current project is deployed on Render.
-
-For a separated frontend/backend deployment:
+## 🏗️ Technology Stack
 
 ### Frontend
 
-Use a Render Static Site.
-
-Typical configuration:
-
-``` text
-Build Command:
-npm install && npm run build
-
-Publish Directory:
-dist
-```
+-   React 19
+-   TypeScript
+-   Vite
+-   Tailwind CSS v4
+-   Motion / motion-react
+-   Lucide React
 
 ### Backend
 
-Use a Render Web Service.
+-   Node.js
+-   Express.js
+-   TypeScript
+-   REST API endpoints
 
-Typical configuration:
+### Database
+
+-   PostgreSQL
+-   `pg`
+
+### AI
+
+-   Google Gen AI SDK
+-   Gemini-based AI Legal Assistant
+
+### Deployment
+
+-   Render
+-   Render PostgreSQL
+
+## 🧩 Architecture
 
 ``` text
-Build Command:
-npm install && npm run build
-
-Start Command:
-npm start
+React + TypeScript Frontend
+            ↓
+       Express API
+        ↙       ↘
+PostgreSQL     Gemini AI
 ```
 
-Configure all production environment variables inside Render instead of
-committing them to GitHub.
+The frontend communicates with the backend API. The backend handles
+authentication, database operations and AI requests.
 
-------------------------------------------------------------------------
-
-# 🔑 Environment Variables
-
-Typical variables used by the architecture include:
-
-  Variable           Purpose
-  ------------------ ------------------------------
-  `MONGO_URI`        MongoDB connection
-  `JWT_SECRET`       Authentication token signing
-  `GEMINI_API_KEY`   Gemini AI access
-  `PORT`             Backend server port
-  `NODE_ENV`         Runtime environment
-  `VITE_API_URL`     Frontend API endpoint
-
-Do not expose private backend secrets through `VITE_*` variables.
-
-------------------------------------------------------------------------
-
-# 🔒 Security Considerations
-
-Because the platform deals with legal-related information, security
-should be treated as a major concern.
-
-Recommended protections include:
-
--   Password hashing
--   JWT authentication
--   Protected API routes
--   Role-based authorization
--   Input validation
--   API rate limiting
--   CORS configuration
--   Secure environment variables
--   HTTPS in production
--   Safe error handling
--   No API secrets in frontend code
--   Minimal collection of personal information
--   Appropriate access control for applications and appointments
-
-------------------------------------------------------------------------
-
-# ⚖️ Legal & AI Disclaimer
-
-Nyaay सारथी is a **legal awareness and assistance platform**.
-
-It does not replace:
-
--   A qualified advocate
--   A court
--   A government authority
--   Official legal documents
--   Professional legal advice
-
-AI-generated information may be incomplete, outdated, or incorrect.
-
-Users should verify important legal information through authoritative
-sources and consult a qualified legal professional when professional
-advice is required.
-
-For production use, legal content should be grounded in verified
-official sources and maintained as laws and procedures change.
-
-------------------------------------------------------------------------
-
-# 🔮 Future Scope
-
-The architecture can be extended with:
-
-### 🤖 Verified Legal RAG
-
-Connect the AI system with verified sources such as:
-
--   Government portals
--   Official legislation
--   Courts
--   Legal Services Authorities
--   Consumer forums
--   Verified public legal resources
-
-### 📄 Document Intelligence
-
--   Upload legal documents
--   Summarize documents
--   Extract important dates
--   Identify sections/clauses
--   Generate document checklists
-
-### 📝 Application Generator
-
-Generate structured drafts for:
-
--   Complaints
--   Applications
--   Grievances
--   Consumer complaints
--   Legal notices
--   Government submissions
-
-### 📍 Government Authority Navigator
-
-Help users identify:
-
--   Relevant department
--   Appropriate authority
--   Complaint mechanism
--   Required documents
--   Submission procedure
-
-### 📊 Application Tracking
-
-Provide a unified timeline for:
-
--   Application submitted
--   Lawyer assigned
--   Appointment scheduled
--   Documents submitted
--   Hearing date
--   Status updates
--   Resolution
-
-### 🌐 Indian Language Expansion
-
-Expand legal-awareness and AI support to additional Indian languages.
-
-### 📱 Mobile Application
-
-The platform can later be extended into Android/iOS applications.
-
-------------------------------------------------------------------------
-
-# 🌱 Social Impact
-
-Nyaay सारथी aims to contribute toward:
-
--   Better legal awareness
--   Easier access to information
--   Improved citizen-government navigation
--   Better advocate discovery
--   Greater awareness of legal rights
--   Easier access to legal-aid information
--   More transparent application/consultation workflows
-
-The platform is particularly useful for people who may find traditional
-legal terminology and processes difficult to understand.
-
-------------------------------------------------------------------------
-
-# 🧪 Prototype Scope
-
-This project is designed as a **student/hackathon-ready full-stack
-prototype**.
-
-The prototype demonstrates the complete product concept across:
+## 🔄 Citizen Workflow
 
 ``` text
-Public Website
+Visit NyaaySarthi
       ↓
-Authentication
+Citizen Registration
       ↓
-Citizen / Advocate Role
+PostgreSQL
       ↓
-Dedicated Dashboard
+Login
       ↓
-AI Assistance
+Citizen Dashboard
       ↓
-Rights Awareness
+Know Your Rights / Chat to AI / Find Advocate /
+Book Consultation / My Applications / Profile
+```
+
+## 🔄 Advocate Workflow
+
+``` text
+Visit NyaaySarthi
       ↓
+Advocate Registration
+      ↓
+Professional Details
+      ↓
+Verification Status
+      ↓
+PostgreSQL
+      ↓
+Login
+      ↓
+Advocate Dashboard
+      ↓
+Manage Profile / Consultation Requests /
+Client Information / Document Review / Chat to AI
+```
+
+## 🔒 Advocate Verification
+
+NyaaySarthi collects advocate enrollment and professional information
+for its verification workflow.
+
+Entering a Bar Council Enrollment Number alone does **not** mean that an
+advocate has been officially verified by a Bar Council or government
+authority.
+
+Where live verification APIs are unavailable, the platform should
+clearly represent the available status, such as Pending, Verified or
+Rejected.
+
+## 🛡️ Legal & Safety
+
+NyaaySarthi is a legal-awareness and consultation-support platform.
+
+The AI assistant: - Does not act as a lawyer - Does not represent users
+in court - Does not replace a qualified advocate - Provides general
+legal information and guidance
+
+Professional legal advice should be obtained from a qualified advocate
+when required.
+
+## ⚙️ Environment Variables
+
+``` env
+DATABASE_URL=your_postgresql_connection_string
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Never commit real database credentials or API keys to GitHub.
+
+For Render deployment, configure secrets through the service's
+Environment Variables settings.
+
+## 🛠️ Local Development
+
+### 1. Clone the repository
+
+``` bash
+git clone <YOUR_REPOSITORY_URL>
+cd NyaaySarthi
+```
+
+### 2. Install dependencies
+
+``` bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env` file with the required values.
+
+### 4. Run the application
+
+Use the development command defined in `package.json`, for example:
+
+``` bash
+npm run dev
+```
+
+## 🚀 Deployment
+
+Recommended architecture:
+
+``` text
+GitHub
+  ↓
+Render Web Service
+  ↓
+NyaaySarthi Backend + Frontend
+  ↓
+Render PostgreSQL
+```
+
+For production, the Render PostgreSQL internal connection can be used
+when the web service and database are in the same Render region.
+
+## 📌 Current Limitations
+
+Depending on the current deployment, advanced integrations may still
+require future development:
+
+-   Live Bar Council verification API
+-   Government identity verification
+-   Live government/legal-service APIs
+-   Payment gateway
+-   Automated payment refund system
+-   Built-in live video/audio consultation
+-   Production-grade document storage
+-   Advanced admin verification dashboard
+-   Large-scale production monitoring
+
+NyaaySarthi should not claim these integrations until they are actually
+connected and tested.
+
+## 🔮 Future Enhancements
+
+-   Bar Council and government verification integrations
+-   DigiLocker integration where appropriate
+-   Secure online payments
+-   Automated appointment confirmation
+-   Cancellation/rescheduling workflows
+-   Video/audio consultation
+-   Secure document storage
+-   Admin moderation and verification dashboard
+-   More Indian languages
+-   Accessibility improvements
+-   Legal-aid authority integrations
+-   Advanced analytics
+
+## 🎯 Project Objective
+
+NyaaySarthi aims to reduce the information gap between citizens and the
+legal system.
+
+Instead of requiring citizens to already know which law may apply, which
+authority to approach, what documents are required, and where to find
+professional help, NyaaySarthi aims to guide them through the process.
+
+``` text
+Legal Awareness
+       +
+AI Guidance
+       +
 Advocate Discovery
-      ↓
-Appointments
-      ↓
-Applications / History
+       +
+Human Consultation
+       =
+More Accessible Legal Support
 ```
 
-Production deployment would require additional validation, legal-content
-verification, security hardening, privacy controls, monitoring, and
-integration with official systems where applicable.
+## 🌱 Social Impact
+
+NyaaySarthi focuses on: - Legal awareness - Rights awareness -
+Accessibility - Transparency - Easier access to advocates - Better
+understanding of basic legal procedures
+
+## 📋 Project Information
+
+**Project Name:** NyaaySarthi\
+**Tagline:** Your Guide. Your Rights. Your Justice.\
+**Domain:** Legal Awareness & Advocate Consultation\
+**Target Users:** Citizens and Advocates\
+**Country Focus:** India
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the `LICENSE` file for details.
 
 ------------------------------------------------------------------------
 
-# 🤝 Contribution
+# ⚖️ NyaaySarthi
 
-Contributions are welcome.
-
-A typical contribution workflow:
-
-``` bash
-git checkout -b feature/your-feature
-```
-
-Make changes, test locally, then:
-
-``` bash
-git add .
-git commit -m "Add: your feature"
-git push origin feature/your-feature
-```
-
-Create a Pull Request with:
-
--   Description of the change
--   Screenshots where applicable
--   Testing performed
--   Any known limitations
-
-------------------------------------------------------------------------
-
-# 👥 Project
-
-**Nyaay सारथी --- Digital Legal Awareness & Guidance**
-
-> **Your Trusted Guide for Lawyer Consultation, Legal Clarity, Rights &
-> Justice.**
-
-Built as a civic-tech solution to make legal awareness, guidance,
-advocate access, and citizen support easier through technology.
+**Your Guide. Your Rights. Your Justice.**
